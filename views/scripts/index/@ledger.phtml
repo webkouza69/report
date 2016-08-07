@@ -1,0 +1,113 @@
+
+<div class="site-info">
+
+   </div>
+   <div class="newfile_area">
+    <h3>最新の改訂版</h3>
+
+    <div class="newfile-dl">
+
+    </div>
+   </div>
+   <h2>帳票ダウンロードメニュー</h2>
+	<!-- <div class="cnt-head clearfix"> -->
+	<div class="clearfix">
+		<div>
+			<div class="pull-left">
+				<div id="modal-menu">
+					<div class="internal">
+						<ul>
+							<li class="title">カテゴリ一覧
+							</li>
+						</ul>
+					</div>
+					<div class="external">
+						<ul>
+							<li class="title">仮公開用ページ
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-menu">問合せ先一覧の表示</button> -->
+			</div>
+			<div id="page-btns" class="pull-right">
+				<button type="button" class="btn btn-primary"><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>" class="btn" data-toggle="modal" data-target="#modal-cate">カテゴリ追加</a></button>
+				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">カテゴリの編集</button>
+				<button type="button" class="btn btn-success" id="btn-save">下書き保存する</button>
+				<button type="button" class="btn btn-info" id="btn-preview">プレビュー</button>
+<article class="cnt cnt-690 cnt-wrap">
+<!-- <p><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>" class="btn" data-toggle="modal" data-target="#modal-cate">カテゴリ追加</a></p> -->
+
+
+<ul>
+<?php foreach($this->resultSet as $itemResult) : ?>
+
+	<li><?php echo $this->escape($itemResult->ledgerName);?></li>
+
+<?php endforeach; ?>
+</ul>
+
+
+
+<form enctype="multipart/form-data" action="<?php echo $this->url(array('controller'=>'File','action'=>'receive'));?>" method="POST">
+    <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+        アップロードファイルを選択:
+        <input name="uf1" type="file" />
+    <input type="submit" value="アップロード" />
+</form>
+
+			</div>
+		</div>
+	</div>
+
+</article>
+
+	<!-- categorys modal -->
+<div class="modal fade" id="modal-cate" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-body">
+
+
+<p><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>">カテゴリ追加</a></p>
+<table>
+<tr>
+<th>カテゴリ名</th>
+<th>画像名</th>
+<th>アンカー名</th>
+<th>優先度</th>
+<th></th>
+</tr>
+<?php foreach($this->ledItem as $itemSheet) : ?>
+<tr>
+    <td><?php echo $this->escape($itemSheet->cateName);?></td>
+    <td><?php echo $this->escape($itemSheet->imgName);?></td>
+    <td><?php echo $this->escape($itemSheet->anchorName);?></td>
+    <td><?php echo $this->escape($itemSheet->priority);?></td>
+    <td>
+        <a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'edit', 'id'=>$itemSheet->id));?>">編集</a>
+        <a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'delete', 'id'=>$itemSheet->id));?>">削除</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+
+<button type="button" id="cate-btn-add" class="btn btn-default">カテゴリの追加</button>
+
+<?= $this->render('parts/edit.phtml') ?>
+
+
+			</div>
+<!-- 			<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+	<button type="button" class="btn btn-success" id="cate-btn-reflect">反映する</button>
+</div> -->
+		</div>
+	</div>
+</div>
+
+
+<!-- end of categorys modal -->
+
+

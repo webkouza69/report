@@ -1,0 +1,95 @@
+
+<button type="button" class="btn">
+<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'addledger'));?>" class="btn" data-toggle="modal" data-target="#modal-cate3" >新規帳票追加</a></button>
+
+<?php foreach ($this->rows as $val1) : { ?>
+
+	<?php foreach ($val1 as $categories ) ?>
+<table>
+
+<h2 id="h2_<?php echo $this->escape($categories['idCategory']); ?>"><?php echo $this->escape($categories['cateName']); ?></h2>
+<tbody class="jquery-ui-sortable">
+<tr class="unsortable">
+	<th>連番</th>
+	<th class="cellwidth393">帳票名</th>
+	<th>更新日</th>
+	<th>ファイル</th>
+	<th>表示設定</th>
+	<th>コメント</th>
+	<th></th>
+</tr>
+<?php foreach ($val1 as $categories ) : { ?>
+<tr data-id="<?php echo $categories['itemId']; ?>">
+	<td><a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
+	<?php echo $this->escape($categories['idLedger']); ?>
+	</a></td>
+	<td><a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
+	<?php echo $this->escape($categories['ledgerName']); ?>
+	</a></td>
+	<td>
+	<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
+	<?php echo $this->escape($categories['dateUpdate']); ?>
+	</a></td>
+	<td>
+	<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
+	<?php echo $this->escape($categories['ledgerFile']); ?>
+	</a>
+
+	</td>
+	<td>表示 非表示<?php echo $this->escape($categories['display']); ?></td>
+	<td><?php echo $this->escape($categories['Annoation']); ?></td>
+	<td><a href="<?php echo $this->url(array('controller'=>'ledger',
+            'action'=>'delete', 'itemId'=>$categories['itemId']));?>">削除</a></td>
+	</a>
+</tr>
+
+<?php } ?>
+
+<?php endforeach; ?>
+</tbody>
+</table>
+<?php } ?>
+
+<?php endforeach; ?>
+
+
+
+<!-- ledger modal -->
+<div class="modal fade" id="modal-cate1" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-body">
+
+
+
+<?= $this->render('./parts/editLedger.phtml') ?>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- end of ledger modal -->
+
+<!-- add ledger modal -->
+<div class="modal fade" id="modal-cate3" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+<div class="modal-body">
+
+
+
+<?= $this->render('./parts/addledger.phtml') ?>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- end of add ledger modal -->

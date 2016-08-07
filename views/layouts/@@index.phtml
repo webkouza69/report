@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>統一帳票更新システム</title>
+
+	<!--[if lte IE 8 ]>
+	<script src="js/html5.js"></script>
+	<![endif]-->
+
+	<link href="css/jquery-ui.min.css" rel="stylesheet">
+	<link href="css/jquery-ui.structure.min.css" rel="stylesheet">
+	<link href="css/bootstrap-datepicker.standalone.css" rel="stylesheet">
+	<link href="css/init.css" rel="stylesheet">
+	<link href="css/reset.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/style2.css" rel="stylesheet">
+	<link href="css/palette-color-picker.css" rel="stylesheet">
+
+	<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datepicker.ja.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/utility.js"></script>
+	<!-- <script type="text/javascript" src="js/telnumber.js"></script> -->
+	<script type="text/javascript" src="js/heightLine.js"></script>
+	<script type="text/javascript" src="js/palette-color-picker.min.js"></script>
+	<script type="text/javascript">
+$(function(){
+
+	// モーダル設定
+    $(document).on('hidden.bs.modal', '.modal', function(){
+        $(this).removeData('bs.modal');
+    });
+
+    $( '.jquery-ui-sortable' ).sortable({
+    /*placeholder: 'sort-placeholder',*/
+     forcePlaceholderSize: true,
+     items: '> tr:not(.unsortable)',
+     cursor: 'move', opacity: 0.2,
+     update: function(e, ui) {
+    window.alert($('.jquery-ui-sortable').sortable('toArray'));
+    }
+      });
+
+	var cookie_name_sortable = "sortable";
+	var sortable_class = ".jquery-ui-sortable";
+
+	$(sortable_class).sortable();
+	$(sortable_class).sortable({
+		update: function(ev, ui) {
+			var sorted =  $(sortable_class).sortable("toArray").join(",");
+			$.cookie(cookie_name_sortable, sorted, {expires: 30});
+		}
+	});
+
+	if($.cookie(cookie_name_sortable)) {
+		var sorted = $.cookie(cookie_name_sortable).split(",").reverse();
+		$.each(
+			sorted,
+			function(index, value) {$('#'+value).prependTo(sortable_class);}
+		);
+	}
+
+	$('.datepicker').datepicker({
+  language: 'ja',
+  format: 'dd-M-yy'
+});
+});
+	</script>
+</head>
+
+<body data-href="<?= $this->url; ?>">
+<div class="wrap">
+<div id="wrapper">
+	<header class="header">
+   <div class="bbsearch_h1" alt="">
+    <h1 id="top"><a href="./">帳票ダウンロード</a></h1>
+    <div class="bbtop"><a href="../">BBナビトップへ</a></div>
+   </div>
+  </header>
+  <!--header-->
+  <div id="nav">
+   <ul>
+    <li class="n_top firstchild"><a class="current" href="./">TOP</a></li>
+    <li class="n_reportList"><a href="detail.html">帳票一覧</a></li>
+    <li class="n_operation"><a href="operation.html">帳票の運用</a></li>
+    <li class="n_manual"><a href="manual.html">各種資料</a></li>
+   </ul>
+  </div>
+<div id="contents">
+<article class="cnt cnt-690 cnt-wrap">
+	<?= $this->layout()->content; ?>
+	</article>
+   <div class="pagetop"><a href="#container">ページトップへ</a></div>
+  </div>
+  </div>
+  <!--contents-->
+
+	<a class="pagetop-h">↑</a><!-- ページトップへ戻る -->
+</div>
+
+
+
+
+<!-- loading modal -->
+<div id="modal-loading" class="hidden">
+	<div>
+		<div class="loading-wrap">
+			<img src="img/loading.gif">
+		</div>
+	</div>
+</div>
+<!-- end of loading modal -->
+
+
+<div id="footer">Copyright c 2013 NTT MARKETING ACT. All Rights Reserved.</div>
+
+<!-- context-menu -->
+<!-- <div id="context-menu" class="context-menu">
+	<ul>
+		<li id="move-up">▲ 行を上に移動</li>
+		<li id="move-down">▼ 行を下に移動</li>
+		<li class="separator"></li>
+		<li id="join-cell">セルの結合</li>
+		<li id="split-cell">セルの分割</li>
+		<li id="split-col">セルの列分割</li>
+		<li class="separator"></li>
+		<li id="add-row">行の追加</li>
+		<li id="del-row">行の削除</li>
+		<li class="separator"></li>
+		<li id="show-2col">2列表示</li>
+		<li id="show-3col">3列表示</li>
+		<li class="separator"></li>
+		<li id="add-tfoot">フッタ行の追加</li>
+		<li id="del-tfoot">フッタ行の削除</li>
+	</ul>
+</div> -->
+<!-- end of context-menu -->
+
+<!-- head-th-edit-box -->
+<!-- <div id="head-edit-wrap">
+	<div id="head-edit">
+		<label>タイトル</label>
+		<input id="head-edit-title" class="mg-b-10" type="text">
+		<label>クラス名</label>
+		<input id="head-edit-class" class="mg-b-20" type="text">
+		<div>
+			<button id="head-edit-cancel" class="btn btn-default pull-left" type="button">キャンセル</button>
+			<button id="head-edit-reflection" class="btn btn-success pull-right" type="button">反映する</button>
+		</div>
+	</div>
+</div> -->
+<!-- end of head-th-edit-box -->
+
+<!-- edit-box -->
+<!-- <div class="modal" id="edit-box" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span class="modal-title">コンテンツの編集</span>
+			</div>
+			<div class="modal-body clearfix">
+				<div id="edit-box-left">
+					<div class="edit-section">
+						<h4 class="edit-section-title">センタ等<span class="small">(クリックで開閉)</span></h4>
+						<fieldset id="field-address">
+							legend>センタ等</legend
+							<label>
+								センタ名
+								<input id="edit-center" type="text">
+							</label>
+							<label>住所等</label>
+							<textarea id="edit-address" class="text-edit" rows="6"></textarea>
+							<div>
+								<div class="edit-note-title">※入力方法・注意事項<span class="small">(クリックで開閉)</span></div>
+								<div class="edit-note-wrap">
+									<div class="edit-note">
+										※文字を選択して「小文字」「赤字」「太字」ボタンを押すと、文字サイズの変更や装飾が可能です。
+									</div>
+									<div class="edit-note">
+										※「リンク」「メール」ボタンは文字を選択して押した場合は、選択した文字列に対するリンクを設定します。<br>
+											文字列を選択しないでボタンを押した場合、リンク用の文字列はリンク先のアドレスと同じになります。
+									</div>
+									<div class="edit-note">
+										※文字サイズ変更や装飾、リンクを設定した文字列を再度選択して「元に戻す」ボタンを押すと文字サイズ変更や装飾、リンクがリセットされます。
+									</div>
+									<div class="edit-note">
+										※文字サイズ変更や装飾には「font」タグが使用されますが、Staging公開時に「span」タグに変換されます。
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="edit-section">
+						<h4 class="edit-section-title">電話番号<span class="small">(クリックで開閉)</span></h4>
+						<fieldset id="field-phone">
+							legend>電話番号</legend
+							<div id="phone-group-wrap"></div>
+							<button id="btn-add-phone" class="btn btn-default" type="button">電話番号の追加</button>
+						</fieldset>
+					</div>
+					<div class="edit-section">
+						<h4 class="edit-section-title">ホームページ<span class="small">(クリックで開閉)</span></h4>
+						<fieldset id="field-hp" class="clearfix">
+							legend>ホームページ</legend
+							<label class="pull-left w-200">
+								見出し
+								<input id="edit-hp-prefix" type="text">
+							</label>
+							<label class="pull-left w-324 mg-l-5">
+								アドレス
+								<input id="edit-hp-address" type="text">
+							</label>
+						</fieldset>
+					</div>
+					<div class="edit-section">
+						<h4 class="edit-section-title">メールアドレス<span class="small">(クリックで開閉)</span></h4>
+						<fieldset id="field-mail">
+							legend>メールアドレス</legend
+							<div id="mail-group-wrap"></div>
+							<button id="btn-add-mail" class="btn btn-default" type="button">メールアドレスの追加</button>
+						</fieldset>
+					</div>
+					<div class="edit-section">
+						<h4 class="edit-section-title">受付<span class="small">(クリックで開閉)</span></h4>
+						<fieldset id="field-reception">
+							legend>受付</legend
+							<fieldset id="reception-time">
+								<legend>受付時間</legend>
+								<ul>
+									<li>
+										<input id="rcpt-nothing" type="radio" name="rcpt-time" value="1">
+										<label for="rcpt-nothing">表示しない</label>
+									</li>
+									<li>
+										<input id="rcpt-allowed" type="radio" name="rcpt-time" value="2">
+										<label for="rcpt-allowed">指定時間</label>
+									</li>
+									<li>
+										<input id="rcpt-24hour" type="radio" name="rcpt-time" value="3">
+										<label for="rcpt-24hour">24時間</label>
+									</li>
+								</ul>
+								<select id="rcpt-fromhour">
+									<option value="0">0時</option>
+									<option value="1">1時</option>
+									<option value="2">2時</option>
+									<option value="3">3時</option>
+									<option value="4">4時</option>
+									<option value="5">5時</option>
+									<option value="6">6時</option>
+									<option value="7">7時</option>
+									<option value="8">8時</option>
+									<option value="9">9時</option>
+									<option value="10">10時</option>
+									<option value="11">11時</option>
+									<option value="12">12時</option>
+									<option value="13">13時</option>
+									<option value="14">14時</option>
+									<option value="15">15時</option>
+									<option value="16">16時</option>
+									<option value="17">17時</option>
+									<option value="18">18時</option>
+									<option value="19">19時</option>
+									<option value="20">20時</option>
+									<option value="21">21時</option>
+									<option value="22">22時</option>
+									<option value="23">23時</option>
+								</select>
+								<select id="rcpt-fromtime">
+									<option value="0">00分</option>
+									<option value="5">05分</option>
+									<option value="10">10分</option>
+									<option value="15">15分</option>
+									<option value="20">20分</option>
+									<option value="25">25分</option>
+									<option value="30">30分</option>
+									<option value="35">35分</option>
+									<option value="40">40分</option>
+									<option value="45">45分</option>
+									<option value="50">50分</option>
+									<option value="55">55分</option>
+								</select>
+								～
+								<select id="rcpt-tohour">
+									<option value="0">0時</option>
+									<option value="1">1時</option>
+									<option value="2">2時</option>
+									<option value="3">3時</option>
+									<option value="4">4時</option>
+									<option value="5">5時</option>
+									<option value="6">6時</option>
+									<option value="7">7時</option>
+									<option value="8">8時</option>
+									<option value="9">9時</option>
+									<option value="10">10時</option>
+									<option value="11">11時</option>
+									<option value="12">12時</option>
+									<option value="13">13時</option>
+									<option value="14">14時</option>
+									<option value="15">15時</option>
+									<option value="16">16時</option>
+									<option value="17">17時</option>
+									<option value="18">18時</option>
+									<option value="19">19時</option>
+									<option value="20">20時</option>
+									<option value="21">21時</option>
+									<option value="22">22時</option>
+									<option value="23">23時</option>
+								</select>
+								<select id="rcpt-totime">
+									<option value="0">00分</option>
+									<option value="5">05分</option>
+									<option value="10">10分</option>
+									<option value="15">15分</option>
+									<option value="20">20分</option>
+									<option value="25">25分</option>
+									<option value="30">30分</option>
+									<option value="35">35分</option>
+									<option value="40">40分</option>
+									<option value="45">45分</option>
+									<option value="50">50分</option>
+									<option value="55">55分</option>
+								</select>
+								<input id="rcpt-lunchbreak" type="checkbox">
+								<label for="rcpt-lunchbreak">12時～13時を除く</label>
+							</fieldset>
+							<fieldset id="reception-date">
+								<legend>受付日</legend>
+								<ul>
+									<li>
+										<input id="rcpd-weekday" type="checkbox">
+										<label for="rcpd-weekday">平日</label>
+									</li>
+									<li>
+										<input id="rcpd-saturday" type="checkbox">
+										<label for="rcpd-saturday">土曜日</label>
+									</li>
+									<li>
+										<input id="rcpd-sunday" type="checkbox">
+										<label for="rcpd-sunday">日曜日</label>
+									</li>
+									<li>
+										<input id="rcpd-holiday" type="checkbox">
+										<label for="rcpd-holiday">祝日</label>
+									</li>
+									<li>
+										<input id="rcpd-365days" type="checkbox">
+										<label for="rcpd-365days">年中無休</label>
+									</li>
+								</ul>
+							</fieldset>
+							<fieldset id="reception-blackout">
+								<legend>受付休み</legend>
+								<ul>
+									<li>
+										<label for="bko-other">その他</label>
+										<input id="bko-other" type="text">
+									</li>
+									<li>
+										<input id="bko-may" type="checkbox">
+										<label for="bko-may">5/3～5/5</label>
+									</li>
+									<li>
+										<input id="bko-end-year" type="checkbox">
+										<label for="bko-end-year">年末年始(12/29～1/3)</label>
+									</li>
+								</ul>
+							</fieldset>
+						</fieldset>
+					</div>
+					<div class="edit-section">
+						<h4 class="edit-section-title">その他<span class="small">(クリックで開閉)</span></h4>
+						<fieldset id="field-other">
+							legend>その他</legend
+							<textarea id="edit-other" class="text-edit" rows="6"></textarea>
+							<div>
+								<div class="edit-note-title">※入力方法・注意事項<span class="small">(クリックで開閉)</span></div>
+								<div class="edit-note-wrap">
+									<div class="edit-note">
+										※文字を選択して「小文字」「赤字」「太字」ボタンを押すと、文字サイズの変更や装飾が可能です。
+									</div>
+									<div class="edit-note">
+										※「リンク」「メール」ボタンは文字を選択して押した場合は、選択した文字列に対するリンクを設定します。<br>
+											文字列を選択しないでボタンを押した場合、リンク用の文字列はリンク先のアドレスと同じになります。
+									</div>
+									<div class="edit-note">
+										※文字サイズ変更や装飾、リンクを設定した文字列を再度選択して「元に戻す」ボタンを押すと文字サイズ変更や装飾、リンクがリセットされます。
+									</div>
+									<div class="edit-note">
+										※文字サイズ変更や装飾には「font」タグが使用されますが、Staging公開時に「span」タグに変換されます。
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+				<div id="edit-box-right">
+					<div class="title text-center">※編集内容が下にプレビューされます</div>
+					<div id="edit-box-preview-wrap">
+						<div id="edit-box-preview"></div>
+					</div>
+					<div id="edit-box-btns" class="clearfix">
+						<button id="btn-cancel-box" class="btn btn-default pull-left" type="button" data-dismiss="modal">キャンセル</button>
+						<button id="btn-update-box" class="btn btn-success pull-right" type="button">更新する</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> -->
+<!-- end of edit-box -->
+
+<!-- ホバーしている行のガイドライン -->
+<div id="hover-row-top"></div>
+<div id="hover-row-bottom"></div>
+<!-- ホバーしている行のガイドライン ここまで -->
+
+<!-- 追加行の挿入位置用 -->
+<div id="row-separator"></div>
+<!-- 追加行の挿入位置用 ここまで -->
+
+<!-- 削除行の位置確認用 -->
+<div id="hover-del-row"></div>
+<!-- 削除行の位置確認用 ここまで -->
+
+<!-- 行の並べ替え用ハンドル -->
+<div id="sort-row-handle"></div>
+<!-- 行の並べ替え用ハンドル ここまで -->
+
+<!-- プレビュー用のインラインフレーム -->
+<!-- <div id="ctn-preview">
+	<div id="ctn-preview-wrap">
+		<div id="ctn-preview-head">
+			<div class="pull-left">
+				<button id="btn-publishing" class="btn btn-primary" type="button">Staging環境へ公開する</button>
+			</div>
+			<div class="pull-right">
+				<button id="btn-cancel" class="btn btn-default" type="button">閉じる</button>
+			</div>
+		</div>
+		<div id="ctn-preview-frame-wrap">
+			<iframe id="ctn-preview-frame" src="preview" frameborder="no"></iframe>
+		</div>
+	</div>
+</div> -->
+<!-- プレビュー用のインラインフレーム ここまで -->
+
+<!-- セル内のコンテンツ追加ボタン -->
+<div id="btn-add-box" class="hidden">
+	<button type="button" class="btn btn-default">コンテンツの追加</button>
+</div>
+<!-- セル内のコンテンツ追加ボタン ここまで -->
+
+<!-- セル内のコンテンツ移動バー -->
+<div id="box-move" class="hidden clearfix">
+	<a id="btn-edit-box" class="pull-left"><img src="img/btn_edit.png"></a>
+	<a id="btn-remove-box" class="pull-right"><img src="img/btn_del.png"></a>
+</div>
+<!-- セル内のコンテンツ追移動バー ここまで -->
+
+<!-- テーブルヘッダの編集ボタン -->
+<div id="btns-thead" class="hidden clearfix">
+	<a id="btn-edit-thead"><img src="img/btn_edit.png"></a>
+</div>
+<!-- セル内のコンテンツ追移動バー ここまで -->
+
+<!-- bodyのブロックパネル -->
+<div id="modal-back"></div>
+<!-- bodyのブロックパネル ここまで -->
+</body>
+</html>

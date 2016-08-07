@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>統一帳票更新システム</title>
+
+	<!--[if lte IE 8 ]>
+	<script src="js/html5.js"></script>
+	<![endif]-->
+
+	<link href="css/jquery-ui.min.css" rel="stylesheet">
+	<link href="css/jquery-ui.structure.min.css" rel="stylesheet">
+	<link href="css/bootstrap-datepicker.standalone.css" rel="stylesheet">
+	<link href="css/init.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+
+	<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/UltraDate.min.js"></script>
+	<script type="text/javascript" src="js/UltraDate.ja.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datepicker.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datepicker.ja.min.js"></script>
+	<script type="text/javascript" src="js/imeEnter.js"></script>
+	<script type="text/javascript" src="js/utility.js"></script>
+	<script type="text/javascript" src="js/telnumber.js"></script>
+</head>
+
+<body data-href="<?= $this->url; ?>">
+
+
+<!-- categorys modal -->
+<div class="modal" id="modal-cate" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h6 class="modal-title">カテゴリの編集</h6>
+			</div>
+			<div class="modal-body">
+				<table class="modal-cate">
+					<thead>
+						<tr>
+							<th class="cate-sort"></th>
+							<th>名前</th>
+							<th>id</th>
+							<th>class</th>
+							<th>削除</th>
+						</tr>
+					</thead>
+					<tbody id="modal-cate-sorttable">
+					</tbody>
+				</table>
+				<button type="button" id="cate-btn-add" class="btn btn-default">カテゴリの追加</button>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+				<button type="button" class="btn btn-success" id="cate-btn-reflect">反映する</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end of categorys modal -->
+
+<!-- loading modal -->
+<div id="modal-loading" class="hidden">
+	<div>
+		<div class="loading-wrap">
+			<img src="img/loading.gif">
+		</div>
+	</div>
+</div>
+<!-- end of loading modal -->
+
+
+
+
+
+<!-- bodyのブロックパネル -->
+<div id="modal-back"></div>
+<!-- bodyのブロックパネル ここまで -->
+</body>
+</html>

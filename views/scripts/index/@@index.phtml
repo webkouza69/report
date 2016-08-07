@@ -1,0 +1,264 @@
+
+<div class="site-info">
+    <ul class="heightLine">
+     <li>平成25年6月3日（月）起票分より、「営業フロント～営業系SOC～料金担当～設備部門」の部門間を流通するSOに関わる帳票が、<em>統一帳票</em>となりました。</li>
+     <li>対象帳票の詳細に関しては、こちらをご覧ください。<br />
+      →　 <span><a class="icon_excel" href="file/all-list(20160318).xls">本社統一帳票一覧(H28.03.18時点)（107KB）</a></span>
+      <p class="s_txt">※一部の帳票は調整中となっております。<br />
+       各帳票の本社窓口より運用開始時期について周知があるまでは、状の帳票で運用してください。</p>
+     </li>
+     <li>改善要望に関しては、「<a href="operation.html#page02" class="inlink">帳票の改善</a>」をご覧ください。 </li>
+    </ul>
+   </div>
+   <div class="newfile_area">
+    <h3>最新の改訂版</h3>
+    <div class="newfile_area_point">※ 新規に起票する場合については、原本(新しいファイル)をご利用いただきますようお願いします。<br />
+     過去のファイルを修正して起票することは、誤記載につながるため止めてください。</div>
+    <div class="newfile-dl">
+     <p class="btn_newfile"><a href="file/20160318_kaitei.zip"><span class="icon_zip">改訂版のみをダウンロード （31.5KB）</span></a></p>
+    </div>
+   </div>
+   <h2>帳票ダウンロードメニュー</h2>
+	<!-- <div class="cnt-head clearfix"> -->
+	<div class="clearfix">
+		<div>
+			<div class="pull-left">
+				<div id="modal-menu">
+					<div class="internal">
+						<ul>
+							<li class="title">カテゴリ一覧
+							</li>
+						</ul>
+					</div>
+					<div class="external">
+						<ul>
+							<li class="title">仮公開用ページ
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-menu">問合せ先一覧の表示</button> -->
+			</div>
+			<div id="page-btns" class="pull-right">
+				<button type="button" class="btn btn-primary"><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>" class="btn" data-toggle="modal" data-target="#modal-cate">カテゴリ追加</a></button>
+				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">カテゴリの編集</button>
+				<button type="button" class="btn btn-success" id="btn-save">下書き保存する</button>
+				<button type="button" class="btn btn-info" id="btn-preview">プレビュー</button>
+<article class="cnt cnt-690 cnt-wrap">
+<!-- <p><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>" class="btn" data-toggle="modal" data-target="#modal-cate">カテゴリ追加</a></p> -->
+<table>
+<tr>
+<th>カテゴリ名</th>
+<th></th>
+</tr>
+<?php foreach($this->allCategorys as $itemSheet) : ?>
+<tr>
+    <td><?php echo $this->escape($itemSheet->cateName); ?></td>
+    <td>
+
+        <a href="<?php echo $this->url(array('controller'=>'index',
+            'action'=>'edit', 'id'=>$itemSheet->id));?>" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">編集</a>
+        <a href="<?php echo $this->url(array('controller'=>'index',
+            'action'=>'delete', 'id'=>$itemSheet->id));?>">削除</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+
+<table width="100%">
+ 			<tr>
+ 			カテゴリ選択
+ 			<td>
+ 				<p>カテゴリを選択し、変更ボタンをクリックしてください。</p>
+ 				<form action="Categories" method="post">
+ 				<select name="categoryID">
+
+ 				<?php foreach($this->rows as $categories): ?>
+ 				<option value="<?= $categories['cateName'] ?>"><?= $categories['cateName'] ?></option>
+ 				<?php endforeach; ?>
+ 				</select>
+ 				<input type="submit" value="変更" />
+ 				</form>
+ 				 			</td>
+ 				 			商品情報追加
+ 				 			<td>
+ 				<form action="insertgoods" method="post">
+ 				<p>商品情報を追加する場合は、商品情報追加ボタンをクリックしてください。</p>
+ 				<input type="submit" value="商品情報追加" />
+ 				</form>
+ 				 			</td>
+ 				 		</tr>
+ </table>
+
+
+<button type="button" class="btn btn-primary">
+<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'addledger'));?>" class="btn" data-toggle="modal" data-target="#modal-cate3" >新規帳票追加</a></button>
+
+<?php foreach ($this->rows as $val1) : { ?>
+
+	<?php foreach ($val1 as $categories ) ?>
+<table>
+
+<h2><?php echo $this->escape($categories['cateName']); ?></h2>
+<tbody class="jquery-ui-sortable">
+<tr class="unsortable">
+	<th>連番</th>
+	<th>帳票名</th>
+	<th>更新日</th>
+	<th>ファイル</th>
+	<th>表示設定</th>
+	<th>コメント</th>
+	<th></th>
+</tr>
+<?php foreach ($val1 as $categories ) : { ?>
+<?php var_dump($categories['itemId']); ?>
+<?php //var_dump($this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']))); ?>
+<tr>
+	<td><a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
+	<?php echo $this->escape($categories['idLedger']); ?>
+	</a></td>
+	<td><a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
+	<?php echo $this->escape($categories['ledgerName']); ?>
+	</a></td>
+	<td>
+	<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
+	<?php echo $this->escape($categories['dateUpdate']); ?>
+	</a></td>
+	<td>
+	<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
+	<?php echo $this->escape($categories['ledgerFile']); ?>
+	</a>
+
+	</td>
+	<td>表示　非表示<?php echo $this->escape($categories['display']); ?></td>
+	<td><?php echo $this->escape($categories['Annoation']); ?></td>
+	<td><a href="<?php echo $this->url(array('controller'=>'index',
+            'action'=>'delete', 'itemId'=>$categories['itemId']));?>">削除</a></td>
+	</a>
+</tr>
+
+<?php } ?>
+
+<?php endforeach; ?>
+</tbody>
+</table>
+<?php } ?>
+
+<?php endforeach; ?>
+
+
+
+
+			</div>
+		</div>
+	</div>
+	<div class="cnt-bodys">
+	<ul>
+	<?php
+
+	foreach ($this->allCategorys as $row){
+	print '<li><a href="#"><img src="img/'.$row->imgName.'"'.'alt="'.$row->cateName.'"></a></li>';
+	}
+	?>
+	</ul>
+</article>
+
+	<!-- categorys modal -->
+<div class="modal fade" id="modal-cate" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-body">
+
+
+<p><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>">カテゴリ追加</a></p>
+<table>
+<tr>
+<th>カテゴリ名</th>
+<th>画像名</th>
+<th>アンカー名</th>
+<th>優先度</th>
+<th></th>
+</tr>
+<?php foreach($this->allCategorys as $itemSheet) : ?>
+<tr>
+    <td><?php echo $this->escape($itemSheet->cateName);?></td>
+    <td><?php echo $this->escape($itemSheet->imgName);?></td>
+    <td><?php echo $this->escape($itemSheet->anchorName);?></td>
+    <td><?php echo $this->escape($itemSheet->priority);?></td>
+    <td>
+        <a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'editLedger', 'id'=>$itemSheet->id));?>">編集</a>
+        <a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'delete', 'id'=>$itemSheet->id));?>">削除</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+
+<button type="button" id="cate-btn-add" class="btn btn-default">カテゴリの追加</button>
+
+<!-- <?= $this->render('parts/edit.phtml') ?> -->
+
+
+			</div>
+<!-- 			<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+	<button type="button" class="btn btn-success" id="cate-btn-reflect">反映する</button>
+</div> -->
+		</div>
+	</div>
+</div>
+
+
+<!-- end of categorys modal -->
+
+
+<!-- ledger modal -->
+<div class="modal fade" id="modal-cate1" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-body">
+
+
+
+<?= $this->render('parts/editLedger.phtml') ?>
+
+
+			</div>
+<!-- 			<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+	<button type="button" class="btn btn-success" id="cate-btn-reflect">反映する</button>
+</div> -->
+		</div>
+	</div>
+</div>
+
+
+<!-- end of ledger modal -->
+
+<!-- add ledger modal -->
+<div class="modal fade" id="modal-cate3" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-body">
+
+
+
+<?= $this->render('parts/addledger.phtml') ?>
+
+
+			</div>
+<!-- 			<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+	<button type="button" class="btn btn-success" id="cate-btn-reflect">反映する</button>
+</div> -->
+		</div>
+	</div>
+</div>
+
+
+<!-- end of add ledger modal -->
+
+
+

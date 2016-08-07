@@ -1,0 +1,88 @@
+<!-- カテゴリー追加・編集モーダル画面 -->
+<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h6 class="modal-title">カテゴリの編集</h6>
+</div>
+<div class="modal-body">
+<form id="category" name="category" enctype="application/x-www-form-urlencoded" action="" method="post">
+<p id="id-element">
+<input type="hidden" name="id" value="<?= $this->category['id'] ?>" id="id"></p>
+
+<fieldset>
+<legend id="cateName-label"><label for="cateName" class="required">カテゴリ名</label></legend>
+<p id="cateName-element">
+<input type="text" name="cateName" id="cateName" value="<?= $this->category['cateName'] ?>"></p>
+</fieldset>
+
+<fieldset>
+<legend id="imgName-label"><label for="imgName" class="required">画像名</label></legend>
+<p id="imgName-element">
+<input type="text" name="imgName" id="imgName" value="<?= $this->category['imgName'] ?>"></p>
+</fieldset>
+
+<fieldset>
+<legend id="anchorName-label"><label for="anchorName" class="required">アンカー名</label></legend>
+<p id="anchorName-element">
+<input type="text" name="anchorName" id="anchorName" value="<?= $this->category['anchorName'] ?>"></p>
+</fieldset>
+
+<fieldset>
+<legend id="priority-label"><label for="priority" class="">優先度</label></legend>
+<p id="priority-element">
+<input type="text" name="priority" id="priority" value="<?= $this->category['priority'] ?>"></p>
+</fieldset>
+
+<fieldset>
+<legend id="priority-label"><label for="dir" class="">帳票カテゴリ別ディレクトリ</label></legend>
+<p id="priority-element">
+<input type="text" name="dir" id="dir" value="<?= $this->category['dir'] ?>"></p>
+</fieldset>
+
+<p id="submit-element">
+<input type="button" name="submit" id="submitbutton" value="編集を保存"></p>
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+</div>
+
+<script type="text/javascript">
+$(function(){
+
+	$('#submitbutton').on('click', function() {
+
+            if(!confirm("更新しますか？")) {
+              return false;
+
+            }else{
+
+            var hostUrl= './index/edit';
+            var data = {
+            	id : $('#id').val(),
+            	cateName : $('#cateName').val(),
+            	imgName : $('#imgName').val(),
+            	anchorName : $('#anchorName').val(),
+            	priority : $('#priority').val(),
+              dir : $('#dir').val()
+            };
+
+            $.ajax({
+                url: hostUrl,
+                type:'POST',
+                dataType: 'json',
+                // サーバに送信するデータ
+                data : data
+                }).then(
+                function(data) {
+                  console.log(data);
+                              alert("更新しました");
+                },
+                function(XMLHttpRequest, textStatus, errorThrown) {
+                             alert("更新に失敗しました");
+                       });
+
+                 }
+            });
+
+});
+</script>
