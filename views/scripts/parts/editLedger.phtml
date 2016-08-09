@@ -13,10 +13,10 @@
 <input type="hidden" name="itemId" value="<?= $this->ledgers['itemId'] ?>" id="itemId"></p>
 
 <p id="idCategory-element">
-<input type="hidden" name="idCategory1" value="<?= $this->ledgers['idCategory'] ?>" id="idCategory1"></p>
+<input type="hidden" name="idCategory" value="<?= $this->ledgers['idCategory'] ?>" id="idCategory"></p>
 
 <fieldset>
-<select id="idCategory" name="idCategory">
+<select id="idCategory1" name="idCategory1">
 <?php foreach($this->allCategory as $i => $category) : ?>
 
   <?php
@@ -24,11 +24,9 @@
 
         echo '<option selected="selected" value="'.$category['id'].'">';
       }else{
-
-    echo '<option value="'.$category['id'].'">';
+        echo '<option value="'.$category['id'].'">';
       }
-    echo $this->escape($category['cateName']);
-
+        echo $this->escape($category['cateName']);
   ?>
     </option>
 <?php endforeach; ?>
@@ -68,7 +66,7 @@
 
         アップロードファイルを選択:
     <input name="uf1" type="file">
-    <input type="submit" value="アップロード">
+    <input type="button" value="アップロード">
 </fieldset>
 
 <fieldset>
@@ -98,7 +96,7 @@
 
 <p id="submit-label">&nbsp;</p>
 <p id="submit-element">
-<input type="button" name="submit" id="submitbutton2" value="仮編集を保存"></p>
+<input type="button" name="button" id="submitbutton2" value="仮編集を保存"></p>
 
 </form>
 
@@ -132,7 +130,7 @@ $('.datepicker').datepicker({
       {"#727272": "#727272"},
       {"#B6B6B6": "#B6B6B6"}
     ],
-    position: 'upside' // default -> 'upside'
+    position: 'upside', // default -> 'upside'
   });
 
   $('#bgColor').paletteColorPicker({
@@ -145,9 +143,8 @@ $('.datepicker').datepicker({
       {"#727272": "#727272"},
       {"#B6B6B6": "#B6B6B6"}
     ],
-    position: 'upside' // default -> 'upside'
+    position: 'upside', // default -> 'upside'
   });
-
 
 // ajax通信設定
   $('#submitbutton2').on('click', function() {
@@ -171,7 +168,6 @@ $('.datepicker').datepicker({
                 data : formData
                 }).then(
                 function(formData) {
-
                   alert("更新しました");
                 },
                 function(XMLHttpRequest, textStatus, errorThrown) {

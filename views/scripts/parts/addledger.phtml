@@ -183,6 +183,7 @@ $('.datepicker').datepicker({
 
             var hostUrl= './../ledger/addledger';
             var formData = new FormData($('#addledger')[0]);
+            console.log(formData);
 
             $.ajax({
                 url: hostUrl,

@@ -2,32 +2,44 @@
    <h3>本社統一帳票一覧</h3>
     <ul class="heightLine">
      <li>
-      → <span class="icon_excel">本社統一帳票一覧(H28.07.26時点)（109KB）</span>
+      → <span class="icon_excel"><?php echo $this->escape($this->topFile['bikou']); ?>（<?php echo $this->escape($this->topFile['fileSize']); ?>）</span>
      </li>
     </ul>
     <div id="page-btns" class="pull">
-				<button type="button" class="btn btn-warning"><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>" class="btn" data-toggle="modal" data-target="#modal-cate">本社統一帳票一覧ファイルアップロード</a></button>
+
 	</div>
 
-	<form action="./../report/file/receive" class="dropzone">
+	<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" class="dropzone" id="fileupledger1">
+		<input type="hidden" name="id" value="1">
+	<input type="text" name="fileName" value="" id="ledgerFile2">
+    <input type="text" name="fileSize" value="" id="fileSize">
   <div class="fallback">
-    <input name="files" type="file" multiple />
+    <input name="file" type="file" multiple id="file">
   </div>
 </form>
+	   <form action="" >
+		   <input type="button" name="btn1" id="btn1" value="ファイルを登録">
+	   </form>
    </div>
 
 
    <div class="newfile_area">
     <h3>最新の改訂版</h3>
     <div class="newfile-dl">
-     <p class="btn_newfile"><a href="file/20160318_kaitei.zip"><span class="icon_zip">改訂版のみをダウンロード （31.5KB）</span></a></p>
+     <p class="btn_newfile"><a href="file/20160318_kaitei.zip"><span class="icon_zip">改訂版のみをダウンロード （<?php echo $this->escape($this->topFile['fileSize']); ?>）</span></a></p>
     </div>
     <div id="page-btns" class="pull">
-				<button type="button" class="btn btn-warning"><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>" class="btn" data-toggle="modal" data-target="#modal-cate">最新の改訂版ファイルアップロード</a></button>
+
 				<!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">カテゴリの編集</button> -->
 				<!-- <button type="button" class="btn btn-success" id="btn-save">下書き保存する</button>
 				<button type="button" class="btn btn-info" id="btn-preview">プレビュー</button> -->
 	</div>
+
+	<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" class="dropzone">
+  <div class="fallback">
+    <input name="file" type="file" multiple />
+  </div>
+</form>
    </div>
    <h2>統一帳票サイト・更新システム</h2>
 	<!-- <div class="cnt-head clearfix"> -->
@@ -43,6 +55,20 @@
 					<div class="external">
 						<ul>
 							<li class="title">仮公開用ページ
+							</li>
+						</ul>
+					</div>
+					<div class="external">
+						<ul>
+							<li class="title"><a href="<?php echo $this->url(array('controller'=>'ledger',
+            'action'=>'publish'));?>">本番反映</a>
+							</li>
+						</ul>
+					</div>
+					<div class="external">
+						<ul>
+							<li class="title"><a href="<?php echo $this->url(array('controller'=>'ledger',
+            'action'=>'reset'));?>">リセット</a>
 							</li>
 						</ul>
 					</div>
@@ -86,6 +112,12 @@
 	?>
 	<li><a href="file/20160725_2_all.zip"><img class="btn" src="img/menu_all.png" alt="一括ダウンロード"/></a><span>25.6MB</span></li>
 	</ul>
+
+	<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" class="dropzone">
+  <div class="fallback">
+    <input name="file" type="file" multiple />
+  </div>
+</form>
 	</div>
 		</div>
 	</div>
@@ -137,3 +169,41 @@
 
 
 <!-- end of categorys modal -->
+
+
+<script type="text/javascript">
+	$(function(){
+
+// ajax通信設定
+  $('#btn1').on('click', function() {
+
+            if(!confirm("更新しますか？")) {
+              return false;
+
+            }else{
+
+            var hostUrl= './TopLedger/topEditledger';
+            var formData = new FormData($('#fileupledger1')[0]);
+            console.log(formData);
+
+            $.ajax({
+                url: hostUrl,
+                type:'POST',
+                enctype  : 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                // サーバに送信するデータ
+                data : formData
+                }).then(
+                function(formData) {
+                  alert("更新しました");
+                },
+                function(XMLHttpRequest, textStatus, errorThrown) {
+                             alert("更新に失敗しました");
+                       });
+              }
+        });
+
+  });
+</script>

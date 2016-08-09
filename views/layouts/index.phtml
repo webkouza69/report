@@ -31,7 +31,7 @@
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/utility.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/heightLine.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/palette-color-picker.min.js"></script>
-	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/dropzone.min.js"></script>
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/dropzone.js"></script>
 	<script type="text/javascript">
 $(function(){
 
@@ -74,10 +74,9 @@ $(function(){
   		format: 'dd-M-yy'
 		});
 
+		var myDropzone = function() {
 
-	var myDropzone = function() {
 		myDropzone.autoDiscover = false;
-
 		$('.dropzone').dropzone({
 			paramName : "files",
 			parallelUploads:1,
@@ -91,6 +90,9 @@ $(function(){
 			},
 			success:function(file, response_text, e) {
 				// upload.php で echo された内容が response_text に入ります。
+
+				$('#ledgerFile2').val(response_text.filename);
+				$('#fileSize').val(response_text.filesize);
 			},
 			drop: function(e) {
 				this.element.classList.remove("selected");
@@ -107,17 +109,9 @@ $(function(){
 				alert(message);
 				this.removeFile(file);
 			}
-
 		});
-
 	};
-
-
 	myDropzone();
-
-
-
-
 });
 	</script>
 </head>
