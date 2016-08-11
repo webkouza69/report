@@ -21,8 +21,12 @@ class IndexController extends Zend_Controller_Action
         $rows = new Application_Model_DbTable_Ledgers();
         $this->view->rows = $rows->getCategories();
 
-        $topFile = new Application_Model_DbTable_TopLedger();
-        $this->view->topFile = $topFile->fetchRow();
+        $itemLedger = new Application_Model_DbTable_Ledgers();
+        $this->view->itemLedger = $itemLedger->getLedger($id);
+
+        $topLedgers = new Application_Model_DbTable_TopLedger();
+        $this->view->topledgers = $topLedgers->fetchRow();
+
 
     }
 
@@ -53,6 +57,7 @@ class IndexController extends Zend_Controller_Action
                 $_POST['imgName'],
                 $_POST['anchorName'],
                 $_POST['priority'],
+                $_POST['remarks'],
                 $_POST['dir']
                 );
 
@@ -95,7 +100,8 @@ class IndexController extends Zend_Controller_Action
                 $_POST['imgName'],
                 $_POST['anchorName'],
                 $_POST['priority'],
-                $_POST['dir']
+                    $_POST['remarks'],
+                    $_POST['dir']
                 );
 
             // ajaxでOKとかを返す

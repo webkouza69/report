@@ -17,7 +17,7 @@ class LedgerController extends Zend_Controller_Action
         $resultSet = new Application_Model_DbTable_Ledgers();
         $this->view->resultSet = $resultSet->getAllLedger();
 
-        $rows = new Application_Model_DbTable_Ledgers();
+         $rows = new Application_Model_DbTable_Ledgers();
         $this->view->rows = $rows->getCategories();
 
         $itemLedger = new Application_Model_DbTable_Ledgers();
@@ -60,7 +60,7 @@ class LedgerController extends Zend_Controller_Action
                 $_POST['idLedger'],
                 $_POST['ledgerName'],
                 $_POST['annotation'],
-                $_POST['ledgerFile2'],
+                $_POST['ledgerFile'],
                 $_POST['fileSize'],
                 $_POST['display'],
                 $_POST['remarks'],
@@ -116,7 +116,7 @@ class LedgerController extends Zend_Controller_Action
                 $_POST['idCategory'],
                 $_POST['ledgerName'],
                 $_POST['annotation'],
-                $_POST['ledgerFile2'],
+                $_POST['ledgerFile'],
                 $_POST['fileSize'],
                 $_POST['display'],
                 $_POST['remarks'],

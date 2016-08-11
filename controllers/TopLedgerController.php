@@ -9,33 +9,28 @@ class TopLedgerController extends Zend_Controller_Action
     /*
      * 初期ページの表示
      */
-    public function topledger()
+    public function ledgertopAction()
     {
         // カテゴリーを取得する
 
-        // 帳票一覧表示設定
-
-
-        $topFile = new Application_Model_DbTable_TopLedger();
-        $topledgers = $topFile->fetchAll();
-
-        $this->view->topledgers = $topledgers;
-
+        // ファイル情報表示設定
+        $topLedgers = new Application_Model_DbTable_TopLedger();
+        $this->view->topledgers = $topLedgers->fetchAll();
 
     }
 
 
-    public function topEditledger()
+   function editledgertopAction()
     {
         // layoutsのindex.phtmlを読み込まさない設定
         $this->_helper->layout()->disableLayout();
 
-        if ($this->getRequest()->isPost()) {
+        if($this->getRequest()->isPost()) {
 
             // jsonで返すデータ
             $res = array(
-                'error' => true,
-                'message' => null,
+                         'error' => true,
+                         'message' => null,
             );
 
             $checkResult = self::check($_POST);
@@ -47,13 +42,13 @@ class TopLedgerController extends Zend_Controller_Action
 
 
             // DB処理
-            $topFile = new Application_Model_DbTable_TopLedger();
-            $topFile->updateTopLedger(
+                $fileTop = new Application_Model_DbTable_TopLedger();
+                $fileTop->updateTopLedger(
                 $_POST['id'],
                 $_POST['fileName'],
                 $_POST['fileSize'],
                 $_POST['bikou']
-            );
+                );
 
             // ajaxでOKとかを返す
             $res['error'] = false;
@@ -64,17 +59,11 @@ class TopLedgerController extends Zend_Controller_Action
 
             $id = $this->getParam('id', 0);
 
-            if ($id > 0) {
-                $topFile = new Application_Model_DbTable_TopLedger();
-                $topledgers = $topFile->updateTopLedger($id);
-
+            if($id > 0){
+                $fileTop = new Application_Model_DbTable_TopLedger();
+                $topledgers = $fileTop->updateTopLedger($id);
                 $this->view->topledgers = $topledgers;
 
-                // カテゴリー一覧を取得してviewに渡す
-                /*$categorys = new Application_Model_DbTable_Categorys();
-                $this->view->allCategory = $categorys->getAllCategory();
-
-                $this->view->ledger = $ledger;*/
 
             }
         }
@@ -88,10 +77,10 @@ class TopLedgerController extends Zend_Controller_Action
         $error = false;
 
         $respons = array(
-            'idLedger' => '',
-            'ledgerName' => '',
-            'dateUpdate' => '',
-            'ledgerFile' => '',
+            'id'      => '',
+            'fileName'    => '',
+            'fileSize'   => '',
+            'bikou'   => '',
         );
 
         /*if (!$checkResult['cateName']) {
@@ -120,5 +109,5 @@ class TopLedgerController extends Zend_Controller_Action
 
         return true;
     }
-}
 
+}
