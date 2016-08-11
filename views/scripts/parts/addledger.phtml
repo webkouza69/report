@@ -1,210 +1,210 @@
 <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h6 class="modal-title">新規仮登録</h6>
-			</div>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h6 class="modal-title">新規仮登録</h6>
+</div>
 <div class="modal-body">
-<form id="addledger" name="addledger" enctype="multipart/form-data" action="" method="post">
+    <form id="addledger" name="addledger" enctype="multipart/form-data" action="" method="post">
 
-<p id="idtem-label">&nbsp;</p>
-<p id="idtem-element">
-<input type="hidden" name="itemId" value="<?= $this->ledgers['itemId'] ?>" id="itemId"></p>
+        <p id="idtem-label">&nbsp;</p>
+        <p id="idtem-element">
+            <input type="hidden" name="itemId" value="<?= $this->ledgers['itemId'] ?>" id="itemId"></p>
 
-<fieldset>
-<legend id="idCategory-label"><label for="idCategory" class="required">カテゴリ</label></legend>
-<select id="idCategory" name="idCategory">
-<?php foreach($this->allCategory as $i => $category) : ?>
-<option value="">
-<?php echo $this->escape($category['cateName']); ?>
-</option>
-<?php endforeach; ?>
-</select>
-</fieldset>
+        <fieldset>
+            <legend id="idCategory-label"><label for="idCategory" class="required">カテゴリ</label></legend>
+            <select id="idCategory" name="idCategory">
+                <?php foreach($this->allCategory as $i => $category) : ?>
+                    <option value="">
+                        <?php echo $this->escape($category['cateName']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </fieldset>
 
-<fieldset>
-<legend id="idLedger-label"><label for="idLedger" class="required">連番</label></legend>
-<p id="idLedger-element">
-<input type="text" name="idLedger" id="idLedger1" value="<?= $this->ledgers['idLedger'] ?>"></p>
-</fieldset>
+        <fieldset>
+            <legend id="idLedger-label"><label for="idLedger" class="required">連番</label></legend>
+            <p id="idLedger-element">
+                <input type="text" name="idLedger" id="idLedger1" value="<?= $this->ledgers['idLedger'] ?>"></p>
+        </fieldset>
 
-<fieldset>
-<legend id="ledgerName-label"><label for="ledgerName" class="required">帳票名</label></legend>
-<p id="ledgerName-element">
-<input type="text" name="ledgerName" id="ledgerName1" value="<?= $this->ledgers['ledgerName'] ?>"></p>
-</fieldset>
+        <fieldset>
+            <legend id="ledgerName-label"><label for="ledgerName" class="required">帳票名</label></legend>
+            <p id="ledgerName-element">
+                <input type="text" name="ledgerName" id="ledgerName1" value="<?= $this->ledgers['ledgerName'] ?>"></p>
+        </fieldset>
 
-<fieldset>
-<legend id="annotation-label"><label for="annotation1" class="">注釈</label></legend>
-<p id="annotation-element">
-<input type="text" name="annotation" id="annotation1" value="<?= $this->ledgers['annotation'] ?>"></p>
-</fieldset>
+        <fieldset>
+            <legend id="annotation-label"><label for="annotation1" class="">注釈</label></legend>
+            <p id="annotation-element">
+                <input type="text" name="annotation" id="annotation1" value="<?= $this->ledgers['annotation'] ?>"></p>
+        </fieldset>
 
-<fieldset>
-<legend id="dateUpdate-label"><label for="dateUpdate1" class="required">更新日</label></legend>
-<small>*更新日入力はテキストフィールドをクリックでカレンダー入力するか、<br>2016-07-01形式で入力してください。</small>
-<p id="dateUpdate-element">
-<input type="text" name="dateUpdate" id="dateUpdate1" value="<?= $this->ledgers['dateUpdate'] ?>" class="form-control datepicker"></p>
-</fieldset>
+        <fieldset>
+            <legend id="dateUpdate-label"><label for="dateUpdate1" class="required">更新日</label></legend>
+            <small>*更新日入力はテキストフィールドをクリックでカレンダー入力するか、<br>2016-07-01形式で入力してください。</small>
+            <p id="dateUpdate-element">
+                <input type="text" name="dateUpdate" id="dateUpdate1" value="<?= $this->ledgers['dateUpdate'] ?>" class="form-control datepicker"></p>
+        </fieldset>
 
-<fieldset>
-<legend id="ledgerFile-label"><label for="ledgerFile" class="">ファイル</label></legend>
-<p id="ledgerFile-element">
-<input type="text" name="ledgerFile2" id="ledgerFile2" value="<?= $this->ledgers['ledgerFile'] ?>" class=""></p>
-<input type="text" name="fileSize" id="fileSize" value="<?= $this->ledgers['fileSize'] ?>">
+        <fieldset>
+            <legend id="ledgerFile-label"><label for="ledgerFile" class="">ファイル</label></legend>
+            <p id="ledgerFile-element">
+                <input type="text" name="ledgerFile2" id="ledgerFile2" value="<?= $this->ledgers['ledgerFile'] ?>" class=""></p>
+            <input type="text" name="fileSize" id="fileSize" value="<?= $this->ledgers['fileSize'] ?>">
 
-<input type="hidden" name="MAX_FILE_SIZE" value="100000" >
-        アップロードファイルを選択:<br>
-    <input type="file" name="uf1" id="ledgerFile1" class="btn-info">
-    <input type="button" value="アップロード" id="btn_up">
-</fieldset>
+            <input type="hidden" name="MAX_FILE_SIZE" value="" >
+            アップロードファイルを選択:<br>
+            <input type="file" name="uf1" id="ledgerFile1" class="btn-info">
+            <input type="button" value="アップロード" id="btn_up">
+        </fieldset>
 
-<fieldset>
-<legend id="display-label"><label for="display1" class="">表示選択</label></legend>
-<p id="display-element">
-<input type="text" name="display" id="display1" value="<?= $this->ledgers['display'] ?>" class=""></p>
-</fieldset>
+        <fieldset>
+            <legend id="display-label"><label for="display1" class="">表示選択</label></legend>
+            <p id="display-element">
+                <input type="text" name="display" id="display1" value="<?= $this->ledgers['display'] ?>" class=""></p>
+        </fieldset>
 
-<fieldset>
-<legend id="comment-label"><label for="comment1" class="">コメント</label></legend>
-<p id="comment-element">
-<input type="text" name="comment" id="comment1" value="<?= $this->ledgers['comment'] ?>" class=""></p>
-</fieldset>
+        <fieldset>
+            <legend id="comment-label"><label for="comment1" class="">コメント</label></legend>
+            <p id="comment-element">
+                <input type="text" name="comment" id="comment1" value="<?= $this->ledgers['comment'] ?>" class=""></p>
+        </fieldset>
 
-<fieldset>
-<legend id="bgColor-label"><label for="bgColor1" class="">セル背景色</label></legend>
-<p id="bgColor-element">
-<input type="text" name="bgColor" id="bgColor1" value="<?= $this->ledgers['bgColor'] ?>" class=""></p>
-</fieldset>
+        <fieldset>
+            <legend id="bgColor-label"><label for="bgColor1" class="">セル背景色</label></legend>
+            <p id="bgColor-element">
+                <input type="text" name="bgColor" id="bgColor1" value="<?= $this->ledgers['bgColor'] ?>" class=""></p>
+        </fieldset>
 
-<fieldset>
-<legend id="priority-label"><label for="priority1" class="">優先度</label></legend>
-<p id="priority-element">
-<input type="text" name="priority" id="priority1" value="<?= $this->ledgers['priority'] ?>"></p>
-</fieldset>
-
-
-<p id="submit-label">&nbsp;</p>
-<p id="submit-element">
-<input type="button" name="submit" id="submitbtn3" value="新規仮登録を保存"></p>
-
-</form>
+        <fieldset>
+            <legend id="priority-label"><label for="priority1" class="">優先度</label></legend>
+            <p id="priority-element">
+                <input type="text" name="priority" id="priority1" value="<?= $this->ledgers['priority'] ?>"></p>
+        </fieldset>
 
 
-<form enctype="multipart/form-data" action="<?php echo $this->url(array('controller'=>'File','action'=>'receive'));?>" method="POST" id="form1">
-<input type="hidden" name="fileup" value="" id="fileup">
-</form>
+        <p id="submit-label">&nbsp;</p>
+        <p id="submit-element">
+            <input type="button" name="submit" id="submitbtn3" value="新規仮登録を保存"></p>
+
+    </form>
+
+
+    <form enctype="multipart/form-data" action="<?php echo $this->url(array('controller'=>'File','action'=>'receive'));?>" method="POST" id="form1">
+        <input type="hidden" name="fileup" value="" id="fileup">
+    </form>
 
 
 </div>
 <div class="modal-footer">
-<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
 </div>
 
 <script type="text/javascript">
-$(function(){
+    $(function(){
 
 // bootstrapモーダル初期化設定
-$(document).on('hidden.bs.modal', '.modal', function(){
-        $(this).removeData('bs.modal');
-    });
+        $(document).on('hidden.bs.modal', '.modal', function(){
+            $(this).removeData('bs.modal');
+        });
 
 // 日付選択カレンダー設定
-$('.datepicker').datepicker({
-  format: 'yyyy-m-dd',
-  language: 'ja'
-});
+        $('.datepicker').datepicker({
+            format: 'yyyy-m-dd',
+            language: 'ja'
+        });
 
 // カラーパレット選択設定
-    $('#annotation').paletteColorPicker({
-    colors: [
-      {"#E91E63": "#E91E63"},
-      {"#C2185B": "#C2185B"},
-      {"#F8BBD0": "#F8BBD0"},
-      {"#CDDC39": "#CDDC39"},
-      {"#212121": "#212121"},
-      {"#727272": "#727272"},
-      {"#B6B6B6": "#B6B6B6"}
-    ],
-    position: 'upside', // default -> 'upside'
-  });
+        $('#annotation').paletteColorPicker({
+            colors: [
+                {"#E91E63": "#E91E63"},
+                {"#C2185B": "#C2185B"},
+                {"#F8BBD0": "#F8BBD0"},
+                {"#CDDC39": "#CDDC39"},
+                {"#212121": "#212121"},
+                {"#727272": "#727272"},
+                {"#B6B6B6": "#B6B6B6"}
+            ],
+            position: 'upside', // default -> 'upside'
+        });
 
-  $('.bgColor').paletteColorPicker({
-    colors: [
-      {"#E91E63": "#E91E63"},
-      {"#C2185B": "#C2185B"},
-      {"#F8BBD0": "#F8BBD0"},
-      {"#CDDC39": "#CDDC39"},
-      {"#212121": "#212121"},
-      {"#727272": "#727272"},
-      {"#B6B6B6": "#B6B6B6"}
-    ],
-    position: 'upside', // default -> 'upside'
-  });
+        $('.bgColor').paletteColorPicker({
+            colors: [
+                {"#E91E63": "#E91E63"},
+                {"#C2185B": "#C2185B"},
+                {"#F8BBD0": "#F8BBD0"},
+                {"#CDDC39": "#CDDC39"},
+                {"#212121": "#212121"},
+                {"#727272": "#727272"},
+                {"#B6B6B6": "#B6B6B6"}
+            ],
+            position: 'upside', // default -> 'upside'
+        });
 
 // ファイルアップロード設定
-      $("#btn_up").on('click', function() {
+        $("#btn_up").on('click', function() {
 
-        if(!confirm("アップロードしますか？")) {
+            if(!confirm("アップロードしますか？")) {
                 return false;
 
             } else {
 
-        var formData = new FormData();
-        formData.append("uploadFile", $('#ledgerFile1').get(0).files[0]);
+                var formData = new FormData();
+                formData.append("uploadFile", $('#ledgerFile1').get(0).files[0]);
 
-        $.ajax({
-            url: $($('#form1')).attr('action'),
-            type:'POST',
-            enctype  : 'multipart/form-data',
-            processData: false,
-            contentType: false,
-            dataType: 'json',
-            // サーバに送信するデータ
-            data : formData
-        }).then(
-          function(data) {
-            $('#ledgerFile2').val(data.filename);
-            $('#fileSize').val(data.filesize);
-          },
-          function(XMLHttpRequest, textStatus, errorThrown) {
-            alert('ファイルのアップロードに失敗しました。');
-          }
-        );
+                $.ajax({
+                    url: $($('#form1')).attr('action'),
+                    type:'POST',
+                    enctype  : 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    // サーバに送信するデータ
+                    data : formData
+                }).then(
+                    function(data) {
+                        $('#ledgerFile2').val(data.filename);
+                        $('#fileSize').val(data.filesize);
+                    },
+                    function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert('ファイルのアップロードに失敗しました。');
+                    }
+                );
 
-      }
-      });
+            }
+        });
 
 // ajax通信設定
-  $('#submitbtn3').on('click', function() {
+        $('#submitbtn3').on('click', function() {
 
             if(!confirm("追加しますか？")) {
                 return false;
 
             } else {
 
-            var hostUrl= './../ledger/addledger';
-            var formData = new FormData($('#addledger')[0]);
-            console.log(formData);
+                var hostUrl= './../ledger/addledger';
+                var formData = new FormData($('#addledger')[0]);
+                console.log(formData);
 
-            $.ajax({
-                url: hostUrl,
-                type:'POST',
-                enctype  : 'multipart/form-data',
-                processData: false,
-                contentType: false,
-                dataType: 'json',
-                // サーバに送信するデータ
-                data : formData
+                $.ajax({
+                    url: hostUrl,
+                    type:'POST',
+                    enctype  : 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    // サーバに送信するデータ
+                    data : formData
                 }).then(
-                function(formData) {
-                  alert("追加しました");
-                },
-                function(XMLHttpRequest, textStatus, errorThrown) {
-                  console.log(formData);
-                             alert("追加に失敗しました");
-                       });
+                    function(formData) {
+                        alert("追加しました");
+                    },
+                    function(XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(formData);
+                        alert("追加に失敗しました");
+                    });
 
-                }
+            }
         });
 
-  });
+    });
 </script>

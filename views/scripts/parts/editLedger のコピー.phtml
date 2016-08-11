@@ -59,20 +59,16 @@
 <input type="text" name="dateUpdate" id="dateUpdate" value="<?= $this->ledgers['dateUpdate'] ?>" class="form-control datepicker"></p>
 </fieldset>
 
-<!--<fieldset>
+<fieldset>
 <legend id="ledgerFile-label"><label for="ledgerFile2" class="">ファイル</label></legend>
 <p id="ledgerFile-element">
-<input type="text" name="utf1" id="ledgerFile2" value="<?/*= $this->ledgers['ledgerFile'] */?>" class="">
-<input type="text" name="ledgerFile2" id="ledgerFile2" value="<?/*= $this->ledgers['ledgerFile'] */?>" class=""></p>
+<input type="text" name="utf1" id="ledgerFile2" value="<?= $this->ledgers['ledgerFile'] ?>" class="">
+<input type="text" name="ledgerFile2" id="ledgerFile2" value="<?= $this->ledgers['ledgerFile'] ?>" class=""></p>
 
         アップロードファイルを選択:
     <input name="uf1" type="file">
     <input type="button" value="アップロード">
-</fieldset>-->
-
-    <input type="text" id="ledgerFile" value="<?= $this->ledgers['ledgerFile'] ?>" name="fileName">
-
-    <input type="text" id="fileSize" value="<?= $this->ledgers['fileSize'] ?>" name="fileSize">
+</fieldset>
 
 <fieldset>
 <legend id="display-label"><label for="display" class="">表示選択</label></legend>
@@ -105,20 +101,6 @@
 
 </form>
 
-    <form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" id="fileupledger" class="dropzone" method="POST">
-
-        <fieldset>
-            <legend id="ledgerFile-label"><label for="ledgerFile2" class="">ファイル</label></legend>
-
-
-        <div class="fallback">
-            <input name="fileup" type="file" multiple id="fileup">
-        </div>
-            <input type="button" value="アップロード" id="btn_up">
-    </form>
-
-
-
 </div>
 <div class="modal-footer">
 <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
@@ -149,7 +131,7 @@ $('.datepicker').datepicker({
       {"#727272": "#727272"},
       {"#B6B6B6": "#B6B6B6"}
     ],
-    position: 'upside' // default -> 'upside'
+    position: 'upside', // default -> 'upside'
   });
 
   $('#bgColor').paletteColorPicker({
@@ -162,7 +144,7 @@ $('.datepicker').datepicker({
       {"#727272": "#727272"},
       {"#B6B6B6": "#B6B6B6"}
     ],
-    position: 'upside' // default -> 'upside'
+    position: 'upside', // default -> 'upside'
   });
 
 // ajax通信設定

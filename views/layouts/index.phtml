@@ -79,7 +79,7 @@ $(function(){
 		myDropzone.autoDiscover = false;
 		$('.dropzone').dropzone({
 			paramName : "files",
-			parallelUploads:1,
+			parallelUploads:200,
 			acceptedFiles:'.xls,.xlsm,.xlsx,.ppt,.pptx,.doc,.docx,.pdf,.zip',
 			maxFiles:1,
 			dictInvalidFileType: "アップロード出来ないファイルです。",
@@ -90,8 +90,16 @@ $(function(){
 			},
 			success:function(file, response_text, e) {
 				// upload.php で echo された内容が response_text に入ります。
+				$('#topledgerFile1').val(response_text.filename);
+				$('#topfileSize1').val(response_text.filesize);
 
-				$('#ledgerFile2').val(response_text.filename);
+				$('#topledgerFile2').val(response_text.filename);
+				$('#topfileSize2').val(response_text.filesize);
+
+				$('#topledgerFile3').val(response_text.filename);
+				$('#topfileSize3').val(response_text.filesize);
+
+				$('#ledgerFile').val(response_text.filename);
 				$('#fileSize').val(response_text.filesize);
 			},
 			drop: function(e) {
@@ -144,9 +152,10 @@ $(function(){
 	<!-- <a class="pagetop-h">↑</a> -->
 	<!-- ページトップへ戻る -->
 </div>
+
 <div id="footer">Copyright c 2013 NTT MARKETING ACT. All Rights Reserved.</div>
 
-
+</div>
 
 
 <!-- loading modal -->
