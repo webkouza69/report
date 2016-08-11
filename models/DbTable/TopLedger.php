@@ -11,15 +11,14 @@ class Application_Model_DbTable_TopLedger extends Zend_Db_Table_Abstract
 		$sql = 'SELECT * FROM topledger';
 
 		$adapter = $this->getAdapter();
-		$resultTop = $adapter->fetchAll($sql);
+		$topLedgers = $adapter->fetchRow($sql);
 
-		return $resultTop;
+		return $topLedgers->toArray();
 	}
 
 
 	public function updateTopLedger($id,$fileName,$fileSize,$bikou)
 	{
-
 
 		$data = array(
 		              'id'=> $id,

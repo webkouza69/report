@@ -54,7 +54,7 @@ class Application_Model_DbTable_Ledgers extends Zend_Db_Table_Abstract
 			return $retval;
 	}
 
-	public function addLedger($itemId,$idCategory,$idLedger,$ledgerName,$annotation,$ledgerFile,$fileSize,$display,$remarks,$comment,$bgColor,$color,$dateUpdate,$priority)
+	public function addLedger($itemId,$idCategory,$idLedger,$ledgerName,$annotation,$ledgerFile2,$fileSize,$display,$remarks,$comment,$bgColor,$color,$dateUpdate,$priority)
 	{
 		$data = array(
 		              'itemId'=> $itemId,
@@ -62,7 +62,7 @@ class Application_Model_DbTable_Ledgers extends Zend_Db_Table_Abstract
 		              'idLedger'=> $idLedger,
 		              'ledgerName'=> $ledgerName,
 		              'annotation'=> $annotation,
-		              'ledgerFile'=> $ledgerFile,
+		              'ledgerFile'=> $ledgerFile2,
 		              'fileSize'=> $fileSize,
 		              'display'=> $display,
 		              'remarks'=> $remarks,
@@ -75,7 +75,7 @@ class Application_Model_DbTable_Ledgers extends Zend_Db_Table_Abstract
 		$this->insert($data);
 	}
 
-	public function updateLedger($itemId,$id,$idLedger,$idCategory,$ledgerName,$annotation,$ledgerFile,$fileSize,$display,$remarks,$comment,$bgColor,$color,$dateUpdate,$priority)
+	public function updateLedger($itemId,$id,$idLedger,$idCategory,$ledgerName,$annotation,$ledgerFile2,$fileSize,$display,$remarks,$comment,$bgColor,$color,$dateUpdate,$priority)
 	{
 
 
@@ -85,7 +85,7 @@ class Application_Model_DbTable_Ledgers extends Zend_Db_Table_Abstract
 		              'idCategory'=> $idCategory,
 		              'ledgerName'=> $ledgerName,
 		              'annotation'=> $annotation,
-		              'ledgerFile'=> $ledgerFile,
+		              'ledgerFile'=> $ledgerFile2,
 		              'fileSize'=> $fileSize,
 		              'display'=> $display,
 		              'remarks'=> $remarks,

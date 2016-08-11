@@ -26,24 +26,28 @@ class Application_Model_DbTable_Categorys extends Zend_Db_Table_Abstract
 		return $resultSet;
 	}
 
-	public function addCategory($id,$cateName, $imgName, $anchorName, $priority)
+	public function addCategory($id,$cateName, $imgName, $anchorName, $priority, $remarks, $dir)
 	{
 		$data = array(
 		              'cateName'=> $cateName,
 		              'imgName'=> $imgName,
 		              'anchorName'=> $anchorName,
-		              'priority'=> $priority
+		              'priority'=> $priority,
+                      'remarks'=> $remarks,
+                      'dir'=> $dir
 		);
 		$this->insert($data);
 	}
 
-	public function updateCategory($id, $cateName, $imgName, $anchorName, $priority)
+	public function updateCategory($id, $cateName, $imgName, $anchorName, $priority, $remarks, $dir)
 	{
 		$data = array(
 		              'cateName'=> $cateName,
 		              'imgName'=> $imgName,
 		              'anchorName'=> $anchorName,
-		              'priority'=> $priority
+		              'priority'=> $priority,
+                      'remarks'=> $remarks,
+                      'dir'=> $dir
 		);
 		$this->update($data, 'id = '.(int)$id);
 	}
