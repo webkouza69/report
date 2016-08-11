@@ -1,0 +1,294 @@
+   <div class="site-info">
+   <h3>本社統一帳票一覧</h3>
+
+    <ul class="heightLine">
+     <li>
+      → <span class="icon_excel">
+
+			 <?php echo $this->escape($this->topledgers['id']) ?>
+
+			 <?php echo $this->escape($this->topledgers['bikou']) ?>
+
+			 <?php echo $this->escape($this->topledgers['fileName']) ?>
+
+			 （<?php echo $this->escape($this->topledgers['fileSize']) ?>）
+
+			 </span>
+     </li>
+    </ul>
+
+    <div id="page-btns" class="pull">
+	</div>
+	<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" class="dropzone" id="fileupledger1" method="POST">
+
+  <input type="text" id="id1" value="1" name="id">
+
+  <input type="text" id="topledgerFile1" value="" name="fileName">
+
+  <input type="text" id="topfileSize1" value="" name="fileSize">
+
+		<input type="text" id="bikou" value="" name="bikou">
+
+    <div class="fallback">
+      <input name="fileup1" type="file" multiple id="fileup1">
+    </div>
+    </form>
+
+  <form id="fileRecord1" action="" method="POST">
+  <input type="button" name="btn1" id="fileup_btn1" value="ファイルを登録">
+  </form>
+   </div>
+
+
+   <div class="newfile_area">
+    <h3>最新の改訂版</h3>
+    <div class="newfile-dl"><?php echo $this->escape($this->topledgers['id']) ?>
+    <div class="newfile-dl"><?php echo $this->escape($this->topledgers['id']) ?>
+     <p class="btn_newfile"><a href="file/20160318_kaitei.zip"><span class="icon_zip">改訂版のみをダウンロード （<?php echo $this->escape($this->topledgers['fileSize']) ?>）</span></a></p>
+    </div>
+    <div id="page-btns" class="pull">
+				<!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">カテゴリの編集</button> -->
+				<!-- <button type="button" class="btn btn-success" id="btn-save">下書き保存する</button>
+				<button type="button" class="btn btn-info" id="btn-preview">プレビュー</button> -->
+	</div>
+
+	<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" class="dropzone" id="fileupledger2" method="POST">
+  <div class="fallback">
+    <input name="fileup2" type="file" multiple id="fileup2">
+  </div>
+		<input type="text" id="id2" value="2" name="id">
+		<input type="text" id="topledgerFile2" value="" name="fileName">
+		<input type="text" id="topfileSize2" value="" name="fileSize">
+</form>
+
+	   <form id="fileRecord2" action="" method="POST">
+		   <input type="button" name="btn1" id="fileup_btn2" value="ファイルを登録">
+	   </form>
+
+   </div>
+   <h2>統一帳票サイト・更新システム</h2>
+
+			<div class="pull-left">
+				<div id="modal-menu">
+					<div class="internal">
+						<ul>
+							<li class="title">カテゴリ一覧
+							</li>
+						</ul>
+					</div>
+					<div class="external">
+						<ul>
+							<li class="title">仮公開用ページ
+							</li>
+						</ul>
+					</div>
+					<div class="external">
+						<ul>
+							<li class="title"><a href="<?php echo $this->url(array('controller'=>'ledger',
+            'action'=>'publish'));?>">本番反映</a>
+							</li>
+						</ul>
+					</div>
+					<div class="external">
+						<ul>
+							<li class="title"><a href="<?php echo $this->url(array('controller'=>'ledger',
+            'action'=>'reset'));?>">リセット</a>
+							</li>
+						</ul>
+	</div>
+				</div></div>
+
+<article class="cnt cnt-690 cnt-wrap">
+<table>
+<tr>
+<th>カテゴリ名</th>
+<th></th>
+</tr>
+<?php foreach($this->allCategorys as $itemSheet) : ?>
+<tr>
+    <td><a href="ledger/ledger#h2_<?php echo $this->escape($itemSheet->id); ?>"><?php echo $this->escape($itemSheet->cateName); ?></a></td>
+    <td>
+
+        <a href="<?php echo $this->url(array('controller'=>'index',
+            'action'=>'edit', 'id'=>$itemSheet->id));?>" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">編集</a>
+        <!-- <a href="<?php echo $this->url(array('controller'=>'index',
+            'action'=>'delete', 'id'=>$itemSheet->id));?>">削除</a> -->
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+
+
+				<div id="page-btns" class="pull">
+				<button type="button" class="btn btn-warning"><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>" class="btn" data-toggle="modal" data-target="#modal-cate">カテゴリ新規作成</a></button>
+				<!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">カテゴリの編集</button> -->
+				<!-- <button type="button" class="btn btn-success" id="btn-save">下書き保存する</button>
+				<button type="button" class="btn btn-info" id="btn-preview">プレビュー</button> -->
+				</div>
+
+	<div class="cnt-bodys">
+	<ul>
+	<?php
+
+	foreach ($this->allCategorys as $row){
+	print '<li><a href="ledger/ledger#h2_'.$row->id.'"><img src="img/'.$row->imgName.'"'.'alt="'.$row->cateName.'"></a></li>';
+	}?><li><a href="file/20160725_2_all.zip"><img class="btn" src="img/menu_all.png" alt="一括ダウンロード"/></a><span><?php echo $this->escape($this->topledgers['fileSize']) ?></span></li>
+	</ul>
+
+		<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" class="dropzone" id="fileupledger3" method="POST">
+			<div class="fallback">
+				<input name="fileup3" type="file" multiple id="fileup3">
+			</div>
+			<input type="text" id="id3" value="3" name="id">
+			<input type="text" id="topledgerFile3" value="" name="fileName">
+			<input type="text" id="topfileSize3" value="" name="fileSize">
+		</form>
+
+		<form id="fileRecord3" action="" method="POST">
+			<input type="button" name="btn1" id="fileup_btn3" value="ファイルを登録">
+		</form>
+	</div>
+				</article>
+	</div>
+
+
+
+
+
+	<!-- categorys modal -->
+<div class="modal fade" id="modal-cate" tabindex="-1" data-backdrop="static">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-body">
+
+
+<p><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>">カテゴリ追加</a></p>
+<table>
+<tr>
+<th>カテゴリ名</th>
+<th>画像名</th>
+<th>アンカー名</th>
+<th>優先度</th>
+<th></th>
+</tr>
+<?php foreach($this->allCategorys as $itemSheet) : ?>
+<tr>
+    <td><?php echo $this->escape($itemSheet->cateName);?></td>
+    <td><?php echo $this->escape($itemSheet->imgName);?></td>
+    <td><?php echo $this->escape($itemSheet->anchorName);?></td>
+    <td><?php echo $this->escape($itemSheet->priority);?></td>
+    <td>
+        <a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'editLedger', 'id'=>$itemSheet->id));?>">編集</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+
+<button type="button" id="cate-btn-add" class="btn btn-default">カテゴリの追加</button>
+
+<!-- <?= $this->render('parts/edit.phtml') ?> -->
+
+
+			</div>
+<!-- 			<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+	<button type="button" class="btn btn-success" id="cate-btn-reflect">反映する</button>
+</div> -->
+		</div>
+	</div>
+</div>
+
+
+<!-- end of categorys modal -->
+
+
+<script type="text/javascript">
+$(function(){
+
+// ajax通信設定
+  $('#fileup_btn1').on('click', function() {
+
+            if(!confirm("更新しますか？")) {
+              return false;
+
+            }else{
+            var hostUrl= './topledger/editledgertop';
+            var formData = new FormData($('#fileupledger1')[0]);
+
+            $.ajax({
+                url: hostUrl,
+                type:'POST',
+                enctype  : 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                // サーバに送信するデータ
+                data : formData
+                }).then(
+                function(formData) {
+                  alert("更新しました");
+                },
+                function(XMLHttpRequest, textStatus, errorThrown) {
+                             alert("更新に失敗しました");
+                       });
+              }
+        });
+
+	$('#fileup_btn2').on('click', function() {
+
+		if(!confirm("更新しますか？")) {
+			return false;
+
+		}else{
+			var hostUrl= './topledger/editledgertop';
+			var formData = new FormData($('#fileupledger2')[0]);
+
+			$.ajax({
+				url: hostUrl,
+				type:'POST',
+				enctype  : 'multipart/form-data',
+				processData: false,
+				contentType: false,
+				dataType: 'json',
+				// サーバに送信するデータ
+				data : formData
+			}).then(
+				function(formData) {
+					alert("更新しました");
+				},
+				function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("更新に失敗しました");
+				});
+		}
+	});
+	$('#fileup_btn3').on('click', function() {
+
+		if(!confirm("更新しますか？")) {
+			return false;
+
+		}else{
+			var hostUrl= './topledger/editledgertop';
+			var formData = new FormData($('#fileupledger3')[0]);
+
+			$.ajax({
+				url: hostUrl,
+				type:'POST',
+				enctype  : 'multipart/form-data',
+				processData: false,
+				contentType: false,
+				dataType: 'json',
+				// サーバに送信するデータ
+				data : formData
+			}).then(
+				function(formData) {
+					alert("更新しました");
+				},
+				function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("更新に失敗しました");
+				});
+		}
+	});
+
+  });
+</script>
