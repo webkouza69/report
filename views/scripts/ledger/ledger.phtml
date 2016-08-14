@@ -2,77 +2,182 @@
 <button type="button" class="btn">
 <a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'addledger'));?>" class="btn" data-toggle="modal" data-target="#modal-cate3" >新規帳票追加</a></button>
 
+<?php var_dump($this->allCategory) ?>
+
 <?php foreach ($this->rows as $val1) : { ?>
 
 	<?php foreach ($val1 as $categories ) ?>
-<table>
+
 
 <h2 id="h2_<?php echo $this->escape($categories['idCategory']); ?>"><?php echo $this->escape($categories['cateName']); ?></h2>
+<table>
 <tbody class="jquery-ui-sortable">
 <tr class="unsortable">
 	<th>連番</th>
 	<th class="cellwidth393">帳票名</th>
 	<th>更新日</th>
-	<th>ファイル</th>
-	<th>表示設定</th>
+	<th style="width:120px;">ファイル</th>
+	<th style="width: 70px;">表示設定</th>
 	<th>コメント</th>
 	<th></th>
 </tr>
 <?php foreach ($val1 as $categories ) : { ?>
-<tr data-id="<?php echo $categories['itemId']; ?>">
-	<td><a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
-	<?php echo $this->escape($categories['idLedger']); ?>
-	</a></td>
-	<td><a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
-	<?php echo $this->escape($categories['ledgerName']); ?>
-	</a></td>
-	<td>
-	<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
-	<?php echo $this->escape($categories['dateUpdate']); ?>
-	</a></td>
-	<td>
-	<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'editledger', 'itemId'=>$categories['itemId']));?>" data-toggle="modal" data-target="#modal-cate1">
-	<?php echo $this->escape($categories['ledgerFile']); ?>
-	</a>
 
+<tr data-id="<?php echo $categories['itemId']; ?>">
+    <form id="editledger" name="editledger" enctype="multipart/form-data" action="" method="post">
+	<td>
+	<input type="hidden" name="idCategory" value="<?= $categories['idCategory'] ?>" >
+	<input type="text" name="idLedger" id="idLedger" value="<?= $categories['idLedger'] ?>" maxlength="6" style="width:70px;">
 	</td>
-	<td>表示 非表示<?php echo $this->escape($categories['display']); ?></td>
+	<td>
+	<input type="text" name="ledgerName" id="ledgerName" value="<?= $categories['ledgerName'] ?>" style="width:390px;">
+	</td>
+	<td>
+
+	<input type="text" name="dateUpdate" id="dateUpdate" value="<?= $categories['dateUpdate'] ?>" class="form-control datepicker" style="width:70px;">
+	</td>
+	<td>
+	<input type="text" name="ledgerFile" id="" value="<?= $categories['ledgerFile'] ?>" class="ledgerFile" style="width:120px;">
+	<input type="text" name="fileSize" id="" value="<?= $categories['fileSize'] ?>" class="fileSize" style="width:120px;"><br>
+
+
+    <input name="uf1" type="file" class="btn-info ledgerFiles" id="">
+    <input type="button" value="アップロード" class="btn_up2">
+	</td>
+	<td>
+		<input type="text" name="display" id="display" value="<?= $categories['display'] ?>" class="" style="width: 50px;">
+	</td>
 	<td><?php echo $this->escape($categories['Annoation']); ?></td>
-	<td><a href="<?php echo $this->url(array('controller'=>'ledger',
-            'action'=>'delete', 'itemId'=>$categories['itemId']));?>">削除</a></td>
-	
-</tr>
+	<td>
+	<input type="button" name="button" class="submitbtn2" value="仮編集を保存">
+        <botton class="btn">
+	<a href="<?php echo $this->url(array('controller'=>'ledger',
+            'action'=>'delete', 'itemId'=>$categories['itemId']));?>">削除</a>
+        </botton>
+    </td>
+    </form>
+    <form enctype="multipart/form-data" action="<?php echo $this->url(array('controller'=>'File','action'=>'receive'));?>" method="POST" class="form2">
+        <input type="hidden" name="fileup" value="" id="fileup2">
+    </form>
+	</tr>
 
 <?php } ?>
 
 <?php endforeach; ?>
 </tbody>
 </table>
+
 <?php } ?>
 
 <?php endforeach; ?>
 
 
+<script type="text/javascript">
+$(function(){
 
-<!-- ledger modal -->
-<div class="modal fade" id="modal-cate1" tabindex="-1" data-backdrop="static">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
+// 日付選択カレンダー設定
+$('.datepicker').datepicker({
+  format: 'yyyy-m-dd',
+  language: 'ja'
+});
 
-			<div class="modal-body">
+// カラーパレット選択設定
+    $('#annotation').paletteColorPicker({
+    colors: [
+      {"#E91E63": "#E91E63"},
+      {"#C2185B": "#C2185B"},
+      {"#F8BBD0": "#F8BBD0"},
+      {"#CDDC39": "#CDDC39"},
+      {"#212121": "#212121"},
+      {"#727272": "#727272"},
+      {"#B6B6B6": "#B6B6B6"}
+    ],
+    position: 'upside' // default -> 'upside'
+  });
+
+  $('#bgColor').paletteColorPicker({
+    colors: [
+      {"#E91E63": "#E91E63"},
+      {"#C2185B": "#C2185B"},
+      {"#F8BBD0": "#F8BBD0"},
+      {"#CDDC39": "#CDDC39"},
+      {"#212121": "#212121"},
+      {"#727272": "#727272"},
+      {"#B6B6B6": "#B6B6B6"}
+    ],
+    position: 'upside' // default -> 'upside'
+  });
+
+// ファイルアップロード設定
+      $(".btn_up2").on('click', function() {
+
+        if(!confirm("アップロードしますか？")) {
+                return false;
+
+            } else {
+
+        var formData = new FormData();
+        formData.append("uploadFile", $('.ledgerFiles').get(0).files[0]);
+
+        $.ajax({
+            url: $($('.form2')).attr('action'),
+            type:'POST',
+            enctype  : 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            // サーバに送信するデータ
+            data : formData
+        }).then(
+          function(data) {
+            $('.ledgerFile').val(data.filename);
+            $('.fileSize').val(data.filesize);
+          },
+          function(XMLHttpRequest, textStatus, errorThrown) {
+            alert('ファイルのアップロードに失敗しました。');
+          }
+        );
+
+      }
+      });
+
+// ajax通信設定
+  $('.submitbtn2').on('click', function() {
+
+            if(!confirm("更新しますか？")) {
+              return false;
+
+            }else{
+
+            var hostUrl= './../ledger/editledger';
+            var formData = new FormData($('#editledger')[0]);
+
+            $.ajax({
+                url: hostUrl,
+                type:'POST',
+                enctype  : 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                // サーバに送信するデータ
+                data : formData
+                }).then(
+                function(formData) {
+                  alert("更新しました");
+                    window.location.reload();
+                },
+                function(XMLHttpRequest, textStatus, errorThrown) {
+                             alert("更新に失敗しました");
+                       });
+              }
+        });
+
+  });
+</script>
 
 
 
-<?= $this->render('./parts/editLedger.phtml') ?>
 
-
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<!-- end of ledger modal -->
 
 <!-- add ledger modal -->
 <div class="modal fade" id="modal-cate3" tabindex="-1" data-backdrop="static">
@@ -93,3 +198,5 @@
 
 
 <!-- end of add ledger modal -->
+
+

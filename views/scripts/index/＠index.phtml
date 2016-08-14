@@ -1,30 +1,34 @@
    <div class="site-info">
    <h3>本社統一帳票一覧</h3>
 
+
     <ul class="heightLine">
      <li>
       → <span class="icon_excel">
 
+			 <?php echo $this->escape($this->topledgers[0]['id']) ?>
 
-<a href="file/<?php echo $this->escape($this->topledgers[0]['fileName']) ?>">
 			 <?php echo $this->escape($this->topledgers[0]['bikou']) ?>
+
+			 <?php echo $this->escape($this->topledgers[0]['fileName']) ?>
+
 			 （<?php echo $this->escape($this->topledgers[0]['fileSize']) ?>）
-</a>
+
 			 </span>
      </li>
     </ul>
 
-
+    <div id="page-btns" class="pull">
+	</div>
 	<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" class="dropzone" id="fileupledger1" method="POST">
 
-  <input type="hidden" id="id1" value="1" name="id">
-
-		<input type="text" id="bikou" value="" name="bikou">
+  <input type="text" id="id1" value="1" name="id">
 
   <input type="text" id="topledgerFile1" value="" name="fileName">
 
   <input type="text" id="topfileSize1" value="" name="fileSize">
 
+		<input type="text" id="bikou" value="" name="bikou">
 
     <div class="fallback">
       <input name="fileup1" type="file" multiple id="fileup1">
@@ -39,8 +43,9 @@
 
    <div class="newfile_area">
     <h3>最新の改訂版</h3>
-     <p class="btn_newfile"><a href="file/<?php echo $this->escape($this->topledgers[1]['fileName']) ?>"><span class="icon_zip">改訂版のみをダウンロード （<?php echo $this->escape($this->topledgers[1]['fileSize']) ?>）</span></a></p>
-
+    <div class="newfile-dl"><?php echo $this->escape($this->topledgers['id']) ?>
+     <p class="btn_newfile"><a href="file/20160318_kaitei.zip"><span class="icon_zip">改訂版のみをダウンロード （<?php echo $this->escape($this->topledgers[1]['fileSize']) ?>）</span></a></p>
+    </div>
     <div id="page-btns" class="pull">
 				<!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">カテゴリの編集</button> -->
 				<!-- <button type="button" class="btn btn-success" id="btn-save">下書き保存する</button>
@@ -51,7 +56,7 @@
   <div class="fallback">
     <input name="fileup2" type="file" multiple id="fileup2">
   </div>
-		<input type="hidden" id="id2" value="2" name="id">
+		<input type="text" id="id2" value="2" name="id">
 		<input type="text" id="topledgerFile2" value="" name="fileName">
 		<input type="text" id="topfileSize2" value="" name="fileSize">
 </form>
@@ -59,8 +64,8 @@
 	   <form id="fileRecord2" action="" method="POST">
 		   <input type="button" name="btn1" id="fileup_btn2" value="ファイルを登録">
 	   </form>
-   </div>
 
+   </div>
    <h2>統一帳票サイト・更新システム</h2>
 
 			<div class="pull-left">
@@ -106,8 +111,6 @@
 
         <a href="<?php echo $this->url(array('controller'=>'index',
             'action'=>'edit', 'id'=>$itemSheet->id));?>" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">編集</a>
-        <!-- <a href="<?php echo $this->url(array('controller'=>'index',
-            'action'=>'delete', 'id'=>$itemSheet->id));?>">削除</a> -->
     </td>
 </tr>
 <?php endforeach; ?>
@@ -127,15 +130,14 @@
 
 	foreach ($this->allCategorys as $row){
 	print '<li><a href="ledger/ledger#h2_'.$row->id.'"><img src="img/'.$row->imgName.'"'.'alt="'.$row->cateName.'"></a></li>';
-	}?>
-		<li><a href="file/<?php echo $this->escape($this->topledgers[2]['fileName']) ?>"><img class="btn" src="img/menu_all.png" alt="一括ダウンロード"/></a><span><?php echo $this->escape($this->topledgers[2]['fileSize']) ?></span></li>
+	}?><li><a href="file/20160725_2_all.zip"><img class="btn" src="img/menu_all.png" alt="一括ダウンロード"/></a><span><?php echo $this->escape($this->topledgers[2]['fileSize']) ?></span></li>
 	</ul>
 
 		<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" class="dropzone" id="fileupledger3" method="POST">
 			<div class="fallback">
 				<input name="fileup3" type="file" multiple id="fileup3">
 			</div>
-			<input type="hidden" id="id3" value="3" name="id">
+			<input type="text" id="id3" value="3" name="id">
 			<input type="text" id="topledgerFile3" value="" name="fileName">
 			<input type="text" id="topfileSize3" value="" name="fileSize">
 		</form>
@@ -145,7 +147,7 @@
 		</form>
 	</div>
 				</article>
-
+	</div>
 
 
 
@@ -160,11 +162,30 @@
 
 
 <p><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>">カテゴリ追加</a></p>
-
+<table>
+<tr>
+<th>カテゴリ名</th>
+<th>画像名</th>
+<th>アンカー名</th>
+<th>優先度</th>
+<th></th>
+</tr>
+<?php foreach($this->allCategorys as $itemSheet) : ?>
+<tr>
+    <td><?php echo $this->escape($itemSheet->cateName);?></td>
+    <td><?php echo $this->escape($itemSheet->imgName);?></td>
+    <td><?php echo $this->escape($itemSheet->anchorName);?></td>
+    <td><?php echo $this->escape($itemSheet->priority);?></td>
+    <td>
+        <a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'editLedger', 'id'=>$itemSheet->id));?>">編集</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
 
 <button type="button" id="cate-btn-add" class="btn btn-default">カテゴリの追加</button>
 
-<?= $this->render('parts/edit.phtml') ?>
+<!-- <?= $this->render('parts/edit.phtml') ?> -->
 
 
 			</div>
@@ -205,7 +226,6 @@ $(function(){
                 }).then(
                 function(formData) {
                   alert("更新しました");
-					window.location.reload();
                 },
                 function(XMLHttpRequest, textStatus, errorThrown) {
                              alert("更新に失敗しました");
@@ -234,7 +254,6 @@ $(function(){
 			}).then(
 				function(formData) {
 					alert("更新しました");
-					window.location.reload();
 				},
 				function(XMLHttpRequest, textStatus, errorThrown) {
 					alert("更新に失敗しました");
@@ -262,7 +281,6 @@ $(function(){
 			}).then(
 				function(formData) {
 					alert("更新しました");
-					window.location.reload();
 				},
 				function(XMLHttpRequest, textStatus, errorThrown) {
 					alert("更新に失敗しました");

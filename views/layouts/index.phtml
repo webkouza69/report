@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/jquery.cookie.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/utility.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/heightLine.js"></script>
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/telnumber.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/palette-color-picker.min.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/dropzone.js"></script>
 	<script type="text/javascript">
@@ -71,7 +72,7 @@ $(function(){
 
 	$('.datepicker').datepicker({
   		language: 'ja',
-  		format: 'dd-M-yy'
+  		format: 'yyyy-m-dd'
 		});
 
 		var myDropzone = function() {
@@ -120,12 +121,38 @@ $(function(){
 		});
 	};
 	myDropzone();
+
+	// プレビュー画面
+	var Preview = {
+		load: function () {
+			$(Names.cntPreview.addHash() + '-wrap').height(($(window).height() - 60));
+			var frameHeight = $(Names.cntPreview.addHash() + '-wrap').height() -
+				$(Names.cntPreview.addHash() + '-head').outerHeight() - 30;
+			$(Names.cntPreview.addHash() + '-frame-wrap').height(frameHeight - 40);
+			$(Names.cntPreview.addHash() + '-frame').height(frameHeight - 40);
+		},
+		// プレビューの表示
+		show: function() {
+			$(Names.cntPreview.addHash() + '-frame').attr('src', '');
+			$(Names.cntPreview.addHash() + '-frame').attr('src', 'preview').load(function() {
+				var $insertContent = $(Names.cntPreview.addHash() + '-frame').contents().find('#mainmenu');
+				// プレビューコンテンツの作成
+				Contents.createPreview($insertContent);
+				// プレビュー画面を表示する
+				$(Names.cntPreview.addHash()).show();
+			});
+		},
+		// プレビューの非表示
+		hide: function() {
+			$(Names.cntPreview.addHash()).hide();
+		}
+	};
 });
+
 	</script>
 </head>
 
 <body data-href="<?= $this->url; ?>">
-<div class="wrap">
 <div id="wrapper">
 	<header class="header">
    <div class="bbsearch_h1" alt="">
@@ -155,55 +182,6 @@ $(function(){
 
 <div id="footer">Copyright c 2013 NTT MARKETING ACT. All Rights Reserved.</div>
 
-</div>
-
-
-<!-- loading modal -->
-<div id="modal-loading" class="hidden">
-	<div>
-		<div class="loading-wrap">
-			<img src="img/loading.gif">
-		</div>
-	</div>
-</div>
-<!-- end of loading modal -->
-
-<!-- context-menu -->
-<!-- <div id="context-menu" class="context-menu">
-	<ul>
-		<li id="move-up">▲ 行を上に移動</li>
-		<li id="move-down">▼ 行を下に移動</li>
-		<li class="separator"></li>
-		<li id="join-cell">セルの結合</li>
-		<li id="split-cell">セルの分割</li>
-		<li id="split-col">セルの列分割</li>
-		<li class="separator"></li>
-		<li id="add-row">行の追加</li>
-		<li id="del-row">行の削除</li>
-		<li class="separator"></li>
-		<li id="show-2col">2列表示</li>
-		<li id="show-3col">3列表示</li>
-		<li class="separator"></li>
-		<li id="add-tfoot">フッタ行の追加</li>
-		<li id="del-tfoot">フッタ行の削除</li>
-	</ul>
-</div> -->
-<!-- end of context-menu -->
-
-<!-- head-th-edit-box -->
-<!-- <div id="head-edit-wrap">
-	<div id="head-edit">
-		<label>タイトル</label>
-		<input id="head-edit-title" class="mg-b-10" type="text">
-		<label>クラス名</label>
-		<input id="head-edit-class" class="mg-b-20" type="text">
-		<div>
-			<button id="head-edit-cancel" class="btn btn-default pull-left" type="button">キャンセル</button>
-			<button id="head-edit-reflection" class="btn btn-success pull-right" type="button">反映する</button>
-		</div>
-	</div>
-</div> -->
-<!-- end of head-th-edit-box -->
 
 <!-- edit-box -->
 <!-- <div class="modal" id="edit-box" tabindex="-1" data-backdrop="static">
@@ -294,87 +272,10 @@ $(function(){
 										<label for="rcpt-24hour">24時間</label>
 									</li>
 								</ul>
-								<select id="rcpt-fromhour">
-									<option value="0">0時</option>
-									<option value="1">1時</option>
-									<option value="2">2時</option>
-									<option value="3">3時</option>
-									<option value="4">4時</option>
-									<option value="5">5時</option>
-									<option value="6">6時</option>
-									<option value="7">7時</option>
-									<option value="8">8時</option>
-									<option value="9">9時</option>
-									<option value="10">10時</option>
-									<option value="11">11時</option>
-									<option value="12">12時</option>
-									<option value="13">13時</option>
-									<option value="14">14時</option>
-									<option value="15">15時</option>
-									<option value="16">16時</option>
-									<option value="17">17時</option>
-									<option value="18">18時</option>
-									<option value="19">19時</option>
-									<option value="20">20時</option>
-									<option value="21">21時</option>
-									<option value="22">22時</option>
-									<option value="23">23時</option>
-								</select>
-								<select id="rcpt-fromtime">
-									<option value="0">00分</option>
-									<option value="5">05分</option>
-									<option value="10">10分</option>
-									<option value="15">15分</option>
-									<option value="20">20分</option>
-									<option value="25">25分</option>
-									<option value="30">30分</option>
-									<option value="35">35分</option>
-									<option value="40">40分</option>
-									<option value="45">45分</option>
-									<option value="50">50分</option>
-									<option value="55">55分</option>
-								</select>
-								～
-								<select id="rcpt-tohour">
-									<option value="0">0時</option>
-									<option value="1">1時</option>
-									<option value="2">2時</option>
-									<option value="3">3時</option>
-									<option value="4">4時</option>
-									<option value="5">5時</option>
-									<option value="6">6時</option>
-									<option value="7">7時</option>
-									<option value="8">8時</option>
-									<option value="9">9時</option>
-									<option value="10">10時</option>
-									<option value="11">11時</option>
-									<option value="12">12時</option>
-									<option value="13">13時</option>
-									<option value="14">14時</option>
-									<option value="15">15時</option>
-									<option value="16">16時</option>
-									<option value="17">17時</option>
-									<option value="18">18時</option>
-									<option value="19">19時</option>
-									<option value="20">20時</option>
-									<option value="21">21時</option>
-									<option value="22">22時</option>
-									<option value="23">23時</option>
-								</select>
-								<select id="rcpt-totime">
-									<option value="0">00分</option>
-									<option value="5">05分</option>
-									<option value="10">10分</option>
-									<option value="15">15分</option>
-									<option value="20">20分</option>
-									<option value="25">25分</option>
-									<option value="30">30分</option>
-									<option value="35">35分</option>
-									<option value="40">40分</option>
-									<option value="45">45分</option>
-									<option value="50">50分</option>
-									<option value="55">55分</option>
-								</select>
+
+
+
+
 								<input id="rcpt-lunchbreak" type="checkbox">
 								<label for="rcpt-lunchbreak">12時～13時を除く</label>
 							</fieldset>
@@ -482,7 +383,7 @@ $(function(){
 <!-- 行の並べ替え用ハンドル ここまで -->
 
 <!-- プレビュー用のインラインフレーム -->
-<!-- <div id="ctn-preview">
+ <div id="ctn-preview">
 	<div id="ctn-preview-wrap">
 		<div id="ctn-preview-head">
 			<div class="pull-left">
@@ -496,7 +397,7 @@ $(function(){
 			<iframe id="ctn-preview-frame" src="preview" frameborder="no"></iframe>
 		</div>
 	</div>
-</div> -->
+</div>
 <!-- プレビュー用のインラインフレーム ここまで -->
 
 <!-- セル内のコンテンツ追加ボタン -->

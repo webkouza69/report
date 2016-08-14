@@ -56,25 +56,20 @@ $(function(){
 
             }else{
 
-            var hostUrl= './index/edit';
-            var data = {
-            	id : $('#id').val(),
-            	cateName : $('#cateName').val(),
-            	imgName : $('#imgName').val(),
-            	anchorName : $('#anchorName').val(),
-            	priority : $('#priority').val(),
-              dir : $('#dir').val()
-            };
+            var hostUrl= './Index/edit';
+            var formData = new FormData($('#category')[0]);
 
             $.ajax({
                 url: hostUrl,
                 type:'POST',
+				enctype  : 'multipart/form-data',
+				processData: false,
+				contentType: false,
                 dataType: 'json',
                 // サーバに送信するデータ
-                data : data
+                data : formData
                 }).then(
-                function(data) {
-                  console.log(data);
+                function(formData) {
                               alert("更新しました");
                 },
                 function(XMLHttpRequest, textStatus, errorThrown) {

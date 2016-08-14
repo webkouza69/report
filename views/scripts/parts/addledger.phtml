@@ -13,7 +13,7 @@
             <legend id="idCategory-label"><label for="idCategory" class="required">カテゴリ</label></legend>
             <select id="idCategory" name="idCategory">
                 <?php foreach($this->allCategory as $i => $category) : ?>
-                    <option value="">
+                    <option value="<?= $category['id'] ?>">
                         <?php echo $this->escape($category['cateName']); ?>
                     </option>
                 <?php endforeach; ?>
@@ -48,7 +48,7 @@
         <fieldset>
             <legend id="ledgerFile-label"><label for="ledgerFile" class="">ファイル</label></legend>
             <p id="ledgerFile-element">
-                <input type="text" name="ledgerFile2" id="ledgerFile2" value="<?= $this->ledgers['ledgerFile'] ?>" class=""></p>
+                <input type="text" name="ledgerFile" id="ledgerFile" value="<?= $this->ledgers['ledgerFile'] ?>" class=""></p>
             <input type="text" name="fileSize" id="fileSize" value="<?= $this->ledgers['fileSize'] ?>">
 
             <input type="hidden" name="MAX_FILE_SIZE" value="" >
@@ -162,7 +162,7 @@
                     data : formData
                 }).then(
                     function(data) {
-                        $('#ledgerFile2').val(data.filename);
+                        $('#ledgerFile').val(data.filename);
                         $('#fileSize').val(data.filesize);
                     },
                     function(XMLHttpRequest, textStatus, errorThrown) {
@@ -197,6 +197,7 @@
                 }).then(
                     function(formData) {
                         alert("追加しました");
+                        window.location.reload();
                     },
                     function(XMLHttpRequest, textStatus, errorThrown) {
                         console.log(formData);
