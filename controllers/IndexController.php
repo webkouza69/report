@@ -24,8 +24,8 @@ class IndexController extends Zend_Controller_Action
         $itemLedger = new Application_Model_DbTable_Ledgers();
         $this->view->itemLedger = $itemLedger->getLedger($id);
 
-        $topLedgers = new Application_Model_DbTable_TopLedger();
-        $this->view->topledgers = $topLedgers->fetchRow();
+        $topLedgers = new Application_Model_DbTable_Topledgers();
+        $this->view->topledgers = $topLedgers->fetchAll();
 
 
     }

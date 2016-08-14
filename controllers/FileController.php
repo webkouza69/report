@@ -55,55 +55,46 @@ class FileController extends Zend_Controller_Action
 			echo implode("\n", $messages);
 		}
 
+        $fsize = filesize(APPLICATION_PATH . '/../file/' . $names);
+        $fsize = $this->getFileSizeUnit($fsize);
+
+
+
 		$res = array(
 			'messages' => null,
 			'filename' => $names,
-			'filesize' => filesize(APPLICATION_PATH . '/../file/' . $names),
+			'filesize' => $fsize,
  		);
         return $this->_helper->json->sendJson($res);
 	}
 
-	/**
-	 * ファイルのダウンロード
-	 * @return [type][description]
-	 */
+    /**
+     *ファイル単位
+     *@return [type][description]
+     */
 
-	public function downloadAction()
-	{
-		//  $this->_helper->viewRenderer->setNoRender();
+    public function getFileSizeUnit($size) {
+        $cnt = 0;
+        $buf = 0;
+        $unit = array('B', 'KB', 'MB', 'GB', 'TB');
+        while(1) {
+            if($cnt > count($unit) - 1) {
+                $cnt = 9999;
+                break;
+            }
+            if(!isset($s)) $s = $size;
+            $sbuf = 1;
+            $sbuf = floor($s / 1024);
+            if($sbuf < 1){
+                $fs = $s + round(($size - ($s * pow(1024, $cnt))) / pow(1024, $cnt), 1);
+                $fs .= $unit[$cnt];
+                break;
+            }else{
+                $s = $sbuf;
+            }
+            $cnt ++;
+        }
+        return $fs;
+    }
 
-		// $dlFilePath = "path/to/download.tar.gz";  // ダウンロードするファイルパス
-		// $dlFileName = "name.tar.gz"               // ダウンロードファイル名
-
-		// ヘッダの設定
-		$this->getResponse()->setHeader('Content-type', 'application/octet-stream');
-		$this->getResponse()->setHeader('Content-Disposition', 'attachment; fileName=' . $dlFileName);
-		$this->getResponse()->setHeader('Content-length', filesize($dlFilePath));
-
-		// ヘッダの送信
-		$this->getResponse()->sendHeaders();
-
-		// 出力バッファを無効にする。
-		ob_end_clean();
-		// 再度バッファリングを有効にする場合は記述する。
-		// ob_start(null, 81920);
-
-
-		/**
-		 * readfile() 関数などで一度にファイルを読み込むと
-		 * メモリ不足エラーとなるので少しずつ出力する
-		 */
-
-		$fhandle = fopen($dlFilePath, 'rb');
-		while (!feof($fhandle)) {
-
-			//  bodyにセットし、出力する
-			$this->getResponse()->setBody(fread($fhandle, 8192));
-			$this->getResponse()->outputBody();
-
-			// 上記２行は、以下の処理と等価である
-			// echo implode('', fread($fhandle, 8192));
-		}
-		fclose($fhandle);
-	}
 }
