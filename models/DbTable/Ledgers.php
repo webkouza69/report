@@ -29,7 +29,7 @@ class Application_Model_DbTable_Ledgers extends Zend_Db_Table_Abstract
 	public function getCategories() {
 
 		$sqlCate = 'SELECT * FROM ledger RIGHT JOIN category ON ledger.idCategory = category.id
-		order by ledger.idCategory, category.id desc;';
+		order by ledger.idCategory, ledger.priority desc;';
 
 		$adapter = $this->getAdapter();
 		$rows = $adapter->fetchAll($sqlCate);
@@ -93,6 +93,21 @@ class Application_Model_DbTable_Ledgers extends Zend_Db_Table_Abstract
 		              'bgColor'=> $bgColor,
 		              'color'=> $color,
 		              'dateUpdate'=> $dateUpdate,
+		              'priority'=> $priority
+		);
+
+		$this->update($data, 'itemId = '.(int)$itemId);
+
+
+
+
+	}
+
+	public function sortLedger($itemId,$priority)
+	{
+
+
+		$data = array(
 		              'priority'=> $priority
 		);
 

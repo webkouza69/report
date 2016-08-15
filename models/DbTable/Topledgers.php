@@ -11,9 +11,9 @@ class Application_Model_DbTable_Topledgers extends Zend_Db_Table_Abstract
 		$sql = 'SELECT * FROM topledger';
 
 		$adapter = $this->getAdapter();
-		$topLedgers = $adapter->fetchAll($sql);
+		$topLedgers = $adapter->fetchRow($sql);
 
-		return $topLedgers;
+		return $topLedgers->toArray();
 	}
 
 
