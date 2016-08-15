@@ -1,0 +1,77 @@
+<!-- データ読み込み設定 ここから -->
+<?php
+
+require_once "./php/topcategory.php";
+
+?>
+<!-- データ読み込み設定 ここまで -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>統一帳票ダウンロード</title>
+<link href="css/reset.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<script type="text/javascript" src="js/jQuery1.9.1.js"></script>
+<script type="text/javascript" src="js/yuga.js"></script>
+<script type="text/javascript" src="js/heightLine.js"></script>
+</head>
+<body>
+<div id="container">
+ <div id="wrapper">
+  <div class="header">
+   <div class="bbsearch_h1" alt="">
+    <h1 id="top"><a href="./">帳票ダウンロード</a></h1>
+    <div class="bbtop"><a href="../">BBナビトップへ</a></div>
+   </div>
+  </div>
+  <!--header-->
+  <div id="nav">
+   <ul>
+    <li class="n_top firstchild"><a class="current" href="./">TOP</a></li>
+    <li class="n_reportList"><a href="detail.html">帳票一覧</a></li>
+    <li class="n_operation"><a href="operation.html">帳票の運用</a></li>
+    <li class="n_manual"><a href="manual.html">各種資料</a></li>
+   </ul>
+  </div>
+  <div id="contents">
+   <div class="site-info">
+    <ul class="heightLine">
+     <li>平成25年6月3日（月）起票分より、「営業フロント～営業系SOC～料金担当～設備部門」の部門間を流通するSOに関わる帳票が、<em>統一帳票</em>となりました。</li>
+     <li>対象帳票の詳細に関しては、こちらをご覧ください。<br />
+      →　 <span><a class="icon_excel" href="file/<?php echo $top_ledger[0]['fileName'] ?>">
+       <?php echo $top_ledger[0]['bikou'] ?>
+       （<?php echo $top_ledger[0]['fileSize'] ?>）</a></span>
+      <p class="s_txt">※一部の帳票は調整中となっております。<br />
+       各帳票の本社窓口より運用開始時期について周知があるまでは、状の帳票で運用してください。</p>
+     </li>
+     <li>改善要望に関しては、「<a href="operation.html#page02" class="inlink">帳票の改善</a>」をご覧ください。 </li>
+    </ul>
+   </div>
+   <div class="newfile_area">
+    <h3>最新の改訂版</h3>
+    <div class="newfile_area_point">※ 新規に起票する場合については、原本(新しいファイル)をご利用いただきますようお願いします。<br />
+     過去のファイルを修正して起票することは、誤記載につながるため止めてください。</div>
+    <div class="newfile-dl">
+     <p class="btn_newfile"><a href="file/<?php echo $top_ledger[1]['fileName'] ?>"><span class="icon_zip">改訂版のみをダウンロード （<?php echo $top_ledger[1]['fileSize'] ?>）</span></a></p>
+    </div>
+   </div>
+   <h2>帳票ダウンロードメニュー</h2>
+   <div class="menu">
+    <ul>
+     <?php foreach ($all_category as $row){
+  echo "<li><a href='./detail.html#h2_".$row['id']."'><img src='img/".$row['imgName']."'". "alt='".$row['cateName']."'></a></li>\n";
+  }?><li class="mb"><a href="file/<?php echo $top_ledger[2]['fileName'] ?>"><img class="btn" src="img/menu_all.png" alt="一括ダウンロード"/></a><span><?php echo $top_ledger[2]['fileSize'] ?></span></li>
+    </ul>
+   </div>
+   <div class="pagetop"><a href="#container">ページトップへ</a></div>
+  </div>
+  <!--contents--> 
+ </div>
+ <!--wrapper-->
+ <div id="footer">Copyright c 2013 NTT MARKETING ACT. All Rights Reserved.</div>
+</div>
+<!--container-->
+</body>
+</html>
