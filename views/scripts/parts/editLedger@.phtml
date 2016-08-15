@@ -1,0 +1,181 @@
+<!-- 統一帳票登録・更新モーダル表示画面 -->
+
+<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h6 class="modal-title">仮編集画面</h6>
+			</div>
+<div class="modal-body">
+<form id="ledger" name="ledger" enctype="multipart/form-data" action="" method="post">
+
+
+<p id="idtem-label">&nbsp;</p>
+<p id="idtem-element">
+<input type="hidden" name="itemId" value="<?= $this->ledgers['itemId'] ?>" id="itemId"></p>
+
+<p id="idCategory-element">
+<input type="hidden" name="idCategory" value="<?= $this->ledgers['idCategory'] ?>" id="idCategory"></p>
+
+<fieldset>
+<select id="idCategory1" name="idCategory">
+<?php foreach($this->allCategory as $i => $category) : ?>
+
+  <?php
+      if($category['id'] == $this->ledgers['idCategory']){
+
+        echo '<option selected="selected" value="'.$category['id'].'">';
+      }else{
+        echo '<option value="'.$category['id'].'">';
+      }
+        echo $this->escape($category['cateName']);
+  ?>
+    </option>
+<?php endforeach; ?>
+</select>
+</fieldset>
+
+
+<fieldset>
+<legend id="idLedger-label"><label for="idLedger" class="required">連番</label></legend>
+<p id="idLedger-element">
+<input type="text" name="idLedger" id="idLedger" value="<?= $this->ledgers['idLedger'] ?>"></p>
+</fieldset>
+
+<fieldset>
+<legend id="ledgerName-label"><label for="ledgerName" class="required">帳票名</label></legend>
+<p id="ledgerName-element">
+<input type="text" name="ledgerName" id="ledgerName" value="<?= $this->ledgers['ledgerName'] ?>"></p>
+</fieldset>
+
+<fieldset>
+<legend id="annotation-label"><label for="annotation" class="">注釈</label></legend>
+<p id="annotation-element">
+<input type="text" name="annotation" id="annotation" value="<?= $this->ledgers['annotation'] ?>"></p>
+</fieldset>
+
+<fieldset>
+<legend id="dateUpdate-label"><label for="dateUpdate" class="required">更新日</label></legend>
+<small>*更新日入力はテキストフィールドをクリックでカレンダー入力するか、<br>2016-07-01形式で入力してください。</small>
+<p id="dateUpdate-element">
+<input type="text" name="dateUpdate" id="dateUpdate" value="<?= $this->ledgers['dateUpdate'] ?>" class="form-control datepicker"></p>
+</fieldset>
+
+<fieldset>
+<legend id="ledgerFile-label"><label for="ledgerFile2" class="">ファイル</label></legend>
+<p id="ledgerFile-element">
+<input type="text" name="utf1" id="ledgerFile2" value="<?= $this->ledgers['ledgerFile'] ?>" class="">
+<input type="text" name="ledgerFile2" id="ledgerFile2" value="<?= $this->ledgers['ledgerFile'] ?>" class=""></p>
+
+        アップロードファイルを選択:
+    <input name="uf1" type="file">
+    <input type="button" value="アップロード">
+</fieldset>
+
+<fieldset>
+<legend id="display-label"><label for="display" class="">表示選択</label></legend>
+<p id="display-element">
+<input type="text" name="display" id="display" value="<?= $this->ledgers['display'] ?>" class=""></p>
+</fieldset>
+
+<fieldset>
+<legend id="comment-label"><label for="comment" class="">コメント</label></legend>
+<p id="comment-element">
+<input type="text" name="comment" id="comment" value="<?= $this->ledgers['comment'] ?>" class=""></p>
+</fieldset>
+
+<fieldset>
+<legend id="bgColor-label"><label for="bgColor" class="">セル背景色</label></legend>
+<p id="bgColor-element">
+<input type="text" name="bgColor" id="bgColor" value="<?= $this->ledgers['bgColor'] ?>" class=""></p>
+</fieldset>
+
+<fieldset>
+<legend id="priority-label"><label for="priority" class="">優先度</label></legend>
+<p id="priority-element">
+<input type="text" name="priority" id="priority" value="<?= $this->ledgers['priority'] ?>"></p>
+</fieldset>
+
+
+<p id="submit-label">&nbsp;</p>
+<p id="submit-element">
+<input type="button" name="button" id="submitbutton2" value="仮編集を保存"></p>
+
+</form>
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+</div>
+
+<script type="text/javascript">
+$(function(){
+
+// bootstrapモーダル初期化設定
+$(document).on('hidden.bs.modal', '.modal', function(){
+        $(this).removeData('bs.modal');
+    });
+
+// 日付選択カレンダー設定
+$('.datepicker').datepicker({
+  format: 'yyyy-m-dd',
+  language: 'ja'
+});
+
+// カラーパレット選択設定
+    $('#annotation').paletteColorPicker({
+    colors: [
+      {"#E91E63": "#E91E63"},
+      {"#C2185B": "#C2185B"},
+      {"#F8BBD0": "#F8BBD0"},
+      {"#CDDC39": "#CDDC39"},
+      {"#212121": "#212121"},
+      {"#727272": "#727272"},
+      {"#B6B6B6": "#B6B6B6"}
+    ],
+    position: 'upside', // default -> 'upside'
+  });
+
+  $('#bgColor').paletteColorPicker({
+    colors: [
+      {"#E91E63": "#E91E63"},
+      {"#C2185B": "#C2185B"},
+      {"#F8BBD0": "#F8BBD0"},
+      {"#CDDC39": "#CDDC39"},
+      {"#212121": "#212121"},
+      {"#727272": "#727272"},
+      {"#B6B6B6": "#B6B6B6"}
+    ],
+    position: 'upside', // default -> 'upside'
+  });
+
+// ajax通信設定
+  $('#submitbutton2').on('click', function() {
+
+            if(!confirm("更新しますか？")) {
+              return false;
+
+            }else{
+
+            var hostUrl= './../ledger/editledger';
+            var formData = new FormData($('#ledger')[0]);
+
+            $.ajax({
+                url: hostUrl,
+                type:'POST',
+                enctype  : 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                // サーバに送信するデータ
+                data : formData
+                }).then(
+                function(formData) {
+                  alert("更新しました");
+                },
+                function(XMLHttpRequest, textStatus, errorThrown) {
+                             alert("更新に失敗しました");
+                       });
+              }
+        });
+
+  });
+</script>

@@ -1,8 +1,20 @@
+<div class="pagelink firstChild">
+    <ul class="firstChild">
+    <?php foreach($this->allCategory as $category) : ?>
+     <li>
+     <a href="#h2_<?php echo $this->escape($category->id); ?>" class="firstChild lastChild"><?php echo $this->escape($category['cateName']); ?></a>
+     </li>
+     <?php endforeach; ?>
+    </ul>
+
+   </div>
+
 
 <button type="button" class="btn">
-<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'addledger'));?>" class="btn" data-toggle="modal" data-target="#modal-cate3" >新規帳票追加</a></button>
+<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'addledger'));?>" class="btn" data-toggle="modal" data-target="#modal-cate3" ><?php echo $this->escape($itemSheet->cateName); ?>新規帳票追加</a></button>
 
-<?php var_dump($this->allCategory) ?>
+<button type="button" class="btn" data-toggle="modal" data-target="#modal-pre">
+プレビュー</button>
 
 <?php foreach ($this->rows as $val1) : { ?>
 
@@ -10,44 +22,53 @@
 
 
 <h2 id="h2_<?php echo $this->escape($categories['idCategory']); ?>"><?php echo $this->escape($categories['cateName']); ?></h2>
+    <p><?php echo $this->escape($categories['remarks']); ?></p>
 <table>
-<tbody class="jquery-ui-sortable">
-<tr class="unsortable">
-	<th>連番</th>
-	<th class="cellwidth393">帳票名</th>
-	<th>更新日</th>
-	<th style="width:120px;">ファイル</th>
-	<th style="width: 70px;">表示設定</th>
-	<th>コメント</th>
-	<th></th>
+<thead>
+  <tr class="">
+  <th>連番</th>
+  <th class="cellwidth393">帳票名</th>
+  <th>更新日</th>
+  <th style="width:120px;">ファイル</th>
+  <th style="width: 70px;">表示設定</th>
+  <th>コメント</th>
+  <th></th>
 </tr>
+</thead>
+<tbody class="jquery-ui-sortable">
 <?php foreach ($val1 as $categories ) : { ?>
 
 <tr data-id="<?php echo $categories['itemId']; ?>">
-    <form id="editledger" name="editledger" enctype="multipart/form-data" action="" method="post">
+    <form name="editledger" enctype="multipart/form-data" action="" method="post" class="editledger">
 	<td>
-	<input type="hidden" name="idCategory" value="<?= $categories['idCategory'] ?>" >
-	<input type="text" name="idLedger" id="idLedger" value="<?= $categories['idLedger'] ?>" maxlength="6" style="width:70px;">
+	<input type="hidden" name="idCategory" value="<?= $categories['idCategory'] ?>" ><br><br>
+	<input type="text" name="idLedger" class="idLedger" value="<?= $categories['idLedger'] ?>" maxlength="6" style="width:70px;">
 	</td>
 	<td>
-	<input type="text" name="ledgerName" id="ledgerName" value="<?= $categories['ledgerName'] ?>" style="width:390px;">
+	<input type="text" name="ledgerName" value="<?= $categories['ledgerName'] ?>" style="width: 390px; margin-bottom: 10px;">
+	<input type="text" name="color" class="color" value="<?= $categories['color'] ?>" >
+	*注釈追記:<br>
+	<input type="text" name="annotation" class="annotation" value="<?= $categories['annotation'] ?>" ><br>
+*行の背景色選択:
+	<input type="hidden" name="bgColor" class="bgColor" value="<?= $categories['bgColor'] ?>" >
 	</td>
 	<td>
 
-	<input type="text" name="dateUpdate" id="dateUpdate" value="<?= $categories['dateUpdate'] ?>" class="form-control datepicker" style="width:70px;">
+	<input type="text" name="dateUpdate" class="form-control datepicker dateUpdate" value="<?= $categories['dateUpdate'] ?>" style="width:70px;">
 	</td>
 	<td>
-	<input type="text" name="ledgerFile" id="" value="<?= $categories['ledgerFile'] ?>" class="ledgerFile" style="width:120px;">
-	<input type="text" name="fileSize" id="" value="<?= $categories['fileSize'] ?>" class="fileSize" style="width:120px;"><br>
+	<input type="text" name="ledgerFile" value="<?= $categories['ledgerFile'] ?>" class="ledgerFile" style="width:120px;">
+	<input type="text" name="fileSize" value="<?= $categories['fileSize'] ?>" class="fileSize" style="width:120px;"><br>
 
 
-    <input name="uf1" type="file" class="btn-info ledgerFiles" id="">
+    <input name="uf1" type="file" class="btn-info ledgerFiles" class="">
     <input type="button" value="アップロード" class="btn_up2">
 	</td>
 	<td>
-		<input type="text" name="display" id="display" value="<?= $categories['display'] ?>" class="" style="width: 50px;">
+		<input type="text" name="display" class="display" value="<?= $categories['display'] ?>" class="" style="width: 50px;">
 	</td>
-	<td><?php echo $this->escape($categories['Annoation']); ?></td>
+	<td>
+	<input type="text" name="comment" class="comment" value="<?= $categories['comment'] ?>" class="" style="width: 50px;">
 	<td>
 	<input type="button" name="button" class="submitbtn2" value="仮編集を保存">
         <botton class="btn">
@@ -74,15 +95,16 @@
 
 <script type="text/javascript">
 $(function(){
-
 // 日付選択カレンダー設定
+
 $('.datepicker').datepicker({
   format: 'yyyy-m-dd',
-  language: 'ja'
+  language: 'ja',
 });
 
+
 // カラーパレット選択設定
-    $('#annotation').paletteColorPicker({
+    $('.color').paletteColorPicker({
     colors: [
       {"#E91E63": "#E91E63"},
       {"#C2185B": "#C2185B"},
@@ -95,7 +117,7 @@ $('.datepicker').datepicker({
     position: 'upside' // default -> 'upside'
   });
 
-  $('#bgColor').paletteColorPicker({
+   $('.bgColor').paletteColorPicker({
     colors: [
       {"#E91E63": "#E91E63"},
       {"#C2185B": "#C2185B"},
@@ -116,8 +138,12 @@ $('.datepicker').datepicker({
 
             } else {
 
+        // 親の要素を取得
+        var $parent = $(this).closest('tr');
+
         var formData = new FormData();
-        formData.append("uploadFile", $('.ledgerFiles').get(0).files[0]);
+        formData.append("uploadFile", $parent.find('.ledgerFiles').get(0).files[0]);
+        formData.append("idCategory", $parent.find('input[name=idCategory]').val());
 
         $.ajax({
             url: $($('.form2')).attr('action'),
@@ -130,8 +156,8 @@ $('.datepicker').datepicker({
             data : formData
         }).then(
           function(data) {
-            $('.ledgerFile').val(data.filename);
-            $('.fileSize').val(data.filesize);
+            $parent.find('.ledgerFile').val(data.filename);
+            $parent.find('.fileSize').val(data.filesize);
           },
           function(XMLHttpRequest, textStatus, errorThrown) {
             alert('ファイルのアップロードに失敗しました。');
@@ -149,8 +175,25 @@ $('.datepicker').datepicker({
 
             }else{
 
+            // 親の要素を取得
+            var $parent = $(this).closest('tr');
+
             var hostUrl= './../ledger/editledger';
-            var formData = new FormData($('#editledger')[0]);
+            var formData = new FormData($('.editledger')[0]);
+
+            // formDataに必要な要素を登録
+            formData.append("itemId", $parent.data('id'));
+            formData.append("idCategory", $parent.find('input[name=idCategory]').val());
+            formData.append("idLedger", $parent.find('input[name=idLedger]').val());
+            formData.append("ledgerName", $parent.find('input[name=ledgerName]').val());
+            formData.append("color", $parent.find('input[name=color]').val());
+            formData.append("annotation", $parent.find('input[name=annotation]').val());
+            formData.append("bgColor", $parent.find('input[name=bgColor]').val());
+            formData.append("dateUpdate", $parent.find('input[name=dateUpdate]').val());
+            formData.append("ledgerFile", $parent.find('input[name=ledgerFile]').val());
+            formData.append("fileSize", $parent.find('input[name=fileSize]').val());
+            formData.append("display", $parent.find('input[name=display]').val());
+            formData.append("comment", $parent.find('input[name=comment]').val());
 
             $.ajax({
                 url: hostUrl,
@@ -173,6 +216,40 @@ $('.datepicker').datepicker({
         });
 
   });
+
+  // 並び替え終了時のイベント
+  $( ".jquery-ui-sortable" ).on( "sortupdate", function( event, ui ) {
+    var $tbody = $(event.target);
+    var len = $tbody.find('tr').length;
+    var formData = {};
+    $tbody.find('tr').each(function(i) {
+      var $tr = $(this);
+      console.log('itemId = ' + $tr.data('id') + ' ' + 'index = ' + i + ' priority = ' + (len - i));
+
+      formData[i] = {
+        itemId: $tr.data('id'),
+        priority: (len - i)
+      };
+    });
+
+    $.ajax({
+        url: './../ledger/sort',
+        type:'POST',
+        dataType: 'json',
+        // contentType: 'application/json',
+        // サーバに送信するデータ
+        data : {'list': formData}
+    }).then(
+      function(data) {
+        // 成功した時は画面を更新する
+        alert('並び替えが完了しました');
+      },
+      function(XMLHttpRequest, textStatus, errorThrown) {
+        alert('並び替えに失敗しました。');
+      }
+    );
+
+  } );
 </script>
 
 
@@ -200,3 +277,18 @@ $('.datepicker').datepicker({
 <!-- end of add ledger modal -->
 
 
+<div class="modal fade" id="modal-pre" tabindex="-1" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+        </div>
+      <div class="modal-body">
+
+<iframe src="http://php_sho.localhost/detail.html" class="pre_ledger"></iframe>
+
+
+      </div>
+    </div>
+  </div>
+</div>

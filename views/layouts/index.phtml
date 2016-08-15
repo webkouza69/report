@@ -30,7 +30,6 @@
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/jquery.cookie.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/utility.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/heightLine.js"></script>
-	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/telnumber.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/palette-color-picker.min.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/dropzone.js"></script>
 	<script type="text/javascript">
@@ -122,31 +121,6 @@ $(function(){
 	};
 	myDropzone();
 
-	// プレビュー画面
-	var Preview = {
-		load: function () {
-			$(Names.cntPreview.addHash() + '-wrap').height(($(window).height() - 60));
-			var frameHeight = $(Names.cntPreview.addHash() + '-wrap').height() -
-				$(Names.cntPreview.addHash() + '-head').outerHeight() - 30;
-			$(Names.cntPreview.addHash() + '-frame-wrap').height(frameHeight - 40);
-			$(Names.cntPreview.addHash() + '-frame').height(frameHeight - 40);
-		},
-		// プレビューの表示
-		show: function() {
-			$(Names.cntPreview.addHash() + '-frame').attr('src', '');
-			$(Names.cntPreview.addHash() + '-frame').attr('src', 'preview').load(function() {
-				var $insertContent = $(Names.cntPreview.addHash() + '-frame').contents().find('#mainmenu');
-				// プレビューコンテンツの作成
-				Contents.createPreview($insertContent);
-				// プレビュー画面を表示する
-				$(Names.cntPreview.addHash()).show();
-			});
-		},
-		// プレビューの非表示
-		hide: function() {
-			$(Names.cntPreview.addHash()).hide();
-		}
-	};
 });
 
 	</script>
