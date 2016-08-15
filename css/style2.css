@@ -459,6 +459,8 @@ button.small {
   color: #fff;
   background-color: #5bc0de;
   border-color: #46b8da;
+  width: 120px;
+  height: 100px;
 }
 .btn-info:focus, .btn-info.focus {
   color: #fff;

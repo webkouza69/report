@@ -296,7 +296,7 @@ h2{
 	clear:both;
 	background: url(../img/h2.png) repeat-x;
 	background-size: cover;
-	width: 950px;
+	/*width: 950px;*/
 	height: 30px;
 	margin:0 0 15px 0;
 	color:#fff;
@@ -390,7 +390,7 @@ table{
 	border-collapse:collapse;
 	table-layout:fixed;
 	font-size:12px;
-	width: 940px;
+	/* width: 940px; */
 	margin:20px auto 30px;
 }
 
@@ -606,4 +606,10 @@ ul.charge{
 #fileupledger2,
 #fileupledger3{
 	margin-bottom: 20px;
+}
+
+.pre_ledger{
+	width: 850px;
+	height:580px;
+	overflow: auto;
 }
