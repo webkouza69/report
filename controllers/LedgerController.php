@@ -17,11 +17,14 @@ class LedgerController extends Zend_Controller_Action
         $resultSet = new Application_Model_DbTable_Ledgers();
         $this->view->resultSet = $resultSet->getAllLedger();
 
-         $rows = new Application_Model_DbTable_Ledgers();
+        $rows = new Application_Model_DbTable_Ledgers();
         $this->view->rows = $rows->getCategories();
 
         $itemLedger = new Application_Model_DbTable_Ledgers();
         $this->view->itemLedger = $itemLedger->getLedger($id);
+
+        $ledItem = new Application_Model_DbTable_Categorys();
+        $this->view->allCategory = $ledItem->fetchAll();
 
         //Zend_Layoutのインスタンスの取得
         $layout = $this->_helper->layout;
@@ -153,6 +156,34 @@ class LedgerController extends Zend_Controller_Action
 
     }
 
+       function sortAction()
+    {
+        // layoutsのindex.phtmlを読み込まさない設定
+        $this->_helper->layout()->disableLayout();
+
+        if($this->getRequest()->isPost()) {
+
+            // jsonで返すデータ
+            $res = array(
+                         'error' => true,
+                         'message' => null,
+            );
+
+            // DB処理
+                $ledgerItem = new Application_Model_DbTable_Ledgers();
+                foreach ($_POST['list'] as $value) {
+                    $ledgerItem->sortLedger($value['itemId'],$value['priority']);
+                }
+
+
+            // ajaxでOKとかを返す
+            $res['error'] = false;
+            return $this->_helper->json->sendJson($res);
+
+        }
+
+    }
+
     public function deleteAction()
     {
 
@@ -273,15 +304,5 @@ class LedgerController extends Zend_Controller_Action
 
         return true;
     }
-
-
-    /*
-     * プレビューページの表示
-     */
-    public function previewAction()
-    {
-        $layout = Zend_Layout::getMvcInstance();
-        $layout->setLayout('preview');
-        $this->view->assign('url', ROOT_URI);}
 };
 

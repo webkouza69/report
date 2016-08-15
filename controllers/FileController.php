@@ -41,12 +41,57 @@ class FileController extends Zend_Controller_Action
 			// ファイル名
 			$names = $info['name'];
 
-			// ファイル名によって振り分け先を設定する
-			if ($validator->isValid($info['name'])) {
-				$upload->setDestination('./file/', $file);
+			// カテゴリーid
+			$cateId = $_POST['idCategory'];
+
+			// ディレクトリを決定
+			if (!$cateId) {
+				$directory = './file/';
 			} else {
-				$upload->setDestination('./file/', $file);
+				// カテゴリテーブルから取得
+	            $categoryModel = new Application_Model_DbTable_Categorys();
+	            $category = $categoryModel->getCategory($cateId);
+
+				$directory = './file/report/' . $category['dir'] . '/';
 			}
+
+			$upload->setDestination($directory, $file);
+
+			// $dirData  = array(
+			//                   'flets' => './file/report/flets/',
+			//                   'hikari' => './file/report/hikari/',
+			//                   'appli' => './file/report/appli/',
+			//                   'legacy' => './file/report/legacy/',
+			//                   'fee' => './file/report/fee/',
+			//                   'kiki' => './file/report/kiki/',
+			//                   'vpn' => './file/report/vpn/',
+			//                    );
+
+			// // カテゴリーによって振り分け先を設定する
+			// if ($cateId == 1) {
+			// 	$upload->setDestination($dirData['flets'], $file);
+
+			// } elseif($cateId == 2) {
+			// 	$upload->setDestination($dirData['hikari'], $file);
+
+			// } elseif($cateId == 3) {
+			// 	$upload->setDestination($dirData['appli'], $file);
+
+			// } elseif($cateId == 4) {
+			// 	$upload->setDestination($dirData['legacy'], $file);
+
+			// } elseif($cateId == 5) {
+			// 	$upload->setDestination($dirData['fee'], $file);
+
+			// } elseif($cateId == 6) {
+			// 	$upload->setDestination($dirData['kiki'], $file);
+
+			// } elseif($cateId == 7) {
+			// 	$upload->setDestination($dirData['vpn'], $file);
+
+			// } else {
+			// 	$upload->setDestination('./file/', $file);
+			// }
 		}
 
 		//  ファイルを受信する （テンポラリフォルダからファイルをコピーする）
@@ -55,7 +100,34 @@ class FileController extends Zend_Controller_Action
 			echo implode("\n", $messages);
 		}
 
-        $fsize = filesize(APPLICATION_PATH . '/../file/' . $names);
+		// ファイルサイズを取得
+		$fsize = filesize(APPLICATION_PATH . '/.' . $directory . $names);
+
+		// if ($cateId == 1) {
+		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['flets'] . $names);
+
+		// 	} elseif($cateId == 2) {
+		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['hikari'] . $names);
+
+		// 	} elseif($cateId == 3) {
+		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['appli'] . $names);
+
+		// 	} elseif($cateId == 4) {
+		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['legacy'] . $names);
+
+		// 	} elseif($cateId == 5) {
+		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['fee'] . $names);
+
+		// 	} elseif($cateId == 6) {
+		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['kiki'] . $names);
+
+		// 	} elseif($cateId == 7) {
+		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['vpn'] . $names);
+
+		// 	} else {
+		// 		$fsize = filesize(APPLICATION_PATH . '/.' . './file/' . $names);
+		// 	}
+
         $fsize = $this->getFileSizeUnit($fsize);
 
 
