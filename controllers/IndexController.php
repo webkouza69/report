@@ -13,7 +13,7 @@ class IndexController extends Zend_Controller_Action
     {
         // トップ用カテゴリ一覧設定
         $ledItem = new Application_Model_DbTable_Categorys();
-        $this->view->allCategorys = $ledItem->fetchAll();
+        $this->view->allCategorys = $ledItem->getAllCategory();
 
         $resultSet = new Application_Model_DbTable_Ledgers();
         $this->view->resultSet = $resultSet->getAllLedger();

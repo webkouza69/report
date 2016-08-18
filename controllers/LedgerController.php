@@ -24,7 +24,7 @@ class LedgerController extends Zend_Controller_Action
         $this->view->itemLedger = $itemLedger->getLedger($id);
 
         $ledItem = new Application_Model_DbTable_Categorys();
-        $this->view->allCategory = $ledItem->fetchAll();
+        $this->view->allCategory = $ledItem->getAllCategory();
 
         //Zend_Layoutのインスタンスの取得
         $layout = $this->_helper->layout;
@@ -62,6 +62,7 @@ class LedgerController extends Zend_Controller_Action
                 $_POST['idCategory'],
                 $_POST['idLedger'],
                 $_POST['ledgerName'],
+                $_POST['color'],
                 $_POST['annotation'],
                 $_POST['ledgerFile'],
                 $_POST['fileSize'],
@@ -69,7 +70,6 @@ class LedgerController extends Zend_Controller_Action
                 $_POST['remarks'],
                 $_POST['comment'],
                 $_POST['bgColor'],
-                $_POST['color'],
                 $_POST['dateUpdate'],
                 $_POST['priority']
                 );
@@ -118,6 +118,7 @@ class LedgerController extends Zend_Controller_Action
                 $_POST['idLedger'],
                 $_POST['idCategory'],
                 $_POST['ledgerName'],
+                $_POST['color'],
                 $_POST['annotation'],
                 $_POST['ledgerFile'],
                 $_POST['fileSize'],
@@ -125,9 +126,7 @@ class LedgerController extends Zend_Controller_Action
                 $_POST['remarks'],
                 $_POST['comment'],
                 $_POST['bgColor'],
-                $_POST['color'],
-                $_POST['dateUpdate'],
-                $_POST['priority']
+                $_POST['dateUpdate']
                 );
 
             // ajaxでOKとかを返す

@@ -56,42 +56,6 @@ class FileController extends Zend_Controller_Action
 			}
 
 			$upload->setDestination($directory, $file);
-
-			// $dirData  = array(
-			//                   'flets' => './file/report/flets/',
-			//                   'hikari' => './file/report/hikari/',
-			//                   'appli' => './file/report/appli/',
-			//                   'legacy' => './file/report/legacy/',
-			//                   'fee' => './file/report/fee/',
-			//                   'kiki' => './file/report/kiki/',
-			//                   'vpn' => './file/report/vpn/',
-			//                    );
-
-			// // カテゴリーによって振り分け先を設定する
-			// if ($cateId == 1) {
-			// 	$upload->setDestination($dirData['flets'], $file);
-
-			// } elseif($cateId == 2) {
-			// 	$upload->setDestination($dirData['hikari'], $file);
-
-			// } elseif($cateId == 3) {
-			// 	$upload->setDestination($dirData['appli'], $file);
-
-			// } elseif($cateId == 4) {
-			// 	$upload->setDestination($dirData['legacy'], $file);
-
-			// } elseif($cateId == 5) {
-			// 	$upload->setDestination($dirData['fee'], $file);
-
-			// } elseif($cateId == 6) {
-			// 	$upload->setDestination($dirData['kiki'], $file);
-
-			// } elseif($cateId == 7) {
-			// 	$upload->setDestination($dirData['vpn'], $file);
-
-			// } else {
-			// 	$upload->setDestination('./file/', $file);
-			// }
 		}
 
 		//  ファイルを受信する （テンポラリフォルダからファイルをコピーする）
@@ -103,30 +67,7 @@ class FileController extends Zend_Controller_Action
 		// ファイルサイズを取得
 		$fsize = filesize(APPLICATION_PATH . '/.' . $directory . $names);
 
-		// if ($cateId == 1) {
-		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['flets'] . $names);
 
-		// 	} elseif($cateId == 2) {
-		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['hikari'] . $names);
-
-		// 	} elseif($cateId == 3) {
-		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['appli'] . $names);
-
-		// 	} elseif($cateId == 4) {
-		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['legacy'] . $names);
-
-		// 	} elseif($cateId == 5) {
-		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['fee'] . $names);
-
-		// 	} elseif($cateId == 6) {
-		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['kiki'] . $names);
-
-		// 	} elseif($cateId == 7) {
-		// 		$fsize = filesize(APPLICATION_PATH . '/.' . $dirData['vpn'] . $names);
-
-		// 	} else {
-		// 		$fsize = filesize(APPLICATION_PATH . '/.' . './file/' . $names);
-		// 	}
 
         $fsize = $this->getFileSizeUnit($fsize);
 
@@ -146,27 +87,26 @@ class FileController extends Zend_Controller_Action
      */
 
     public function getFileSizeUnit($size) {
-        $cnt = 0;
-        $buf = 0;
-        $unit = array('B', 'KB', 'MB', 'GB', 'TB');
-        while(1) {
-            if($cnt > count($unit) - 1) {
-                $cnt = 9999;
-                break;
-            }
-            if(!isset($s)) $s = $size;
-            $sbuf = 1;
-            $sbuf = floor($s / 1024);
-            if($sbuf < 1){
-                $fs = $s + round(($size - ($s * pow(1024, $cnt))) / pow(1024, $cnt), 1);
-                $fs .= $unit[$cnt];
-                break;
-            }else{
-                $s = $sbuf;
-            }
-            $cnt ++;
-        }
-        return $fs;
+       $units = array('', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y');
+		$u = 0;
+		$unit;
+		$n;
+		$p;
+
+		while (1000 <= $size) {
+		    $size = $size / 1024;
+		    $u++;
+		}
+		$unit = $units[$u];
+		if (100 <= $size) {
+			return round($size) . $unit . 'B';
+		}
+		$n = (10 <= $size ? (round($size * 10) / 10) : (round($size * 100) / 100)) . '';
+		$p = (10 <= $size) ? ($size % 1) : ($size * 10 % 1);
+		if (!$p && 4 > strlen($n)) {
+			$n = substr(preg_replace('/^(\d+)$/', '$1.', $n) . '000', 0, 4);
+		}
+		return $n . $unit . 'B';
     }
 
 }
