@@ -30,7 +30,7 @@
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/jquery.cookie.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/utility.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/heightLine.js"></script>
-	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/palette-color-picker.min.js"></script>
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/palette-color-picker-bbnavi.js"></script>
 	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/dropzone.js"></script>
 	<script type="text/javascript">
 $(function(){
@@ -71,7 +71,7 @@ $(function(){
 
 	$('.datepicker').datepicker({
   		language: 'ja',
-  		format: 'yyyy-m-dd'
+  		format: 'yyyy/m/dd'
 		});
 
 		var myDropzone = function() {
@@ -121,6 +121,7 @@ $(function(){
 	};
 	myDropzone();
 
+
 });
 
 	</script>
@@ -130,24 +131,17 @@ $(function(){
 <div id="wrapper">
 	<header class="header">
    <div class="bbsearch_h1" alt="">
-    <h1 id="top"><a href="./">帳票ダウンロード</a></h1>
+    <h1 id="top"><a href="<?= $this->baseUrl() ?>/">帳票ダウンロード</a></h1>
     <div class="bbtop"><a href="../">BBナビトップへ</a></div>
    </div>
   </header>
   <!--header-->
-  <!-- <div id="nav">
-   <ul>
-    <li class="n_top firstchild"><a class="current" href="./">TOP</a></li>
-    <li class="n_reportList"><a href="detail.html">帳票一覧</a></li>
-    <li class="n_operation"><a href="operation.html">帳票の運用</a></li>
-    <li class="n_manual"><a href="manual.html">各種資料</a></li>
-   </ul>
-  </div> -->
+
 <div id="contents">
 
 	<?= $this->layout()->content; ?>
 
-   <div class="pagetop"><a href="#container">ページトップへ</a></div>
+
   </div>
   <!--contents-->
 	<!-- <a class="pagetop-h">↑</a> -->
@@ -156,188 +150,6 @@ $(function(){
 
 <div id="footer">Copyright c 2013 NTT MARKETING ACT. All Rights Reserved.</div>
 
-
-<!-- edit-box -->
-<!-- <div class="modal" id="edit-box" tabindex="-1" data-backdrop="static">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<span class="modal-title">コンテンツの編集</span>
-			</div>
-			<div class="modal-body clearfix">
-				<div id="edit-box-left">
-					<div class="edit-section">
-						<h4 class="edit-section-title">センタ等<span class="small">(クリックで開閉)</span></h4>
-						<fieldset id="field-address">
-							legend>センタ等</legend
-							<label>
-								センタ名
-								<input id="edit-center" type="text">
-							</label>
-							<label>住所等</label>
-							<textarea id="edit-address" class="text-edit" rows="6"></textarea>
-							<div>
-								<div class="edit-note-title">※入力方法・注意事項<span class="small">(クリックで開閉)</span></div>
-								<div class="edit-note-wrap">
-									<div class="edit-note">
-										※文字を選択して「小文字」「赤字」「太字」ボタンを押すと、文字サイズの変更や装飾が可能です。
-									</div>
-									<div class="edit-note">
-										※「リンク」「メール」ボタンは文字を選択して押した場合は、選択した文字列に対するリンクを設定します。<br>
-											文字列を選択しないでボタンを押した場合、リンク用の文字列はリンク先のアドレスと同じになります。
-									</div>
-									<div class="edit-note">
-										※文字サイズ変更や装飾、リンクを設定した文字列を再度選択して「元に戻す」ボタンを押すと文字サイズ変更や装飾、リンクがリセットされます。
-									</div>
-									<div class="edit-note">
-										※文字サイズ変更や装飾には「font」タグが使用されますが、Staging公開時に「span」タグに変換されます。
-									</div>
-								</div>
-							</div>
-						</fieldset>
-					</div>
-					<div class="edit-section">
-						<h4 class="edit-section-title">電話番号<span class="small">(クリックで開閉)</span></h4>
-						<fieldset id="field-phone">
-							legend>電話番号</legend
-							<div id="phone-group-wrap"></div>
-							<button id="btn-add-phone" class="btn btn-default" type="button">電話番号の追加</button>
-						</fieldset>
-					</div>
-					<div class="edit-section">
-						<h4 class="edit-section-title">ホームページ<span class="small">(クリックで開閉)</span></h4>
-						<fieldset id="field-hp" class="clearfix">
-							legend>ホームページ</legend
-							<label class="pull-left w-200">
-								見出し
-								<input id="edit-hp-prefix" type="text">
-							</label>
-							<label class="pull-left w-324 mg-l-5">
-								アドレス
-								<input id="edit-hp-address" type="text">
-							</label>
-						</fieldset>
-					</div>
-					<div class="edit-section">
-						<h4 class="edit-section-title">メールアドレス<span class="small">(クリックで開閉)</span></h4>
-						<fieldset id="field-mail">
-							legend>メールアドレス</legend
-							<div id="mail-group-wrap"></div>
-							<button id="btn-add-mail" class="btn btn-default" type="button">メールアドレスの追加</button>
-						</fieldset>
-					</div>
-					<div class="edit-section">
-						<h4 class="edit-section-title">受付<span class="small">(クリックで開閉)</span></h4>
-						<fieldset id="field-reception">
-							legend>受付</legend
-							<fieldset id="reception-time">
-								<legend>受付時間</legend>
-								<ul>
-									<li>
-										<input id="rcpt-nothing" type="radio" name="rcpt-time" value="1">
-										<label for="rcpt-nothing">表示しない</label>
-									</li>
-									<li>
-										<input id="rcpt-allowed" type="radio" name="rcpt-time" value="2">
-										<label for="rcpt-allowed">指定時間</label>
-									</li>
-									<li>
-										<input id="rcpt-24hour" type="radio" name="rcpt-time" value="3">
-										<label for="rcpt-24hour">24時間</label>
-									</li>
-								</ul>
-
-
-
-
-								<input id="rcpt-lunchbreak" type="checkbox">
-								<label for="rcpt-lunchbreak">12時～13時を除く</label>
-							</fieldset>
-							<fieldset id="reception-date">
-								<legend>受付日</legend>
-								<ul>
-									<li>
-										<input id="rcpd-weekday" type="checkbox">
-										<label for="rcpd-weekday">平日</label>
-									</li>
-									<li>
-										<input id="rcpd-saturday" type="checkbox">
-										<label for="rcpd-saturday">土曜日</label>
-									</li>
-									<li>
-										<input id="rcpd-sunday" type="checkbox">
-										<label for="rcpd-sunday">日曜日</label>
-									</li>
-									<li>
-										<input id="rcpd-holiday" type="checkbox">
-										<label for="rcpd-holiday">祝日</label>
-									</li>
-									<li>
-										<input id="rcpd-365days" type="checkbox">
-										<label for="rcpd-365days">年中無休</label>
-									</li>
-								</ul>
-							</fieldset>
-							<fieldset id="reception-blackout">
-								<legend>受付休み</legend>
-								<ul>
-									<li>
-										<label for="bko-other">その他</label>
-										<input id="bko-other" type="text">
-									</li>
-									<li>
-										<input id="bko-may" type="checkbox">
-										<label for="bko-may">5/3～5/5</label>
-									</li>
-									<li>
-										<input id="bko-end-year" type="checkbox">
-										<label for="bko-end-year">年末年始(12/29～1/3)</label>
-									</li>
-								</ul>
-							</fieldset>
-						</fieldset>
-					</div>
-					<div class="edit-section">
-						<h4 class="edit-section-title">その他<span class="small">(クリックで開閉)</span></h4>
-						<fieldset id="field-other">
-							legend>その他</legend
-							<textarea id="edit-other" class="text-edit" rows="6"></textarea>
-							<div>
-								<div class="edit-note-title">※入力方法・注意事項<span class="small">(クリックで開閉)</span></div>
-								<div class="edit-note-wrap">
-									<div class="edit-note">
-										※文字を選択して「小文字」「赤字」「太字」ボタンを押すと、文字サイズの変更や装飾が可能です。
-									</div>
-									<div class="edit-note">
-										※「リンク」「メール」ボタンは文字を選択して押した場合は、選択した文字列に対するリンクを設定します。<br>
-											文字列を選択しないでボタンを押した場合、リンク用の文字列はリンク先のアドレスと同じになります。
-									</div>
-									<div class="edit-note">
-										※文字サイズ変更や装飾、リンクを設定した文字列を再度選択して「元に戻す」ボタンを押すと文字サイズ変更や装飾、リンクがリセットされます。
-									</div>
-									<div class="edit-note">
-										※文字サイズ変更や装飾には「font」タグが使用されますが、Staging公開時に「span」タグに変換されます。
-									</div>
-								</div>
-							</div>
-						</fieldset>
-					</div>
-				</div>
-				<div id="edit-box-right">
-					<div class="title text-center">※編集内容が下にプレビューされます</div>
-					<div id="edit-box-preview-wrap">
-						<div id="edit-box-preview"></div>
-					</div>
-					<div id="edit-box-btns" class="clearfix">
-						<button id="btn-cancel-box" class="btn btn-default pull-left" type="button" data-dismiss="modal">キャンセル</button>
-						<button id="btn-update-box" class="btn btn-success pull-right" type="button">更新する</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div> -->
-<!-- end of edit-box -->
 
 <!-- ホバーしている行のガイドライン -->
 <div id="hover-row-top"></div>
@@ -355,24 +167,6 @@ $(function(){
 <!-- 行の並べ替え用ハンドル -->
 <div id="sort-row-handle"></div>
 <!-- 行の並べ替え用ハンドル ここまで -->
-
-<!-- プレビュー用のインラインフレーム -->
- <div id="ctn-preview">
-	<div id="ctn-preview-wrap">
-		<div id="ctn-preview-head">
-			<div class="pull-left">
-				<button id="btn-publishing" class="btn btn-primary" type="button">Staging環境へ公開する</button>
-			</div>
-			<div class="pull-right">
-				<button id="btn-cancel" class="btn btn-default" type="button">閉じる</button>
-			</div>
-		</div>
-		<div id="ctn-preview-frame-wrap">
-			<iframe id="ctn-preview-frame" src="preview" frameborder="no"></iframe>
-		</div>
-	</div>
-</div>
-<!-- プレビュー用のインラインフレーム ここまで -->
 
 <!-- セル内のコンテンツ追加ボタン -->
 <div id="btn-add-box" class="hidden">

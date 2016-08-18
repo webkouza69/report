@@ -2,55 +2,65 @@
     <ul class="firstChild">
     <?php foreach($this->allCategory as $category) : ?>
      <li>
-     <a href="#h2_<?php echo $this->escape($category->id); ?>" class="firstChild lastChild"><?php echo $this->escape($category['cateName']); ?></a>
+     <a href="#h2_<?php echo $this->escape($category['id']); ?>" class="firstChild lastChild"><?php echo $this->escape($category['cateName']); ?></a>
      </li>
      <?php endforeach; ?>
     </ul>
 
    </div>
 
-
-<button type="button" class="btn">
-<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'addledger'));?>" class="btn" data-toggle="modal" data-target="#modal-cate3" ><?php echo $this->escape($itemSheet->cateName); ?>新規帳票追加</a></button>
-
-<button type="button" class="btn" data-toggle="modal" data-target="#modal-pre">
-プレビュー</button>
-
 <?php foreach ($this->rows as $val1) : { ?>
 
 	<?php foreach ($val1 as $categories ) ?>
+<div style="margin-bottom:15px">
+<button type="button" class="btn">
+<a href="<?php echo $this->url(array('controller'=>'ledger', 'action'=>'addledger'));?>" data-toggle="modal" data-target="#modal-cate3" ><?php echo $this->escape($itemSheet->cateName); ?>新規帳票追加</a></button>
 
-
+<button type="button" class="btn" data-toggle="modal" data-target="#modal-pre">
+プレビュー</button>
+</div>
+<small>*ドラッグで行の順番を入れ替えることが出来ます。</small>
 <h2 id="h2_<?php echo $this->escape($categories['idCategory']); ?>"><?php echo $this->escape($categories['cateName']); ?></h2>
     <p><?php echo $this->escape($categories['remarks']); ?></p>
 <table>
 <thead>
   <tr class="">
+  <th>背景</th>
   <th>連番</th>
   <th class="cellwidth393">帳票名</th>
   <th>更新日</th>
   <th style="width:120px;">ファイル</th>
   <th style="width: 70px;">表示設定</th>
-  <th>コメント</th>
   <th></th>
 </tr>
 </thead>
 <tbody class="jquery-ui-sortable">
 <?php foreach ($val1 as $categories ) : { ?>
 
-<tr data-id="<?php echo $categories['itemId']; ?>">
+<tr data-id="<?php echo $categories['itemId']; ?>"
+<?php if($categories['display'] == 1){
+
+  if($categories['bgColor'] == ''){
+    echo 'style="background: #dfdfdf"';
+  } else {
+    echo 'style="background:'. $categories['bgColor'].'"';
+  }
+
+}; ?>>
     <form name="editledger" enctype="multipart/form-data" action="" method="post" class="editledger">
+  <td><input type="hidden" name="bgColor" class="bgColor" value="<?= $categories['bgColor'] ?>" data-id="bgColor-<?php echo $categories['itemId']; ?>"></td>
 	<td>
 	<input type="hidden" name="idCategory" value="<?= $categories['idCategory'] ?>" ><br><br>
 	<input type="text" name="idLedger" class="idLedger" value="<?= $categories['idLedger'] ?>" maxlength="6" style="width:70px;">
 	</td>
 	<td>
-	<input type="text" name="ledgerName" value="<?= $categories['ledgerName'] ?>" style="width: 390px; margin-bottom: 10px;">
-	<input type="text" name="color" class="color" value="<?= $categories['color'] ?>" >
-	*注釈追記:<br>
-	<input type="text" name="annotation" class="annotation" value="<?= $categories['annotation'] ?>" ><br>
-*行の背景色選択:
-	<input type="hidden" name="bgColor" class="bgColor" value="<?= $categories['bgColor'] ?>" >
+	<input type="text" name="ledgerName" value="<?= $categories['ledgerName'] ?>" style="width: 310px; margin-bottom: 5px;">
+        <button class="add-title">*注釈追記</button>
+        <div class="add-wrap">
+	<input type="hidden" name="color" class="color" value="<?= $categories['color'] ?>" data-id="color-<?php echo $categories['itemId']; ?>">
+
+            *注釈:<input type="text" name="annotation" class="annotation" value="<?= $categories['annotation'] ?>" >
+            </div>
 	</td>
 	<td>
 
@@ -58,22 +68,32 @@
 	</td>
 	<td>
 	<input type="text" name="ledgerFile" value="<?= $categories['ledgerFile'] ?>" class="ledgerFile" style="width:120px;">
-	<input type="text" name="fileSize" value="<?= $categories['fileSize'] ?>" class="fileSize" style="width:120px;"><br>
+	<input type="hidden" name="fileSize" value="<?= $categories['fileSize'] ?>" class="fileSize"><br>
 
 
-    <input name="uf1" type="file" class="btn-info ledgerFiles" class="">
-    <input type="button" value="アップロード" class="btn_up2">
+    <input name="uf1" type="file" class="btn-info ledgerFiles uf1">
+<!--    <input type="button" value="アップロード" class="btn_up2">-->
 	</td>
 	<td>
-		<input type="text" name="display" class="display" value="<?= $categories['display'] ?>" class="" style="width: 50px;">
+  <select name="display" class="display">
+    <option value="0" <?php if($categories['display'] == 0){ echo "selected";} ?>>表示</option>
+    <option value="1" <?php if($categories['display'] == 1){ echo "selected";} ?>>非表示</option>
+  </select>
+        <?php if($categories['display'] == 0){ echo "<p style='display: none;'>";} else {echo "<p>";} ?>
+        コメント<input type="text" name="comment" class="comment" value="<?= $categories['comment'] ?>" class="" style="width: 50px;">
+        </p>
 	</td>
-	<td>
-	<input type="text" name="comment" class="comment" value="<?= $categories['comment'] ?>" class="" style="width: 50px;">
 	<td>
 	<input type="button" name="button" class="submitbtn2" value="仮編集を保存">
-        <botton class="btn">
+        <botton class="btn btn_del">
 	<a href="<?php echo $this->url(array('controller'=>'ledger',
-            'action'=>'delete', 'itemId'=>$categories['itemId']));?>">削除</a>
+            'action'=>'delete', 'itemId'=>$categories['itemId']));?>">
+<?php if($categories['display'] == 0){
+  echo "削除";
+} else {
+  echo "取り消し";
+} ?>
+  </a>
         </botton>
     </td>
     </form>
@@ -87,51 +107,45 @@
 <?php endforeach; ?>
 </tbody>
 </table>
-
+<div class="pagetop"><a href="#container">ページトップへ</a></div>
 <?php } ?>
 
 <?php endforeach; ?>
 
 
 <script type="text/javascript">
-$(function(){
-// 日付選択カレンダー設定
+$(function(e){
 
-$('.datepicker').datepicker({
-  format: 'yyyy-m-dd',
-  language: 'ja',
-});
 
 
 // カラーパレット選択設定
     $('.color').paletteColorPicker({
     colors: [
-      {"#E91E63": "#E91E63"},
-      {"#C2185B": "#C2185B"},
-      {"#F8BBD0": "#F8BBD0"},
-      {"#CDDC39": "#CDDC39"},
-      {"#212121": "#212121"},
-      {"#727272": "#727272"},
-      {"#B6B6B6": "#B6B6B6"}
+      {"#FF3366": "#FF3366"},
+      {"#E04F9B": "#E04F9B"},
+      {"#727272": "#727272"}
     ],
     position: 'upside' // default -> 'upside'
   });
 
    $('.bgColor').paletteColorPicker({
     colors: [
-      {"#E91E63": "#E91E63"},
-      {"#C2185B": "#C2185B"},
-      {"#F8BBD0": "#F8BBD0"},
-      {"#CDDC39": "#CDDC39"},
-      {"#212121": "#212121"},
-      {"#727272": "#727272"},
-      {"#B6B6B6": "#B6B6B6"}
+      {"#FCFBEF": "#FCFBEF"},
+      {"#DFDFDF": "#DFDFDF"}
     ],
     position: 'upside' // default -> 'upside'
   });
 
+
+//削除設定
+      $(".btn_del").on('click', function() {
+
+        if(!confirm("削除しますか？")) {
+                return false;
+            }
+          });
 // ファイルアップロード設定
-      $(".btn_up2").on('click', function() {
+      $(".uf1").on('change', function() {
 
         if(!confirm("アップロードしますか？")) {
                 return false;
@@ -192,7 +206,7 @@ $('.datepicker').datepicker({
             formData.append("dateUpdate", $parent.find('input[name=dateUpdate]').val());
             formData.append("ledgerFile", $parent.find('input[name=ledgerFile]').val());
             formData.append("fileSize", $parent.find('input[name=fileSize]').val());
-            formData.append("display", $parent.find('input[name=display]').val());
+            formData.append("display", $parent.find('select[name=display]').val());
             formData.append("comment", $parent.find('input[name=comment]').val());
 
             $.ajax({
@@ -215,7 +229,7 @@ $('.datepicker').datepicker({
               }
         });
 
-  });
+
 
   // 並び替え終了時のイベント
   $( ".jquery-ui-sortable" ).on( "sortupdate", function( event, ui ) {
@@ -250,6 +264,30 @@ $('.datepicker').datepicker({
     );
 
   } );
+
+  $('.public').on('click', function() {
+
+    if(!confirm("本番反映しますか？")) {
+      return false;
+
+    }
+  });
+  $('.reset').on('click', function() {
+
+    if(!confirm("リセットしますか？")) {
+      return false;
+
+    }
+  });
+
+    $('.add-title').on('click', function(e) {
+        $(this).next('.add-wrap').slideToggle('fast');
+        e.preventDefault();
+    });
+
+    e.preventDefault();
+
+});
 </script>
 
 
@@ -281,11 +319,15 @@ $('.datepicker').datepicker({
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+        <button type="button" class="btn btn-default public"><a href="<?php echo $this->url(array('controller'=>'ledger',
+            'action'=>'publish'));?>">本番反映</a></button>
+        <button type="button" class="btn btn-default reset"><a href="<?php echo $this->url(array('controller'=>'ledger',
+            'action'=>'reset'));?>">リセット</a></button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
         </div>
       <div class="modal-body">
 
-<iframe src="http://php_sho.localhost/detail.html" class="pre_ledger"></iframe>
+<iframe src="./stage/detail.html" class="pre_ledger"></iframe>
 
 
       </div>

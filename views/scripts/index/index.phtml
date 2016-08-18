@@ -1,15 +1,28 @@
+   <div class="" style="margin-bottom:15px;">
+					<div class="internal">
+						<ul>
+							<li class="title"><a href="#led_list">カテゴリ一覧</a>
+							</li>
+						</ul>
+					</div>
+					<div class="external">
+						<ul>
+
+						<li><button type="button" class="btn" data-toggle="modal" data-target="#modal-pre_top">
+							仮公開用ページ
+							</button>
+						</li>
+						</ul>
+					</div>
+</div>
    <div class="site-info">
    <h3>本社統一帳票一覧</h3>
 
     <ul class="heightLine">
      <li>
       → <span class="icon_excel">
-
-
-<a href="file/<?php echo $this->escape($this->topledgers[0]['fileName']) ?>">
-			 <?php echo $this->escape($this->topledgers[0]['bikou']) ?>
+			 本社統一帳票一覧（<?php echo $this->escape($this->topledgers[0]['bikou']) ?>）
 			 （<?php echo $this->escape($this->topledgers[0]['fileSize']) ?>）
-</a>
 			 </span>
      </li>
     </ul>
@@ -18,12 +31,12 @@
 	<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" class="dropzone" id="fileupledger1" method="POST">
 
   <input type="hidden" id="id1" value="1" name="id">
+帳票情報入力欄：
+		<input type="text" id="bikou" value="<?php echo $this->escape($this->topledgers[0]['bikou']) ?>" name="bikou">
 
-		<input type="text" id="bikou" value="" name="bikou">
+  <input type="hidden" id="topledgerFile1" value="<?php echo $this->escape($this->topledgers[0]['fileName']) ?>" name="fileName">
 
-  <input type="text" id="topledgerFile1" value="" name="fileName">
-
-  <input type="text" id="topfileSize1" value="" name="fileSize">
+  <input type="hidden" id="topfileSize1" value="<?php echo $this->escape($this->topledgers[0]['fileSize']) ?>" name="fileSize">
 
 
     <div class="fallback">
@@ -32,14 +45,14 @@
     </form>
 
   <form id="fileRecord1" action="" method="POST">
-  <input type="button" name="btn1" id="fileup_btn1" value="ファイルを登録">
+  <input type="button" name="btn1" id="fileup_btn1" value="選択したファイルを登録">
   </form>
    </div>
 
 
    <div class="newfile_area">
     <h3>最新の改訂版</h3>
-     <p class="btn_newfile"><a href="file/<?php echo $this->escape($this->topledgers[1]['fileName']) ?>"><span class="icon_zip">改訂版のみをダウンロード （<?php echo $this->escape($this->topledgers[1]['fileSize']) ?>）</span></a></p>
+     <p class="btn_newfile"><!-- <a href="file/<?php echo $this->escape($this->topledgers[1]['fileName']) ?> ">--><span class="icon_zip">改訂版のみをダウンロード （<?php echo $this->escape($this->topledgers[1]['fileSize']) ?>）</span><!-- </a> --></p>
 
     <div id="page-btns" class="pull">
 				<!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">カテゴリの編集</button> -->
@@ -52,19 +65,18 @@
     <input name="fileup2" type="file" multiple id="fileup2">
   </div>
 		<input type="hidden" id="id2" value="2" name="id">
-		<input type="text" id="topledgerFile2" value="" name="fileName">
-		<input type="text" id="topfileSize2" value="" name="fileSize">
+		<input type="hidden" id="topledgerFile2" value="" name="fileName">
+		<input type="hidden" id="topfileSize2" value="" name="fileSize">
 </form>
 
 	   <form id="fileRecord2" action="" method="POST">
-		   <input type="button" name="btn1" id="fileup_btn2" value="ファイルを登録">
+		   <input type="button" name="btn1" id="fileup_btn2" value="選択したファイルを登録">
 	   </form>
    </div>
 
-   <h2>統一帳票サイト・更新システム</h2>
+   <h2 id="led_list">統一帳票サイト・更新システム</h2>
 
-			<div class="pull-left">
-				<div id="modal-menu">
+	<div class="" style="margin-bottom:15px;">
 					<div class="internal">
 						<ul>
 							<li class="title">カテゴリ一覧
@@ -73,61 +85,47 @@
 					</div>
 					<div class="external">
 						<ul>
-							<li class="title">仮公開用ページ
-							</li>
+
+						<li><button type="button" class="btn" data-toggle="modal" data-target="#modal-pre_top">
+							仮公開用ページ
+							</button>
+						</li>
 						</ul>
 					</div>
-					<div class="external">
-						<ul>
-							<li class="title"><a href="<?php echo $this->url(array('controller'=>'ledger',
-            'action'=>'publish'));?>">本番反映</a>
-							</li>
-						</ul>
-					</div>
-					<div class="external">
-						<ul>
-							<li class="title"><a href="<?php echo $this->url(array('controller'=>'ledger',
-            'action'=>'reset'));?>">リセット</a>
-							</li>
-						</ul>
-	</div>
-				</div></div>
+</div>
 
 <article class="cnt cnt-690 cnt-wrap">
-<table>
+<table style="width:900px;">
 <tr>
-<th>カテゴリ名</th>
+<th style="width: 600px;">カテゴリ名</th>
 <th></th>
 </tr>
 <?php foreach($this->allCategorys as $itemSheet) : ?>
 <tr>
-    <td><a href="ledger/ledger#h2_<?php echo $this->escape($itemSheet->id); ?>"><?php echo $this->escape($itemSheet->cateName); ?></a></td>
+    <td><a href="ledger/ledger#h2_<?php echo $this->escape($itemSheet['id']); ?>"><?php echo $this->escape($itemSheet['cateName']); ?></a></td>
     <td>
 
         <a href="<?php echo $this->url(array('controller'=>'index',
-            'action'=>'edit', 'id'=>$itemSheet->id));?>" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">編集</a>
-        <!-- <a href="<?php echo $this->url(array('controller'=>'index',
-            'action'=>'delete', 'id'=>$itemSheet->id));?>">削除</a> -->
+            'action'=>'edit', 'id'=>$itemSheet['id']));?>" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate-edit">編集</a>
     </td>
 </tr>
 <?php endforeach; ?>
 </table>
 
 
-				<div id="page-btns" class="pull">
-				<button type="button" class="btn btn-warning"><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>" class="btn" data-toggle="modal" data-target="#modal-cate">カテゴリ新規作成</a></button>
-				<!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">カテゴリの編集</button> -->
-				<!-- <button type="button" class="btn btn-success" id="btn-save">下書き保存する</button>
-				<button type="button" class="btn btn-info" id="btn-preview">プレビュー</button> -->
-				</div>
+	<div id="" class="pull">
+		<button type="button" class="btn">
+		<a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>" data-toggle="modal" data-target="#modal-cate">カテゴリ新規作成</a>
+		</button>
+	</div>
 
 	<div class="cnt-bodys">
 	<ul>
-	<?php
+	<!-- <?php
 
 	foreach ($this->allCategorys as $row){
-	print '<li><a href="ledger/ledger#h2_'.$row->id.'"><img src="img/'.$row->imgName.'"'.'alt="'.$row->cateName.'"></a></li>';
-	}?>
+	print '<li><a href="ledger/ledger#h2_'.$row['id'].'"><img src="img/'.$row['imgName'].'"'.'alt="'.$row['cateName'].'"></a></li>';
+	}?> -->
 		<li><a href="file/<?php echo $this->escape($this->topledgers[2]['fileName']) ?>"><img class="btn" src="img/menu_all.png" alt="一括ダウンロード"/></a><span><?php echo $this->escape($this->topledgers[2]['fileSize']) ?></span></li>
 	</ul>
 
@@ -136,50 +134,16 @@
 				<input name="fileup3" type="file" multiple id="fileup3">
 			</div>
 			<input type="hidden" id="id3" value="3" name="id">
-			<input type="text" id="topledgerFile3" value="" name="fileName">
-			<input type="text" id="topfileSize3" value="" name="fileSize">
+			<input type="hidden" id="topledgerFile3" value="" name="fileName">
+			<input type="hidden" id="topfileSize3" value="" name="fileSize">
 		</form>
 
 		<form id="fileRecord3" action="" method="POST">
-			<input type="button" name="btn1" id="fileup_btn3" value="ファイルを登録">
+			<input type="button" name="btn1" id="fileup_btn3" value="選択したファイルを登録">
 		</form>
 	</div>
 				</article>
-
-
-
-
-
-
-	<!-- categorys modal -->
-<div class="modal fade" id="modal-cate" tabindex="-1" data-backdrop="static">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-
-			<div class="modal-body">
-
-
-<p><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>">カテゴリ追加</a></p>
-
-
-<button type="button" id="cate-btn-add" class="btn btn-default">カテゴリの追加</button>
-
-<?= $this->render('parts/edit.phtml') ?>
-
-
-			</div>
-<!-- 			<div class="modal-footer">
-	<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
-	<button type="button" class="btn btn-success" id="cate-btn-reflect">反映する</button>
-</div> -->
-		</div>
-	</div>
-</div>
-
-
-<!-- end of categorys modal -->
-
-
+   <div class="pagetop"><a href="#container">ページトップへ</a></div>
 <script type="text/javascript">
 $(function(){
 
@@ -204,7 +168,6 @@ $(function(){
                 data : formData
                 }).then(
                 function(formData) {
-                  alert("更新しました");
 					window.location.reload();
                 },
                 function(XMLHttpRequest, textStatus, errorThrown) {
@@ -233,7 +196,6 @@ $(function(){
 				data : formData
 			}).then(
 				function(formData) {
-					alert("更新しました");
 					window.location.reload();
 				},
 				function(XMLHttpRequest, textStatus, errorThrown) {
@@ -261,7 +223,6 @@ $(function(){
 				data : formData
 			}).then(
 				function(formData) {
-					alert("更新しました");
 					window.location.reload();
 				},
 				function(XMLHttpRequest, textStatus, errorThrown) {
@@ -270,5 +231,89 @@ $(function(){
 		}
 	});
 
+	$('.public').on('click', function() {
+
+		if(!confirm("本番反映しますか？")) {
+			return false;
+
+		}
+	});
+	$('.reset').on('click', function() {
+
+		if(!confirm("リセットしますか？")) {
+			return false;
+
+		}
+	});
+
   });
 </script>
+
+	<!-- categorys modal -->
+<div class="modal fade" id="modal-cate" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myLargeModalLabel">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-body">
+
+
+<p><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>">カテゴリ追加</a></p>
+
+
+<!-- <button type="button" id="cate-btn-add" class="btn btn-default">カテゴリの追加</button> -->
+
+<?= $this->render('parts/edit.phtml') ?>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- end of categorys modal -->
+
+	<!-- categorys edit modal -->
+<div class="modal fade" id="modal-cate-edit" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="myLargeModalLabel">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-body">
+
+
+<p><a href="<?php echo $this->url(array('controller'=>'index', 'action'=>'add'));?>">カテゴリ追加</a></p>
+
+
+<button type="button" id="cate-btn-add" class="btn btn-default">カテゴリの追加</button>
+
+<?= $this->render('parts/edit.phtml') ?>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- end of categorys edit modal -->
+
+<div class="modal fade" id="modal-pre_top" tabindex="-2" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default public"><a href="<?php echo $this->url(array('controller'=>'ledger',
+            'action'=>'publish'));?>">本番反映</a></button>
+        <button type="button" class="btn btn-default reset"><a href="<?php echo $this->url(array('controller'=>'ledger',
+            'action'=>'reset'));?>">リセット</a></button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        </div>
+      <div class="modal-body">
+
+<iframe src="http://10.56.164.60/dev/morinaga/web/html/unified_report/stage/index.html" class="pre_ledger"></iframe>
+
+
+      </div>
+    </div>
+  </div>
+</div>

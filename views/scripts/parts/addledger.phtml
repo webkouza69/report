@@ -36,7 +36,15 @@
             <legend id="annotation-label"><label for="annotation1" class="">注釈</label></legend>
             <p id="annotation-element">
                 <input type="text" name="annotation" id="annotation1" value="<?= $this->ledgers['annotation'] ?>"></p>
+                <p id="Color-element">
+                <input type="hidden" name="color" class="color" value="<?= $this->ledgers['color'] ?>" class=""></p>
         </fieldset>
+
+        <filedse>
+            <legend id="bgColor-label"><label for="bgColor1" class="">セル背景色</label></legend>
+            <p id="bgColor-element">
+                <input type="hidden" name="bgColor" class="bgColor" value="<?= $this->ledgers['bgColor'] ?>" class=""></p>
+        </filedse>
 
         <fieldset>
             <legend id="dateUpdate-label"><label for="dateUpdate1" class="required">更新日</label></legend>
@@ -60,19 +68,17 @@
         <fieldset>
             <legend id="display-label"><label for="display1" class="">表示選択</label></legend>
             <p id="display-element">
-                <input type="text" name="display" id="display1" value="<?= $this->ledgers['display'] ?>" class=""></p>
+
+            <select name="display" class="display">
+                <option value="0">表示</option>
+                <option value="1">非表示</option>
+            </select>
         </fieldset>
 
         <fieldset>
             <legend id="comment-label"><label for="comment1" class="">コメント</label></legend>
             <p id="comment-element">
                 <input type="text" name="comment" id="comment1" value="<?= $this->ledgers['comment'] ?>" class=""></p>
-        </fieldset>
-
-        <fieldset>
-            <legend id="bgColor-label"><label for="bgColor1" class="">セル背景色</label></legend>
-            <p id="bgColor-element">
-                <input type="text" name="bgColor" id="bgColor1" value="<?= $this->ledgers['bgColor'] ?>" class=""></p>
         </fieldset>
 
         <fieldset>
@@ -114,13 +120,13 @@
         });
 
 // カラーパレット選択設定
-        $('#annotation').paletteColorPicker({
+        $('.color').paletteColorPicker({
             colors: [
                 {"#E91E63": "#E91E63"},
-                {"#C2185B": "#C2185B"},
+                {"#E04F9B": "#E04F9B"},
                 {"#F8BBD0": "#F8BBD0"},
-                {"#CDDC39": "#CDDC39"},
-                {"#212121": "#212121"},
+                {"#FCFBEF": "#FCFBEF"},
+                {"#DFDFDF": "#DFDFDF"},
                 {"#727272": "#727272"},
                 {"#B6B6B6": "#B6B6B6"}
             ],
@@ -130,10 +136,10 @@
         $('.bgColor').paletteColorPicker({
             colors: [
                 {"#E91E63": "#E91E63"},
-                {"#C2185B": "#C2185B"},
+                {"#E04F9B": "#E04F9B"},
                 {"#F8BBD0": "#F8BBD0"},
-                {"#CDDC39": "#CDDC39"},
-                {"#212121": "#212121"},
+                {"#FCFBEF": "#FCFBEF"},
+                {"#DFDFDF": "#DFDFDF"},
                 {"#727272": "#727272"},
                 {"#B6B6B6": "#B6B6B6"}
             ],
