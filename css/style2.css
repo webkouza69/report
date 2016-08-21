@@ -79,7 +79,7 @@
 }
 
 .modal-header .close {
-  margin-top: -2px;
+  margin: -2px 0 0 825px;
 }
 
 .modal-title {
@@ -170,7 +170,7 @@ body {
   width: 960px;
 }
 .cnt.cnt-690 {
-  width: 950px;
+  width: 690px;
 }
 .cnt.cnt-wrap {
   background: #fafafa;
@@ -376,6 +376,40 @@ button.small {
   color: #fff;
   background-color: #333;
 }
+/**/
+.btn-del {
+    color: #333;
+    background-color: #f36;
+    border-color: #ccc;
+}
+.btn-del:focus, .btn-del.focus {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #8c8c8c;
+}
+.btn-delt:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+.btn-del:active, .btn-del.active, .open > .btn-del.dropdown-toggle {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+.btn-del:active:hover, .btn-del:active:focus, .btn-del:active.focus, .btn-del.active:hover, .btn-del.active:focus, .btn-del.active.focus, .open > .btn-del.dropdown-toggle:hover, .open > .btn-del.dropdown-toggle:focus, .open > .btn-del.dropdown-toggle.focus {
+    color: #333;
+    background-color: #d4d4d4;
+    border-color: #8c8c8c;
+}
+.btn-del:active, .btn-del.active, .open > .btn-del.dropdown-toggle {
+    background-image: none;
+}
+.btn-del .badge {
+    color: #fff;
+    background-color: #f36;
+}
+/**/
 
 .btn-primary {
   color: #fff;
@@ -453,10 +487,23 @@ button.small {
   background-color: #fff;
 }
 
-.btn-info {
+.btn-info{
+    color: #fff;
+    border-color: #46b8da;
+    width: 90px;
+}
+
+.btn-led{
+    width: 120px !important;
+}
+
+.btn-led a{
   color: #fff;
   border-color: #46b8da;
-  width: 90px;
+  width: 120px !important;
+}
+.btn-info a,.btn-info a:hover{
+    text-decoration: none;
 }
 .btn-info:focus, .btn-info.focus {
   color: #fff;
@@ -644,66 +691,6 @@ button.small {
   color: #fff;
 }
 
-/*------------------------------------------------------------------------------
- * エラーパネル(カテゴリの編集　入力画面のエラー用)
- *----------------------------------------------------------------------------*/
-#modal-cate-sorttable .pnl-err {
-  padding: 5px;
-  color: #555;
-}
-#modal-cate-sorttable .input-err {
-  background: #f6d4d8;
-}
-
-/*------------------------------------------------------------------------------
- * コンテキストメニュー
- *----------------------------------------------------------------------------*/
-.context-menu {
-  display: none;
-  background: url(../img/context_back.png);
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  z-index: 1000;
-}
-.context-menu ul {
-  background: #ddd;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  display: block;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-}
-.context-menu li {
-  cursor: pointer;
-  display: block;
-  font-size: 12px;
-  padding: 3px 15px;
-}
-.context-menu li:hover {
-  background: #06C;
-  color: #fff;
-}
-.context-menu li.separator {
-  border-top: 1px solid #ccc;
-  height: 0;
-  padding: 0;
-}
-.context-menu li.disabled {
-  color: #bbb;
-  cursor: default;
-}
-.context-menu li.disabled:hover {
-  background: #ddd;
-}
 
 /*------------------------------------------------------------------------------
  * ヘッダ
@@ -745,43 +732,7 @@ button.small {
 /*------------------------------------------------------------------------------
  * カテゴリモーダル内コンテンツ
  *----------------------------------------------------------------------------*/
-#modal-cate table {
-  border: 1px solid #ccc;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10px;
-  width: 100%;
-}
-#modal-cate table thead th,
-#modal-cate table tbody td {
-  background: #c8efea;
-  padding: 5px;
-}
-#modal-cate table thead th input,
-#modal-cate table tbody td input {
-  width: 245px;
-}
-#modal-cate table tbody td {
-  background: #fff;
-  padding: 3px;
-}
-#modal-cate table tbody td.cate-sort {
-  font-size: 18px;
-  text-align: center;
-  vertical-align: middle;
-  width: 23px;
-}
-#modal-cate table tbody td.cate-sort:hover {
-  background: #e5e5e5;
-  cursor: pointer;
-}
-#modal-cate table th, #modal-cate table td {
-  border: 1px solid #ccc;
-}
-#modal-cate .cate-slc-enabled.cate-del,
-#modal-cate .cate-slc-enabled [value="1"] {
-  background-color: #f00;
-  color: #fff;
-}
+
 #modal-cate .cate-slc-enabled [value="0"] {
   background-color: #fff;
   color: #000;

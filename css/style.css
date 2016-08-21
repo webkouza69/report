@@ -73,7 +73,6 @@ h1{
 	text-indent:-9999px;
 	height:85px;
 	width:521px;
-	/* float:left; */
 }
 
 h1 a{
@@ -169,19 +168,20 @@ h3{
 
 .site-info{
 	background:#F2F2F2;
-	width: 300px;
+	width: 325px;
 	float: left;
 	overflow:hidden;
 	position:relative;
 	padding:10px 15px;
-	margin-top:10px;
+	margin: 10px 0 30px;
 }
 .site-info.firstChild{
 	margin-top:0;
 }
 
 .site-info ul{
-	width:660px;
+	width:340px;
+	height: 30px;
 }
 
 .site-info li{
@@ -209,11 +209,14 @@ h3{
 }
 
 .newfile_area{
-	margin:10px 15px 20px;
+	margin:10px 5px 20px;
 	background:#F2F2F2;
-	width: 300px;
+	width: 275px;
 	float: left;
 	padding:10px 15px;
+}
+.newfile_area_all{
+	margin:10px 0 20px !important;
 }
 
 .newfile_area_point {
@@ -236,34 +239,18 @@ h3{
 .newfile_area h3{
 	background:url(../img/icon_list2.png) 0 1px no-repeat;
 	padding:0 0 0 18px;
-	margin:0 0 8px;
-}
-
-.newfile_area ul{
-	padding:0 0 0 40px;
-	margin:0 0 5px;
-}
-.newfile_area ul li{
-	list-style:disc;
-	font-size:13px;
-	margin:0 0 3px;
+	margin:15px 0 8px;
 }
 
 .newfile_area .date{
 	font-weight:bold;
 }
 
-.newfile-dl{
-	width:642px;
-	margin:10px 0 0 0;
-	overflow:hidden;
-}
 
 .btn_newfile{
-	height:42px;
-	width:328px;
-	margin-bottom: 20px;
-	/*float:left;*/
+	height:30px;
+	width:275px;
+
 }
 
 .btn_newfile a{
@@ -344,7 +331,6 @@ h2{
 	width:93px;
 	margin:30px 25px 0 auto;
 	padding-bottom:40px;
-	clear:both;
 }
 .pagetop a{
 	width:93px;
@@ -394,8 +380,18 @@ table{
 	border-collapse:collapse;
 	table-layout:fixed;
 	font-size:12px;
-	/* width: 940px; */
 	margin:20px auto 30px;
+}
+
+.cate_tb{
+	width: 100%;
+	margin:  20px auto 0;
+}
+.cate_tb th:first-child{
+	width: 590px;
+}
+.cate_tb td:nth-child(even){
+	text-align: center;
 }
 
 tbody{
@@ -537,28 +533,6 @@ ul.charge{
 .list{
 	position:relative;
 }
-
-/*
-.list .btn_dl{
-	width:104px;
-	height:23px;
-	position:absolute;
-	top:9px;
-	right:10px;
-	_right:60px;
-	text-indent:-9999px;
-}
-
-.list .btn_dl a{
-	display:block;
-	width:104px;
-	height:23px;
-	background:url(../img/btn_dl.png) 0 0 no-repeat;
-}
-.list .btn_dl a:hover{
-	background:url(../img/btn_dl.png) 0 -23px no-repeat;
-}
-*/
 
 .outlink{
 	background:url(../img/icon_outlink.png) 0 3px no-repeat;
