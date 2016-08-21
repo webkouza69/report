@@ -1,0 +1,126 @@
+<!-- データ読み込み設定 ここから -->
+<?php
+
+require_once "./php/ledger.php";
+
+?>
+<!-- データ読み込み設定 ここまで -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>統一帳票ダウンロード 帳票一覧</title>
+<link href="css/reset.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<script type="text/javascript" src="js/jQuery1.9.1.js"></script>
+<script type="text/javascript" src="js/yuga.js"></script>
+</head>
+<body>
+<div id="container">
+ <div id="wrapper">
+  <div class="header">
+   <div class="bbsearch_h1" alt="">
+    <h1 id="top"><a href="./">帳票ダウンロード 帳票一覧</a></h1>
+    <div class="bbtop"><a href="../">BBナビトップへ</a></div>
+   </div>
+  </div>
+  <!--header-->
+  <div id="nav">
+   <ul>
+    <li class="n_top firstchild"><a href="./">TOP</a></li>
+    <li class="n_reportList"><a class="current" href="detail.html">帳票一覧</a></li>
+    <li class="n_operation"><a href="operation.html">帳票の運用</a></li>
+    <li class="n_manual"><a href="manual.html">各種資料</a></li>
+   </ul>
+  </div>
+  <div id="contents">
+   <div class="pagelink">
+    <ul>
+     <?php foreach ($all as $val1) : { ?>
+     <li>
+     <?php foreach ($val1 as $cate) ?>
+     <a href="#h2_<?php echo $cate['idCategory']; ?>" class="firstChild lastChild"><?php echo $cate['cateName']; ?></a>
+     </li>
+     <?php } ?>
+     <?php endforeach; ?>
+    </ul>
+    <div class="newfile_area_point">※ 新規に起票する場合については、原本(新しいファイル)をご利用いただきますようお願いします。<br />
+     過去のファイルを修正して起票することは、誤記載につながるため止めてください。</div>
+   </div>
+
+<!-- ここからカテゴリー別 帳票出力 -->
+
+  <?php foreach ($all as $val1) : { ?>
+<div class="list">
+  <?php foreach ($val1 as $cate) ?>
+<table>
+
+<h2 id="h2_<?php echo $cate['idCategory']; ?>">
+<?php echo $cate['cateName']; ?></h2>
+<p><?php echo $cate['remarks']; ?></p>
+<thead>
+      <tr>
+       <th>連番</th>
+       <th class="cellwidth393">帳票名</th>
+       <th class="cellwidth80">更新日</th>
+       <th class="cellwidth90">ダウンロード</th>
+      </tr>
+</thead>
+<?php foreach ($val1 as $cate) : { ?>
+
+<tr <?php if($cate['display'] == 1){
+
+  if($cate['bgColor'] == ''){
+    echo 'style="background: #dfdfdf"';
+  } else {
+    echo 'style="background:'. $categories['bgColor'].'"';
+  }
+
+}; ?>>
+  <td class="center firstChild">
+  <?php echo $cate['idLedger']; ?>
+  </td>
+  <td>
+  <?php if($cate['display'] == 1): ?>
+    <?= $cate['ledgerName'] ?>
+    <span style="font-weight:bold; color:<?= $cate['color'] ?>"><?= $cate['annotation'] ?></span>
+  <? else: ?>
+    <a href="../file/report/<?= $cate['dir'] ?>/<?= $cate['ledgerFile'] ?>"><?= $cate['ledgerName'] ?></a>
+    <span style="font-weight:bold; color:<?= $cate['color'] ?>"><?= $cate['annotation'] ?></span>
+  <? endif; ?>
+
+  </td>
+  <td>
+  <?php echo $cate['dateUpdate']; ?>
+  </td>
+  <td class="dlcell lastChild">
+  <?php if($cate['display'] == 1): ?>
+    <?= $cate['fileSize'] ?>
+  <? else: ?>
+    <a href="../file/report/<?= $cate['dir'] ?>/<?= $cate['ledgerFile'] ?>"><?= $cate['fileSize'] ?></a>
+  <? endif; ?>
+  </td>
+</tr>
+
+<?php } ?>
+
+<?php endforeach; ?>
+</table>
+
+<?php } ?>
+</div>
+ <div class="pagetop"><a href="#container">ページトップへ</a></div>
+<?php endforeach;
+$sql = null;
+ ?>
+<!-- ここまでカテゴリー別 帳票出力 -->
+  </div>
+  <!--contents-->
+ </div>
+ <!--wrapper-->
+ <div id="footer">Copyright c 2013 NTT MARKETING ACT. All Rights Reserved.</div>
+</div>
+<!--container-->
+</body>
+</html>

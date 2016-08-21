@@ -1,0 +1,30 @@
+/* CSS Document */
+
+html,body,header,h1,h2,h3,h4,h5,h6,p,ul,ol,li,dl,dt,dd,article,aside,canvas,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section,summary {
+	margin: 0;
+	padding: 0;
+}
+
+ul li {
+	list-style-type: none;
+}
+
+a{
+	text-decoration: none;
+}
+
+a img {
+	border: none;
+}
+
+/*IE6/7/8用HTML5要素の定義*/
+article,aside,canvas,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section,summary
+{
+	display:block;
+}
+
+.clear{
+	clear:both;
+}
