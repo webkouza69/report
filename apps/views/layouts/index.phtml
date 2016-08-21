@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>統一帳票更新システム</title>
+
+	<!--[if lte IE 8 ]>
+	<script src="js/html5.js"></script>
+	<![endif]-->
+
+	<link href="<?= $this->baseUrl() ?>/css/jquery-ui.min.css" rel="stylesheet">
+	<link href="<?= $this->baseUrl() ?>/css/jquery-ui.structure.min.css" rel="stylesheet">
+	<link href="<?= $this->baseUrl() ?>/css/bootstrap-datepicker.standalone.css" rel="stylesheet">
+	<link href="<?= $this->baseUrl() ?>/css/init.css" rel="stylesheet">
+	<link href="<?= $this->baseUrl() ?>/css/reset.css" rel="stylesheet">
+	<link href="<?= $this->baseUrl() ?>/css/style.css" rel="stylesheet">
+	<link href="<?= $this->baseUrl() ?>/css/style2.css" rel="stylesheet">
+	<link href="<?= $this->baseUrl() ?>/css/palette-color-picker.css" rel="stylesheet">
+	<link href="<?= $this->baseUrl() ?>/css/basic.css" rel="stylesheet">
+
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/bootstrap-datepicker.min.js"></script>
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/bootstrap-datepicker.ja.min.js"></script>
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/utility.js"></script>
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/heightLine.js"></script>
+	<script type="text/javascript" src="<?= $this->baseUrl() ?>/js/palette-color-picker-bbnavi.js"></script>
+	<script type="text/javascript">
+$(function(){
+
+	// モーダル設定
+    $(document).on('hidden.bs.modal', '.modal', function(){
+        $(this).removeData('bs.modal');
+    });
+
+    $( '.jquery-ui-sortable' ).sortable({
+    /*placeholder: 'sort-placeholder',*/
+     forcePlaceholderSize: true,
+     items: '> tr:not(.unsortable)',
+     cursor: 'move', opacity: 0.2,
+     update: function(e, ui) {
+    window.alert($('.jquery-ui-sortable').sortable('toArray'));
+    }
+      });
+
+	var cookie_name_sortable = "sortable";
+	var sortable_class = ".jquery-ui-sortable";
+
+	$(sortable_class).sortable();
+	$(sortable_class).sortable({
+		update: function(ev, ui) {
+			var sorted =  $(sortable_class).sortable("toArray").join(",");
+			$.cookie(cookie_name_sortable, sorted, {expires: 30});
+		}
+	});
+
+	if($.cookie(cookie_name_sortable)) {
+		var sorted = $.cookie(cookie_name_sortable).split(",").reverse();
+		$.each(
+			sorted,
+			function(index, value) {$('#'+value).prependTo(sortable_class);}
+		);
+	}
+
+	$('.datepicker').datepicker({
+  		language: 'ja',
+  		format: 'yyyy/m/dd'
+		});
+
+});
+
+	</script>
+</head>
+
+<body data-href="<?= $this->url; ?>">
+<div id="wrapper">
+	<header class="header">
+   <div class="bbsearch_h1" alt="">
+    <h1 id="top"><a href="<?= $this->baseUrl() ?>/">帳票ダウンロード</a></h1>
+<!--    <div class="bbtop"><a href="../">BBナビトップへ</a></div>-->
+   </div>
+  </header>
+  <!--header-->
+
+<div id="contents">
+
+	<?= $this->layout()->content; ?>
+
+
+  </div>
+  <!--contents-->
+	<!-- <a class="pagetop-h">↑</a> -->
+	<!-- ページトップへ戻る -->
+</div>
+
+<div id="footer">Copyright c 2013 NTT MARKETING ACT. All Rights Reserved.</div>
+
+
+<!-- ホバーしている行のガイドライン -->
+<div id="hover-row-top"></div>
+<div id="hover-row-bottom"></div>
+<!-- ホバーしている行のガイドライン ここまで -->
+
+<!-- 追加行の挿入位置用 -->
+<div id="row-separator"></div>
+<!-- 追加行の挿入位置用 ここまで -->
+
+<!-- 削除行の位置確認用 -->
+<div id="hover-del-row"></div>
+<!-- 削除行の位置確認用 ここまで -->
+
+<!-- 行の並べ替え用ハンドル -->
+<div id="sort-row-handle"></div>
+<!-- 行の並べ替え用ハンドル ここまで -->
+
+<!-- セル内のコンテンツ追加ボタン -->
+<!-- <div id="btn-add-box" class="hidden">
+	<button type="button" class="btn btn-default">コンテンツの追加</button>
+</div> -->
+<!-- セル内のコンテンツ追加ボタン ここまで -->
+
+<!-- セル内のコンテンツ移動バー -->
+<!-- <div id="box-move" class="hidden clearfix">
+	<a id="btn-edit-box" class="pull-left"><img src="img/btn_edit.png"></a>
+	<a id="btn-remove-box" class="pull-right"><img src="img/btn_del.png"></a>
+</div> -->
+<!-- セル内のコンテンツ追移動バー ここまで -->
+
+<!-- テーブルヘッダの編集ボタン -->
+<!-- <div id="btns-thead" class="hidden clearfix">
+	<a id="btn-edit-thead"><img src="img/btn_edit.png"></a>
+</div> -->
+<!-- セル内のコンテンツ追移動バー ここまで -->
+
+<!-- bodyのブロックパネル -->
+<div id="modal-back"></div>
+<!-- bodyのブロックパネル ここまで -->
+</body>
+</html>
