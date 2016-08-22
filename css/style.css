@@ -594,3 +594,7 @@ ul.charge{
 .add-wrap{
 	display: none;
 }
+.req{
+	color: #ab2233;
+	text-indent: 10px;
+}
