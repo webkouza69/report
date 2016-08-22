@@ -6,23 +6,25 @@
 
 <div class="modal-body">
 <form id="category" name="category" enctype="application/x-www-form-urlencoded" action="" method="post">
-<p id="id-element">
-<input type="hidden" name="id" value="<?= $this->category['id'] ?>" id="id"></p>
 
+
+<p id="id-element">
+<input type="hidden" name="id" value="<?= $this->category['id'] ?>" id="id">
+</p>
 <fieldset>
-<legend id="cateName-label"><label for="cateName" class="required">カテゴリ名</label></legend>
+<legend id="cateName-label"><label for="cateName" class="required">カテゴリ名</label><small class="req">*必須</small></legend>
 <p id="cateName-element">
 <input type="text" name="cateName" id="cateName" value="<?= $this->category['cateName'] ?>"></p>
 </fieldset>
 
 <fieldset>
-<legend id="imgName-label"><label for="imgName" class="required">画像名</label></legend>
+<legend id="imgName-label"><label for="imgName" class="required">画像名</label><small class="req">*必須</small></legend>
 <p id="imgName-element">
 <input type="text" name="imgName" id="imgName" value="<?= $this->category['imgName'] ?>"></p>
 </fieldset>
 
 <fieldset>
-<legend id="anchorName-label"><label for="anchorName" class="required">アンカー名</label></legend>
+<legend id="anchorName-label"><label for="anchorName" class="required">アンカー名</label><small class="req">*必須</small></legend>
 <p id="anchorName-element">
 <input type="text" name="anchorName" id="anchorName" value="<?= $this->category['anchorName'] ?>"></p>
 </fieldset>
@@ -34,13 +36,18 @@
 </fieldset>
 
 <fieldset>
-<legend id="priority-label"><label for="dir" class="">帳票カテゴリ別ディレクトリ</label>(※必須、半角英数字、8文字以内)</legend>
+<legend id="priority-label"><label for="dir" class="">帳票カテゴリ別ディレクトリ</label><small class="req">(※必須、半角英数字、8文字以内)</small></legend>
 <p id="priority-element">
 <input type="text" name="dir" id="dir" value="<?= $this->category['dir'] ?>"></p>
 </fieldset>
 
-<p id="submit-element" class="mt15 tac">
-<input type="button" name="submit" id="submitbutton" value="編集を保存" class="btn btn-primary"></p>
+<legend id="remarks-label"><label for="remarks" class="">カテゴリー備考</label><small>帳票カテゴリー備考</small></legend>
+<p id="remarks-element">
+<input type="text" name="remarks" id="remarks" value="<?= $this->category['remarks'] ?>" class="cellwidth330"></p>
+</fieldset>
+
+<p id="submit-element" class="mt15">
+<input type="button" name="submit" id="submitbutton" value="編集を保存"></p>
 </form>
 </div>
 <div class="modal-footer">
@@ -84,7 +91,7 @@ $(function(){
 
         // エラーがない場合、画面をリロード
         alert("更新しました");
-        window.reload();
+        window.location.reload();
       },
       function(XMLHttpRequest, textStatus, errorThrown) {
         alert("更新に失敗しました");

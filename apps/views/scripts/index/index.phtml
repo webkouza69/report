@@ -9,7 +9,7 @@
 					<div class="external">
 						<ul>
 
-						<li><button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-pre_top">
+						<li><button type="button" class="btn btn-success btn_preview" data-toggle="modal" data-target="#modal-pre_top">
 							プレビュー
 							</button>
 						</li>
@@ -28,37 +28,31 @@
      </li>
     </ul>
 
-
-	<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" class="dropzone" id="fileupledger1" method="POST">
-
+<form id="fileRecord1" action="" method="POST">
+   帳票情報入力欄：<input type="text" id="bikou" value="<?php echo $this->escape($this->topledgers[0]['bikou']) ?>" name="bikou">
   <input type="hidden" id="id1" value="1" name="id">
 
   <input type="hidden" id="topledgerFile1" value="<?php echo $this->escape($this->topledgers[0]['fileName']) ?>" name="fileName">
 
   <input type="hidden" id="topfileSize1" value="<?php echo $this->escape($this->topledgers[0]['fileSize']) ?>" name="fileSize">
 
+  <input name="fileup1" type="file" id="fileup1">
 
-    <div class="fallback">
-      <input name="fileup1" type="file" multiple id="fileup1">
-    </div>
-        帳票情報入力欄：<input type="text" id="bikou" value="<?php echo $this->escape($this->topledgers[0]['bikou']) ?>" name="bikou">
-    </form>
-
-  <form id="fileRecord1" action="" method="POST">
   <input type="button" name="btn1" id="fileup_btn1" value="選択したファイルを登録">
   </form>
+
+	<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" id="fileupledger1" method="POST"  enctype="multipart/form-data" class="form_up1">
+
+  <input type="hidden" name="fileup2" value="" id="fileup2">
+
+    </form>
+
    </div>
 
 
    <div class="newfile_area heightLine">
     <h3>最新の改訂版</h3>
      <p class="btn_newfile"><span class="icon_zip">改訂版のみをダウンロード （<?php echo $this->escape($this->topledgers[1]['fileSize']) ?>）</span></p>
-
-    <div id="page-btns" class="pull">
-				<!-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate">カテゴリの編集</button> -->
-				<!-- <button type="button" class="btn btn-success" id="btn-save">下書き保存する</button>
-				<button type="button" class="btn btn-info" id="btn-preview">プレビュー</button> -->
-	</div>
 
 	<form action="<?php echo $this->url(array('controller'=>'File', 'action'=>'receive'));?>" class="dropzone" id="fileupledger2" method="POST">
   <div class="fallback">
@@ -69,9 +63,9 @@
 		<input type="hidden" id="topfileSize2" value="" name="fileSize">
 </form>
 
-	   <form id="fileRecord2" action="" method="POST">
-		   <input type="button" name="btn1" id="fileup_btn2" value="選択したファイルを登録">
-	   </form>
+	   <!-- <form id="fileRecord2" action="" method="POST">
+	   		   <input type="button" name="btn1" id="fileup_btn2" value="選択したファイルを登録">
+	   </form> -->
    </div>
     <div class="newfile_area newfile_area_all heightLine">
         <h3>一括ダウンロード</h3>
@@ -87,9 +81,9 @@
 			<input type="hidden" id="topfileSize3" value="" name="fileSize">
 		</form>
 
-		<form id="fileRecord3" action="" method="POST">
+		<!-- <form id="fileRecord3" action="" method="POST">
 			<input type="button" name="btn1" id="fileup_btn3" value="選択したファイルを登録">
-		</form>
+		</form> -->
 		</div>
 
    <h2 id="led_list">統一帳票カテゴリ追加・編集</h2>
@@ -111,7 +105,7 @@
 					<div class="external">
 						<ul>
 
-						<li><button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-pre_top">
+						<li><button type="button" class="btn btn-success btn_preview" data-toggle="modal" data-target="#modal-pre_top">
 							プレビュー
 							</button>
 						</li>
@@ -150,6 +144,41 @@
 <script type="text/javascript">
 $(function(){
 
+
+	 $("#fileup1").on('change', function() {
+
+        if(!confirm("アップロードしますか？")) {
+                return false;
+
+            } else {
+
+        // 要素を取得
+
+        var formData = new FormData();
+        formData.append("uploadFile", $('#fileup1')[0].files[0]);
+
+        $.ajax({
+            url: $($('.form_up1')).attr('action'),
+            type:'POST',
+            enctype  : 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            // サーバに送信するデータ
+            data : formData
+        }).then(
+          function(data) {
+            $('#topledgerFile1').val(data.filename);
+            $('#topfileSize1').val(data.filesize);
+          },
+          function(XMLHttpRequest, textStatus, errorThrown) {
+            alert('ファイルのアップロードに失敗しました。');
+          }
+        );
+
+      }
+      });
+
 // ajax通信設定
   $('#fileup_btn1').on('click', function() {
 
@@ -158,7 +187,13 @@ $(function(){
 
             }else{
             var hostUrl= './topledger/topedit';
-            var formData = new FormData($('#fileupledger1')[0]);
+            var formData = new FormData($('#fileRecord1')[0]);
+
+
+             // formDataに必要な要素を登録
+            formData.append("id", $('#fileRecord1').find('input[name=id]').val());
+            formData.append("fileName", $('#fileRecord1').find('input[name=fileName]').val());
+            formData.append("fileSize", $('#fileRecord1').find('input[name=fileSize]').val());
 
             $.ajax({
                 url: hostUrl,
@@ -179,7 +214,7 @@ $(function(){
               }
         });
 
-	$('#fileup_btn2').on('click', function() {
+	$('#fileup2').on('change', function() {
 
 		if(!confirm("更新しますか？")) {
 			return false;
@@ -206,7 +241,7 @@ $(function(){
 				});
 		}
 	});
-	$('#fileup_btn3').on('click', function() {
+	$('#fileup3').on('click', function() {
 
 		if(!confirm("更新しますか？")) {
 			return false;
@@ -248,6 +283,18 @@ $(function(){
 
 		}
 	});
+
+	// モーダル設定
+    $(document).on('hidden.bs.modal', '.modal', function(){
+        $(this).removeData('bs.modal');
+    });
+
+    $('.btn_preview').on('click', function() {
+      var $iframe = $('#modal-pre_top').find('iframe');
+      var src = $iframe.attr('src');
+      $iframe.attr('src', src);
+    });
+
 
   });
 </script>

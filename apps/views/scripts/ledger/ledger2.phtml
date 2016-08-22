@@ -2,7 +2,7 @@
     <ul class="firstChild">
     <?php foreach($this->allCategory as $category) : ?>
      <li>
-     <a href="#h2_<?php ($category['id']); ?>" class="firstChild lastChild"><?php echo $this->escape($category['cateName']); ?></a>
+     <a href="#h2_<?php echo $this->escape($category['id']); ?>" class="firstChild lastChild"><?php echo $this->escape($category['cateName']); ?></a>
      </li>
      <?php endforeach; ?>
     </ul>
@@ -16,7 +16,7 @@
 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-cate3">
 新規帳票追加</button>
 
-<button type="button" class="btn btn-success btn_preview" data-toggle="modal" data-target="#modal-pre">
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-pre">
 プレビュー</button>
 </div>
 <small>*ドラッグで行の順番を入れ替えることが出来ます。</small>
@@ -76,10 +76,10 @@
 	</td>
 	<td>
 
-	<input type="text" name="dateUpdate[]" class="form-control datepicker dateUpdate" value="<?= $led['dateUpdate'] ?>" style="width:70px;">
+	<input type="text" name="dateUpdate[]" class="form-control datepicker dateUpdate" value="<?= date('Y/m/d', strtotime($led['dateUpdate'])); ?>" style="width:70px;">
 	</td>
 	<td>
-    <span class="ledgerFileName" title="<?= h($led['ledgerFile'] . '(' . $led['fileSize'] . ')') ?>" style="width:120px;white-space:nowrap;overflow:hidden;display:inline-block;"><?= $led['ledgerFile'] ?>(<?= $led['fileSize'] ?>)</span>
+    <span class="ledgerFileName" style="width:120px;white-space: nowrap;overflow: hidden;"><?= $led['ledgerFile'] ?></span>
   	<input type="hidden" name="ledgerFile[]" value="<?= $led['ledgerFile'] ?>" class="ledgerFile">
   	<input type="hidden" name="fileSize[]" value="<?= $led['fileSize'] ?>" class="fileSize">
 
@@ -177,7 +177,7 @@ $(function(){
           function(data) {
             $parent.find('.ledgerFile').val(data.filename);
             $parent.find('.fileSize').val(data.filesize);
-            $parent.find('.ledgerFileName').text(data.filename + '(' + data.filesize + ')');
+            $parent.find('.ledgerFileName').text(data.filename);
           },
           function(XMLHttpRequest, textStatus, errorThrown) {
             alert('ファイルのアップロードに失敗しました。');
@@ -232,7 +232,7 @@ $(function(){
         // 更新色を削除
         $form.find('.changed').removeClass('changed');
 
-        console.log(res);
+        console.log(res);        
         /*window.location.reload();*/
       },
       function(XMLHttpRequest, textStatus, errorThrown) {
@@ -298,18 +298,18 @@ $(function(){
         e.preventDefault();
     });
 
-    // var $arr_dis = $('editledger').find('select[name="display[]"]').val();
-    // var $comment = $('editledger').find('p.h_comment]');
+    var $arr_dis = $('editledger').find('select[name="display[]"]').val();
+    var $comment = $('editledger').find('p.h_comment]');
 
-    // console.log($arr_dis);
-    // console.log($comment);
+    console.log($arr_dis);
+    console.log($comment);
 
-    // if($arr_dis == 0){
-    //     $('editledger').find('p.h_comment]').hide();
-    // } else {
-    //     $('editledger').find('p.h_comment]').show();
+    if($arr_dis == 0){
+        $('editledger').find('p.h_comment]').hide();
+    } else {
+        $('editledger').find('p.h_comment]').show();
 
-    // }
+    }
 
     $('.display').on('change', function(e){
 
@@ -329,16 +329,9 @@ $(function(){
     // 画面読み込み時に一度実行
     $('.display').trigger('change');
 
-    // プレビューボタンのクリック時、iframeの画面を初期化する
-    $('.btn_preview').on('click', function() {
-      var $iframe = $('#modal-pre_top').find('iframe');
-      var src = $iframe.attr('src');
-      $iframe.attr('src', src);
-    });
-
-    // 指定要素の親のtdに changed クラスを付与する
+    // 指定要素の親のth or tdに changed クラスを付与する
     function markChanged(el) {
-      $(el).closest('td').addClass('changed');
+      $(el).closest('td,th').addClass('changed');
     }
 
     $(document).on('change', 'table input', function() {
@@ -348,36 +341,50 @@ $(function(){
 </script>
 
 <style>
-  /* 変更があったセルが分かるように */
   .changed {
     background-color: #fdd;
   }
 </style>
 
-<!-- 帳票の新規登録 -->
+
+
+
+<!-- add ledger modal -->
 <div class="modal" id="modal-cate3" tabindex="-1" data-backdrop="static">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-      <div class="modal-body">
-        <?= $this->render('./parts/addledger.phtml') ?>
+
+<div class="modal-body">
+
+
+
+<?= $this->render('./parts/addledger.phtml') ?>
+
+
 			</div>
 		</div>
 	</div>
 </div>
 
-<!-- プレビュー -->
+
+<!-- end of add ledger modal -->
+
+
 <div class="modal" id="modal-pre" tabindex="-1" data-backdrop="static">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-footer">
+        <div class="modal-footer">
         <button type="button"><a href="<?php echo $this->url(array('controller'=>'ledger',
             'action'=>'publish'));?>" class="btn btn-danger public">本番反映</a></button>
         <button type="button"><a href="<?php echo $this->url(array('controller'=>'ledger',
             'action'=>'reset'));?>" class="btn btn-default reset">リセット</a></button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-      </div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        </div>
       <div class="modal-body">
-        <iframe src="../../staging/unified_report/detail.html" class="pre_ledger"></iframe>
+
+<iframe src="http://10.56.164.60/dev/morinaga/web/html/staging/unified_report/detail.html" class="pre_ledger"></iframe>
+
+
       </div>
     </div>
   </div>

@@ -9,8 +9,8 @@
         <p id="idtem-element">
             <input type="hidden" name="itemId" value="<?= $this->ledgers['itemId'] ?>" id="itemId"></p>
 
-        <fieldset class="cellwidth300">
-            <legend id="idCategory-label"><label for="idCategory" class="required">カテゴリ</label></legend>
+        <fieldset class="cellwidth300 mb15">
+            <legend id="idCategory-label"><label for="idCategory" class="required">カテゴリ</label><small class="req">*必須</small></legend>
             <select id="idCategory" name="idCategory">
                 <?php foreach($this->allCategory as $i => $category) : ?>
                     <option value="<?= $category['id'] ?>">
@@ -19,43 +19,43 @@
                 <?php endforeach; ?>
             </select>
         </fieldset>
-<div class="clearfix">
+<div class="clearfix mb15">
         <fieldset class="fl">
-            <legend id="idLedger-label"><label for="idLedger" class="required">連番</label></legend>
+            <legend id="idLedger-label"><label for="idLedger" class="required">連番</label><small class="req">*必須</small></legend>
             <p id="idLedger-element">
                 <input type="text" name="idLedger" id="idLedger1" value="<?= $this->ledgers['idLedger'] ?>"></p>
         </fieldset>
 
-        <filedse class="fl">
-            <legend id="bgColor-label"><label for="bgColor1" class="">セル背景色</label></legend>
+        <filedse class="fl pd-l-15">
+            <legend id="bgColor-label"><label for="bgColor1" class="">セル背景色</label><small class="pd-l-10">一括ダウンロード設定時</small></legend>
             <p id="bgColor-element">
                 <input type="hidden" name="bgColor" class="bgColor_add" value="<?= $this->ledgers['bgColor'] ?>" class=""></p>
         </filedse>
 
 
+        <!-- 優先度はデフォルトで0で登録するため不要
         <fieldset>
             <legend id="priority-label"><label for="priority1" class="">優先度</label></legend>
             <p id="priority-element">
                 <input type="text" name="priority" id="priority1" value="<?= $this->ledgers['priority'] ?>"></p>
-        </fieldset>
+        </fieldset> -->
 </div>
 <div class="clearfix">
-        <fieldset class="fl">
-            <legend id="ledgerName-label"><label for="ledgerName" class="required">帳票名</label></legend>
+        <fieldset class="fl cellwidth330">
+            <legend id="ledgerName-label"><label for="ledgerName" class="required">帳票名</label><small class="req">*必須</small></legend>
             <p id="ledgerName-element">
-                <input type="text" name="ledgerName" id="ledgerName1" value="<?= $this->ledgers['ledgerName'] ?>"></p>
+                <input type="text" name="ledgerName" id="ledgerName1" value="<?= $this->ledgers['ledgerName'] ?>" class="cellwidth330"></p>
         </fieldset>
 
-        <fieldset>
-            <legend id="annotation-label"><label for="annotation1" class="">注釈</label></legend>
+        <fieldset class="ml375">
+            <legend id="annotation-label"><label for="annotation1" class="">注釈</label><small class="pd-l-10">帳票に注釈がある場合のみ</small></legend>
             <p id="annotation-element">
-                <input type="text" name="annotation" id="annotation1" value="<?= $this->ledgers['annotation'] ?>"></p>
-                <p id="Color-element">
-                <input type="hidden" name="color" class="color_add" value="<?= $this->ledgers['color'] ?>" class=""></p>
+            <input type="hidden" name="color" class="color_add" value="<?= $this->ledgers['color'] ?>" id="Color-element">
+                <input type="text" name="annotation" id="annotation1" value="<?= $this->ledgers['annotation'] ?>" class="cellwidth330"></p>
         </fieldset>
 </div>
-        <fieldset>
-            <legend id="dateUpdate-label"><label for="dateUpdate1" class="required">更新日</label></legend>
+        <fieldset class="mb20">
+            <legend id="dateUpdate-label"><label for="dateUpdate1" class="required">更新日</label><small class="req">*必須</small></legend>
             <p id="dateUpdate-element">
                 <input type="text" name="dateUpdate" id="dateUpdate1" value="<?= $this->ledgers['dateUpdate'] ?>" class="form-control datepicker_add"><small>*更新日入力はテキストフィールドをクリックでカレンダー入力するか、2016-07-01形式で入力してください。</small></p>
         </fieldset>
@@ -66,12 +66,11 @@
                 <input type="text" name="ledgerFile" id="ledgerFile" value="<?= $this->ledgers['ledgerFile'] ?>" class=""></p>
             <input type="hidden" name="fileSize" id="fileSize" value="<?= $this->ledgers['fileSize'] ?>">
 
-            <input type="hidden" name="MAX_FILE_SIZE" value="" >
-            アップロードファイルを選択:<br>
+            アップロードファイルを選択:<small class="req pd-l-10">*必須</small><br>
             <input type="file" name="uf1" id="ledgerFile1" class="btn-info">
-            <input type="button" value="アップロード" id="btn_up">
-<div class="clearfix">
-        <fieldset class="fl">
+            <input type="hidden" value="アップロード" id="btn_up">
+<div class="clearfix mt15">
+        <fieldset class="fl cellwidth90">
             <legend id="display-label"><label for="display1" class="">表示選択</label></legend>
             <p id="display-element">
 
@@ -82,7 +81,7 @@
         </fieldset>
 
         <fieldset>
-            <legend id="comment-label"><label for="comment1" class="">コメント</label></legend>
+            <legend id="comment-label"><label for="comment1" class="">コメント</label><small class="pd-l-10">表示選択を非表示選択時</small></legend>
             <p id="comment-element">
                 <input type="text" name="comment" id="comment1" value="<?= $this->ledgers['comment'] ?>" class=""></p>
         </fieldset>
@@ -107,8 +106,6 @@
 
 <script type="text/javascript">
     $(function(){
-
-        console.log(1);
 
 // bootstrapモーダル初期化設定
         $(document).on('hidden.bs.modal', '.modal', function(){
@@ -178,31 +175,42 @@
             if(!confirm("追加しますか？")) {
                 return false;
 
-            } else {
-
-                var hostUrl= './../ledger/addledger';
-                var formData = new FormData($('#addledger')[0]);
-                console.log(formData);
-
-                $.ajax({
-                    url: hostUrl,
-                    type:'POST',
-                    enctype  : 'multipart/form-data',
-                    processData: false,
-                    contentType: false,
-                    dataType: 'json',
-                    // サーバに送信するデータ
-                    data : formData
-                }).then(
-                    function(formData) {
-                        alert("追加しました");
-                        window.location.reload();
-                    },
-                    function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert("追加に失敗しました");
-                    });
-
             }
+
+            var hostUrl= './../ledger/addledger';
+            var formData = new FormData($('#addledger')[0]);
+            console.log(formData);
+
+            $.ajax({
+                url: hostUrl,
+                type:'POST',
+                enctype  : 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                // サーバに送信するデータ
+                data : formData
+            }).then(
+                function(res) {
+                    if (res.error) {
+                      // エラーメッセージ res.messages を何らか出力
+                      var displayMessage = 'エラーがあります\n\n';
+                      $.each(res.messages, function(key, msg) {
+                        // メッセージが空でなければ追加
+                        if (msg !== '') {
+                          displayMessage += msg + '\n';
+                        }
+                      });
+                      alert(displayMessage);
+                      return;
+                    }
+                    alert("帳票を追加しました");
+                    window.location.reload();
+                },
+                function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("帳票の追加に失敗しました");
+                }
+            );
         });
 
     });
